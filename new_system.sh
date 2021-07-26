@@ -78,3 +78,10 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
+COMMAND=upwork
+if ! command -v $COMMAND &> /dev/null; then
+    wget -O ~/upwork.deb https://upwork-usw2-desktopapp.upwork.com/binaries/v5_5_0_11_61df9c99b6df4e7b/upwork_5.5.0.11_amd64.deb
+    sudo gdebi -n ~/upwork.deb
+else
+    echo "$COMMAND found"
+fi
