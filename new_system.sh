@@ -15,6 +15,21 @@ if ! command -v $COMMAND &> /dev/null; then
     sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
     sudo apt update
     sudo apt install -y code
+    declare -a StringArray=(
+        'Dart-Code.dart-code'
+        'Dart-Code.flutter'
+        'GitHub.vscode-pull-request-github'
+        'GitHub.copilot'
+        'ms-azuretools.vscode-docker'
+        'ms-python.python'
+        'ms-python.vscode-pylance'
+        'ms-toolsai.jupyter'
+        'yzane.markdown-pdf'
+        'tomoki1207.pdf'
+    )
+    for val in "${StringArray[@]}"; do
+        code --install-extension $val
+    done
 else
     echo "$COMMAND found"
 fi
