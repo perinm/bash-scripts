@@ -6,8 +6,9 @@
 
 - new_system.sh:
 
-    useful and time-saving when starting new linux install
-    updates system system, and install many useful packages for me
+    1. useful and time-saving when starting new linux install
+
+    2. updates system system, and install many useful packages for me
 
 - install_flutter.sh
 
