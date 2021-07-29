@@ -1,6 +1,6 @@
 sudo apt update
 sudo apt upgrade -y
-sudo apt install gdebi vlc -y
+sudo apt install gdebi vlc python3-pip python3-venv -y
 COMMAND=google-chrome
 if ! command -v $COMMAND &> /dev/null; then
     wget -O ~/google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -22,6 +22,7 @@ if ! command -v $COMMAND &> /dev/null; then
         'GitHub.copilot'
         'ms-azuretools.vscode-docker'
         'ms-python.python'
+        'ms-vscode-remote.remote-ssh'
         'ms-python.vscode-pylance'
         'ms-toolsai.jupyter'
         'yzane.markdown-pdf'
