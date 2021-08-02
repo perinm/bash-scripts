@@ -1,6 +1,13 @@
+#!/bin/bash
 sudo apt update
 sudo apt upgrade -y
-sudo apt install gdebi vlc python3-pip python3-venv -y
+# lines 5 - 9 install docker requirements
+sudo apt install -y gdebi vlc python3-pip python3-venv \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
 COMMAND=google-chrome
 if ! command -v $COMMAND &> /dev/null; then
     wget -O ~/google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -31,6 +38,24 @@ if ! command -v $COMMAND &> /dev/null; then
     for val in "${StringArray[@]}"; do
         code --install-extension $val
     done
+else
+    echo "$COMMAND found"
+fi
+COMMAND=docker
+if ! command -v $COMMAND &> /dev/null; then
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    echo \
+        "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+        $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt-get update
+    sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+else
+    echo "$COMMAND found"
+fi
+COMMAND=docker-compose
+if ! command -v $COMMAND &> /dev/null; then
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
 else
     echo "$COMMAND found"
 fi
