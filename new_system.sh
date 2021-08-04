@@ -2,7 +2,7 @@
 sudo apt update
 sudo apt upgrade -y
 # lines 5 - 9 install docker requirements
-sudo apt install -y gdebi vlc python3-pip python3-venv \
+sudo apt install -y gdebi vlc python3-pip python3-venv htop \
     apt-transport-https \
     ca-certificates \
     curl \
