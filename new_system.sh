@@ -2,7 +2,7 @@
 sudo apt update
 sudo apt upgrade -y
 # lines 5 - 9 install docker requirements
-sudo apt install -y gdebi vlc python3-pip python3-venv htop \
+sudo apt install -y gdebi python3-pip python3-venv htop \
     apt-transport-https \
     ca-certificates \
     curl \
@@ -108,6 +108,13 @@ COMMAND=upwork
 if ! command -v $COMMAND &> /dev/null; then
     wget -O ~/upwork.deb https://upwork-usw2-desktopapp.upwork.com/binaries/v5_5_0_11_61df9c99b6df4e7b/upwork_5.5.0.11_amd64.deb
     sudo gdebi -n ~/upwork.deb
+else
+    echo "$COMMAND found"
+fi
+COMMAND=smplayer
+if ! command -v $COMMAND &> /dev/null; then
+    wget -O ~/smplayer.deb https://download.opensuse.org/repositories/home:/smplayerdev/xUbuntu_20.04/amd64/smplayer_21.1.0+2.1_amd64.deb
+    sudo gdebi -n ~/smplayer.deb
 else
     echo "$COMMAND found"
 fi
