@@ -118,3 +118,9 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
+COMMAND=youtube-dl
+if ! command -v $COMMAND &> /dev/null; then
+    sudo -H pip install --upgrade youtube-dl
+else
+    echo "$COMMAND found"
+fi
