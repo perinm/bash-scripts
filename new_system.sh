@@ -25,15 +25,19 @@ if ! command -v $COMMAND &> /dev/null; then
     declare -a StringArray=(
         'Dart-Code.dart-code'
         'Dart-Code.flutter'
-        'GitHub.vscode-pull-request-github'
+        'DavidAnson.vscode-markdownlint'
         'GitHub.copilot'
+        'GitHub.vscode-pull-request-github'
+        'GrapeCity.gc-excelviewer'
         'ms-azuretools.vscode-docker'
         'ms-python.python'
-        'ms-vscode-remote.remote-ssh'
         'ms-python.vscode-pylance'
         'ms-toolsai.jupyter'
-        'yzane.markdown-pdf'
+        'ms-vscode-remote.remote-ssh'
+        'ms-vscode-remote.remote-ssh-edit'
         'tomoki1207.pdf'
+        'WakaTime.vscode-wakatime'
+        'yzane.markdown-pdf'
     )
     for val in "${StringArray[@]}"; do
         code --install-extension $val
