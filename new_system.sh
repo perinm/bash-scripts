@@ -35,6 +35,7 @@ if ! command -v $COMMAND &> /dev/null; then
         'ms-toolsai.jupyter'
         'ms-vscode-remote.remote-ssh'
         'ms-vscode-remote.remote-ssh-edit'
+        'ms-vscode.cpptools'
         'tomoki1207.pdf'
         'WakaTime.vscode-wakatime'
         'yzane.markdown-pdf'
