@@ -13,3 +13,11 @@
 - install_flutter.sh
 
     1. install flutter, and android-studio, and configure some system things
+
+## How to use
+
+Run:
+```
+chmod +x <script_name>.sh
+./<script_name>.sh
+```
