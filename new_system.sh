@@ -129,3 +129,21 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
+FILE=~/.local/share/applications/obsidian.desktop
+if [ -f "$FILE" ]; then
+    echo "$FILE exists."
+else
+    python download_latest_file_from_github.py
+    chmod a+x /home/salvorhardin/apps/obsidian/Obsidian.AppImage
+    cat >$FILE <<EOL
+    [Desktop Entry]
+    Name=Obsidian
+    Comment=Obsidian - A second brain, for you, forever.
+    Exec=/home/salvorhardin/apps/obsidian/Obsidian.AppImage
+    Icon=/home/salvorhardin/apps/app-icons/obsidian.png
+    Terminal=false
+    Type=Application
+    Categories=Development
+    MimeType=x-scheme-handler/obsidian;text/html;
+    EOL
+fi

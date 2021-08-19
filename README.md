@@ -14,17 +14,11 @@
 
     1. install flutter, and android-studio, and configure some system things
 
-
 ## How to use
 
 Run:
-```
-chmod +x <script_name>.sh
-./<script_name>.sh
-```
 
-## Useful links
-
-- more than one webcam stream at the same time:
-
-   1. https://askubuntu.com/questions/165727/is-it-possible-for-two-processes-to-access-the-webcam-at-the-same-time
+    ```bash
+    chmod +x <script_name>.sh
+    ./<script_name>.sh
+    ```
