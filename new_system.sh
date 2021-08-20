@@ -118,8 +118,10 @@ else
 fi
 COMMAND=smplayer
 if ! command -v $COMMAND &> /dev/null; then
-    wget -O ~/smplayer.deb https://download.opensuse.org/repositories/home:/smplayerdev/xUbuntu_20.04/amd64/smplayer_21.1.0+2.1_amd64.deb
-    sudo gdebi -n ~/smplayer.deb
+    echo 'deb http://download.opensuse.org/repositories/home:/smplayerdev/xUbuntu_21.04/ /' | sudo tee /etc/apt/sources.list.d/home:smplayerdev.list
+    curl -fsSL https://download.opensuse.org/repositories/home:smplayerdev/xUbuntu_21.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_smplayerdev.gpg > /dev/null
+    sudo apt update
+    sudo apt install -y smplayer
 else
     echo "$COMMAND found"
 fi
