@@ -118,10 +118,9 @@ else
 fi
 COMMAND=smplayer
 if ! command -v $COMMAND &> /dev/null; then
-    echo 'deb http://download.opensuse.org/repositories/home:/smplayerdev/xUbuntu_21.04/ /' | sudo tee /etc/apt/sources.list.d/home:smplayerdev.list
-    curl -fsSL https://download.opensuse.org/repositories/home:smplayerdev/xUbuntu_21.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_smplayerdev.gpg > /dev/null
-    sudo apt update
-    sudo apt install -y smplayer
+    sudo add-apt-repository ppa:rvm/smplayer 
+    sudo apt-get update 
+    sudo apt-get install smplayer smplayer-themes smplayer-skins 
 else
     echo "$COMMAND found"
 fi
