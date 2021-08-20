@@ -140,8 +140,8 @@ else
         [Desktop Entry]
         Name=Obsidian
         Comment=Obsidian - A second brain, for you, forever.
-        Exec=/home/salvorhardin/apps/obsidian/Obsidian.AppImage
-        Icon=/home/salvorhardin/apps/app-icons/obsidian.png
+        Exec=${HOME}/apps/obsidian/Obsidian.AppImage
+        Icon=${HOME}/apps/app-icons/obsidian.png
         Terminal=false
         Type=Application
         Categories=Development
