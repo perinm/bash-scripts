@@ -19,7 +19,7 @@ COMMAND=code
 if ! command -v $COMMAND &> /dev/null; then
     sudo apt install -y software-properties-common apt-transport-https curl
     curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-    sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+    sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" -y
     sudo apt update
     sudo apt install -y code
     declare -a StringArray=(
@@ -118,7 +118,7 @@ else
 fi
 COMMAND=smplayer
 if ! command -v $COMMAND &> /dev/null; then
-    sudo add-apt-repository ppa:rvm/smplayer 
+    sudo add-apt-repository ppa:rvm/smplayer -y
     sudo apt-get update 
     sudo apt-get install smplayer smplayer-themes smplayer-skins 
 else
