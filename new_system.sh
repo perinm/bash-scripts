@@ -1,13 +1,27 @@
 #!/bin/bash
 sudo apt update
 sudo apt upgrade -y
-# lines 5 - 9 install docker requirements
+
+# lines below sudo apt install, install docker requirements
 sudo apt install -y gdebi python3-pip python3-venv htop \
     apt-transport-https \
     ca-certificates \
     curl \
     gnupg \
     lsb-release
+
+## system extra settings
+# allows gnome workspace to work with 2 monitors instead of only one
+settings set org.gnome.mutter workspaces-only-on-primary false
+
+## /#
+
+## Install many apps, each app install consists of
+
+# COMMAND
+# IF command doesn't exist run code block of installation
+# ELSE tell command exists 
+# FI
 COMMAND=google-chrome
 if ! command -v $COMMAND &> /dev/null; then
     wget -O ~/google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
