@@ -12,9 +12,9 @@ COMMAND=nordvpn
 # fi
 if ! command -v $COMMAND &> /dev/null; then
     sh <(curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh)
-    nordvpn set obfuscate on
+    # nordvpn set obfuscate on
     nordvpn set killswitch on
-    nordvpn set autoconnect on Obfuscated_Servers
+    # nordvpn set autoconnect on Obfuscated_Servers
 else
     echo "$COMMAND found"
 fi
