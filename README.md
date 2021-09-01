@@ -14,6 +14,10 @@
 
     1. install flutter, and android-studio, and configure some system things
 
+- extra_things.sh
+
+    1. Install nordvpn app.
+
 ## How to use
 
 Run:
