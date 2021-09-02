@@ -27,7 +27,7 @@ Run:
     ./<script_name>.sh
     ```
 
-## Extra info
+## Extra info ([source](https://askubuntu.com/questions/343268/how-to-use-manual-partitioning-during-installation/343352#343352))
 
 When sideloading ubuntu with windows previously installed, select manually by using "Something else" option.
 - swap
