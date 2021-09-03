@@ -57,6 +57,7 @@ if ! command -v $COMMAND &> /dev/null; then
     for val in "${StringArray[@]}"; do
         code --install-extension $val
     done
+    pip install ipykernel
 else
     echo "$COMMAND found"
 fi
