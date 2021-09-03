@@ -17,7 +17,7 @@ print(final_file)
 
 page = requests.get(url)
 tree = html.fromstring(page.content)
-download_link = tree.xpath(f"//a[contains(@href,'{file_abbv}')]/@href")[0]
+download_link = tree.xpath(f"//a[contains(@href,'{file_abbv}')]/@href")[-1]
 download_link = 'https://github.com' + download_link
 print(download_link)
 downloaded_obj = requests.get(download_link)
