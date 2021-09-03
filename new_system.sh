@@ -24,8 +24,8 @@ settings set org.gnome.mutter workspaces-only-on-primary false
 # FI
 COMMAND=google-chrome
 if ! command -v $COMMAND &> /dev/null; then
-    wget -O ~/google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    sudo gdebi -n google-chrome-stable_current_amd64.deb
+    wget -O ~/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    sudo gdebi -n ~/google-chrome.deb
 else
     echo "$COMMAND found"
 fi
@@ -134,7 +134,7 @@ COMMAND=smplayer
 if ! command -v $COMMAND &> /dev/null; then
     sudo add-apt-repository ppa:rvm/smplayer -y
     sudo apt-get update 
-    sudo apt-get install smplayer smplayer-themes smplayer-skins 
+    sudo apt-get install -y smplayer smplayer-themes
 else
     echo "$COMMAND found"
 fi
@@ -148,6 +148,7 @@ FILE=~/.local/share/applications/obsidian.desktop
 if [ -f "$FILE" ]; then
     echo "$FILE exists."
 else
+    pip install 'lxml == 4.6.3'
     python3 download_latest_file_from_github.py
     chmod a+x ${HOME}/apps/obsidian/Obsidian.AppImage
     cat >$FILE <<EOL
