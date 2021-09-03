@@ -152,14 +152,14 @@ else
     python3 download_latest_file_from_github.py
     chmod a+x ${HOME}/apps/obsidian/Obsidian.AppImage
     cat >$FILE <<EOL
-        [Desktop Entry]
-        Name=Obsidian
-        Comment=Obsidian - A second brain, for you, forever.
-        Exec=${HOME}/apps/obsidian/Obsidian.AppImage
-        Icon=${HOME}/apps/app-icons/obsidian.png
-        Terminal=false
-        Type=Application
-        Categories=Development
-        MimeType=x-scheme-handler/obsidian;text/html;
+[Desktop Entry]
+Name=Obsidian
+Comment=Obsidian - A second brain, for you, forever.
+Exec=${HOME}/apps/obsidian/Obsidian.AppImage
+Icon=${HOME}/apps/app-icons/obsidian.png
+Terminal=false
+Type=Application
+Categories=Development
+MimeType=x-scheme-handler/obsidian;text/html;
 EOL
 fi
