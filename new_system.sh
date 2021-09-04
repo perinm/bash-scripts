@@ -12,7 +12,7 @@ sudo apt install -y gdebi python3-pip python3-venv htop \
 
 ## system extra settings
 # allows gnome workspace to work with 2 monitors instead of only one
-settings set org.gnome.mutter workspaces-only-on-primary false
+gsettings set org.gnome.mutter workspaces-only-on-primary false
 
 ## /#
 
@@ -163,4 +163,12 @@ Type=Application
 Categories=Development
 MimeType=x-scheme-handler/obsidian;text/html;
 EOL
+fi
+COMMAND=arduino
+if ! command -v $COMMAND &> /dev/null; then
+    wget -O ~/arduino1.tar.xz https://downloads.arduino.cc/arduino-1.8.15-linux64.tar.xz
+    tar -xf ~/arduino1.tar.xz -C ~/
+    sudo ~/arduino-1.8.15/install.sh
+else
+    echo "$COMMAND found"
 fi
