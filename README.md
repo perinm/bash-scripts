@@ -30,17 +30,18 @@ Run:
 ## Extra info ([source](https://askubuntu.com/questions/343268/how-to-use-manual-partitioning-during-installation/343352#343352))
 
 When sideloading ubuntu with windows previously installed, select manually by using "Something else" option.
+
 - swap
-    - type: primary
-    - beginning of space
-    - use as: swap area
+  - type: primary
+  - beginning of space
+  - use as: swap area
 - / (root)
-    - type: logical
-    - location: beginning of space
-    - use as: ext4
-    - mount point: /
-    - size: (10 - 20gb) (20480mb) [if installing cuda in a nvidia machine make it 35gb or 35840mb]
+  - type: logical
+  - location: beginning of space
+  - use as: ext4
+  - mount point: /
+  - size: (10 - 20gb) (20480mb) [if installing cuda in a nvidia machine make it 35gb or 35840mb]
 - /home
-    - 4 first options same as / (root)
-    - choose your home size accordingly (all free space in hard drive)
-- device for boot loader being all drive
+  - 4 first options same as / (root)
+  - choose your home size accordingly (all free space in hard drive)
+- device for boot loader being main drive (if there is windows, choose the same one)
