@@ -39,7 +39,7 @@ When sideloading ubuntu with windows previously installed, select manually by us
     - location: beginning of space
     - use as: ext4
     - mount point: /
-    - size: (10 - 20gb) (20480mb)
+    - size: (10 - 20gb) (20480mb) [if installing cuda in a nvidia machine make it 35gb or 35840mb]
 - /home
     - 4 first options same as / (root)
     - choose your home size accordingly (all free space in hard drive)
