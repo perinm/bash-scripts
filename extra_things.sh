@@ -11,3 +11,6 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
+# fix ubuntu hangs based on volume button on portuguese-br keyboards
+# https://askubuntu.com/questions/1041335/ubuntu-18-04-input-slow-when-portuguese-brazil-layout-among-keyboard-input-sou/1163929#1163929
+sed -i '/^modifier_map Mod3 { Scroll_Lock }$/s/^/#/' /usr/share/X11/xkb/symbols/br
