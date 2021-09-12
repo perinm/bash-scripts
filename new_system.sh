@@ -169,6 +169,7 @@ if ! command -v $COMMAND &> /dev/null; then
     wget -O ~/arduino1.tar.xz https://downloads.arduino.cc/arduino-1.8.15-linux64.tar.xz
     tar -xf ~/arduino1.tar.xz -C ~/
     sudo ~/arduino-1.8.15/install.sh
+    sudo usermod -a -G dialout $USER
 else
     echo "$COMMAND found"
 fi
