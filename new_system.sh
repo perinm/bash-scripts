@@ -172,3 +172,10 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
+command=qbittorrent
+if ! command -v $COMMAND &> /dev/null; then
+    sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable -y
+    sudo apt-get update && sudo apt-get install qbittorrent
+else
+    echo "$COMMAND found"
+fi

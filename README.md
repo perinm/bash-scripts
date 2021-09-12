@@ -45,3 +45,11 @@ When sideloading ubuntu with windows previously installed, select manually by us
   - 4 first options same as / (root)
   - choose your home size accordingly (all free space in hard drive)
 - device for boot loader being main drive (if there is windows, choose the same one)
+
+## Useful commands
+
+- [manual config brightness keys](https://askubuntu.com/questions/798203/changing-screen-brightness-through-keyboard-functions-on-my-notebook)
+
+```bash
+ssh-keygen -t ed25519 -C "<example@email.com>"
+```
