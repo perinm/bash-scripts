@@ -173,10 +173,18 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
-command=qbittorrent
+COMMAND=qbittorrent
 if ! command -v $COMMAND &> /dev/null; then
     sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable -y
     sudo apt-get update && sudo apt-get install qbittorrent
+else
+    echo "$COMMAND found"
+fi
+COMMAND=remmina
+if ! command -v $COMMAND &> /dev/null; then
+    sudo apt-add-repository ppa:remmina-ppa-team/remmina-next
+    sudo apt update
+    sudo apt install remmina remmina-plugin-rdp remmina-plugin-secret
 else
     echo "$COMMAND found"
 fi
