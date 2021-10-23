@@ -3,7 +3,7 @@ sudo apt update
 sudo apt upgrade -y
 
 # lines below sudo apt install, install docker requirements
-sudo apt install -y gdebi python3-pip python3-venv htop libcanberra-gtk-module \
+sudo apt install -y gdebi python3-pip python3-venv htop libcanberra-gtk-module p7zip-full \
     apt-transport-https \
     ca-certificates \
     curl \
