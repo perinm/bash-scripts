@@ -53,3 +53,5 @@ When sideloading ubuntu with windows previously installed, select manually by us
 ```bash
 ssh-keygen -t ed25519 -C "<example@email.com>"
 ```
+
+- [create bootable liveimage using hdd partition instead of usb](https://askubuntu.com/questions/1156490/make-a-hdd-partition-work-like-usb-bootable-in-ubuntu)
