@@ -55,3 +55,5 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
 ```
 
 - [create bootable liveimage using hdd partition instead of usb](https://askubuntu.com/questions/1156490/make-a-hdd-partition-work-like-usb-bootable-in-ubuntu)
+
+- [fix slow boot by defining suspend/hibernate SWAP UUID](https://askubuntu.com/questions/1240123/how-to-enable-the-hibernate-option-in-ubuntu-20-04)
