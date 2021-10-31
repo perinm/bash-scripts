@@ -182,9 +182,18 @@ else
 fi
 COMMAND=remmina
 if ! command -v $COMMAND &> /dev/null; then
-    sudo apt-add-repository ppa:remmina-ppa-team/remmina-next
+    sudo apt-add-repository ppa:remmina-ppa-team/remmina-next -y
     sudo apt update
-    sudo apt install remmina remmina-plugin-rdp remmina-plugin-secret
+    sudo apt install -y remmina remmina-plugin-rdp remmina-plugin-secret
+else
+    echo "$COMMAND found"
+fi
+COMMAND=teams
+if ! command -v $COMMAND &> /dev/null; then
+    curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+    sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/ms-teams stable main" > /etc/apt/sources.list.d/teams.list'
+    sudo apt update
+    sudo apt install -y teams
 else
     echo "$COMMAND found"
 fi
