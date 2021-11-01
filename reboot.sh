@@ -4,5 +4,5 @@
 nohup discord --start-minimized >/dev/null 2>&1 &
 nohup slack -u >/dev/null 2>&1 &
 nohup telegram-desktop -startintray >/dev/null 2>&1 &
-nohup upwork >/dev/null 2>&1 &
+# nohup upwork >/dev/null 2>&1 &
 nohup teams --system-initiated >/dev/null 2>&1 &
