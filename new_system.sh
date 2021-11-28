@@ -197,3 +197,22 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
+FILE=~/.local/share/applications/freecad_realthunder.desktop
+if [ -f "$FILE" ]; then
+    echo "$FILE exists."
+else
+    pip install 'lxml == 4.6.3'
+    python3 download_latest_freecad_from_github.py
+    chmod a+x ${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
+    cat >$FILE <<EOL
+[Desktop Entry]
+Name=FreeCad_RealThunder
+Comment=FreeCad RealThunder version
+Exec=${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
+Icon=${HOME}/apps/app-icons/freecad_realthunder.png
+Terminal=false
+Type=Application
+Categories=Development
+MimeType=x-scheme-handler/freecad_realthunder;text/html;
+EOL
+fi
