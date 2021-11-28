@@ -213,6 +213,5 @@ Icon=${HOME}/apps/app-icons/freecad_realthunder.png
 Terminal=false
 Type=Application
 Categories=Development
-MimeType=x-scheme-handler/freecad_realthunder;text/html;
 EOL
 fi
