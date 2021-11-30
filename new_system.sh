@@ -1,9 +1,8 @@
 #!/bin/bash
-sudo apt update
-sudo apt upgrade -y
+sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y
 
 # lines below sudo apt install, install docker requirements
-sudo apt install -y gdebi python3-pip python3-venv htop libcanberra-gtk-module p7zip-full lm-sensors \
+sudo apt install -y gdebi python3-pip python3-venv htop libcanberra-gtk-module p7zip-full lm-sensors wireshark \
     apt-transport-https \
     ca-certificates \
     curl \
