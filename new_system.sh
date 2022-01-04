@@ -149,7 +149,7 @@ if [ -f "$FILE" ]; then
     echo "$FILE exists."
 else
     pip install 'lxml == 4.6.3'
-    python3 download_latest_file_from_github.py
+    python3 ./python_scripts/download_latest_file_from_github.py
     chmod a+x ${HOME}/apps/obsidian/Obsidian.AppImage
     cat >$FILE <<EOL
 [Desktop Entry]
@@ -201,7 +201,7 @@ if [ -f "$FILE" ]; then
     echo "$FILE exists."
 else
     pip install 'lxml == 4.6.3'
-    python3 download_latest_freecad_from_github.py
+    python3 ./python_scripts/download_latest_freecad_from_github.py
     chmod a+x ${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
     cat >$FILE <<EOL
 [Desktop Entry]
