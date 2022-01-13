@@ -224,3 +224,11 @@ Type=Application
 Categories=Development
 EOL
 fi
+COMMAND=google-earth-pro
+if ! command -v $COMMAND &> /dev/null; then
+    wget -O ~/google-earth.deb https://dl.google.com/dl/earth/client/current/google-earth-pro-stable_current_amd64.deb
+    sudo gdebi -n ~/google-earth.deb
+    rm ~/google-earth.deb
+else
+    echo "$COMMAND found"
+fi
