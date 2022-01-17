@@ -1,6 +1,6 @@
 from lxml import html
-from python_scripts.utils import get_latest_release_url
-
+from utils import get_latest_release_url
+# from python_scripts.utils import get_latest_release_url
 
 url = 'https://github.com/obsidianmd/obsidian-releases/releases/latest'
 file_name = 'Obsidian'
