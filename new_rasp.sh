@@ -31,8 +31,11 @@ sudo apt install -y gdebi python3-pip python3-venv htop libcanberra-gtk-module p
 COMMAND=code
 if ! command -v $COMMAND &> /dev/null; then
     sudo apt install -y software-properties-common apt-transport-https curl
-    curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-    sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" -y
+    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+    sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
+    sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+    rm -f packages.microsoft.gpg
+    sudo apt install -y apt-transport-https
     sudo apt update
     sudo apt install -y code
     declare -a StringArray=(
@@ -60,7 +63,7 @@ COMMAND=docker
 if ! command -v $COMMAND &> /dev/null; then
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
     echo \
-        "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
         $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
     sudo apt-get update
     sudo apt-get install -y docker-ce docker-ce-cli containerd.io
@@ -74,28 +77,34 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
-COMMAND=drovio
+# COMMAND=drovio
+# if ! command -v $COMMAND &> /dev/null; then
+#     wget -O ~/drovio.deb https://repository.drovio.com/stable/drovio/linux/latest_version/drovio.deb
+#     sudo gdebi -n ~/drovio.deb
+# else
+#     echo "$COMMAND found"
+# fi
+# COMMAND=raspotify
+# if ! command -v $COMMAND &> /dev/null; then
+#     curl -sL https://dtcooper.github.io/raspotify/install.sh | sh
+# else
+#     echo "$COMMAND found"
+# fi
+COMMAND=spocon
 if ! command -v $COMMAND &> /dev/null; then
-    wget -O ~/drovio.deb https://repository.drovio.com/stable/drovio/linux/latest_version/drovio.deb
-    sudo gdebi -n ~/drovio.deb
+    sudo add-apt-repository ppa:spocon/spocon
+    sudo apt-get -y update
+    sudo apt-get install spocon 
 else
     echo "$COMMAND found"
 fi
-COMMAND=spotify
-if ! command -v $COMMAND &> /dev/null; then
-    curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo apt-key add - 
-    echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-    sudo apt-get update && sudo apt-get install -y spotify-client
-else
-    echo "$COMMAND found"
-fi
-COMMAND=discord
-if ! command -v $COMMAND &> /dev/null; then
-    wget -O ~/discord.deb "https://discordapp.com/api/download?platform=linux&format=deb"
-    sudo gdebi -n ~/discord.deb
-else
-    echo "$COMMAND found"
-fi
+# COMMAND=discord
+# if ! command -v $COMMAND &> /dev/null; then
+#     wget -O ~/discord.deb "https://discordapp.com/api/download?platform=linux&format=deb"
+#     sudo gdebi -n ~/discord.deb
+# else
+#     echo "$COMMAND found"
+# fi
 COMMAND=telegram-desktop
 if ! command -v $COMMAND &> /dev/null; then
     wget -O- https://telegram.org/dl/desktop/linux | sudo tar xJ -C /opt/
@@ -103,13 +112,13 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
-COMMAND=slack
-if ! command -v $COMMAND &> /dev/null; then
-    wget -O ~/slack.deb https://downloads.slack-edge.com/releases/linux/4.17.0/prod/x64/slack-desktop-4.17.0-amd64.deb
-    sudo gdebi -n ~/slack.deb
-else
-    echo "$COMMAND found"
-fi
+# COMMAND=slack
+# if ! command -v $COMMAND &> /dev/null; then
+#     wget -O ~/slack.deb https://downloads.slack-edge.com/releases/linux/4.17.0/prod/x64/slack-desktop-4.17.0-amd64.deb
+#     sudo gdebi -n ~/slack.deb
+# else
+#     echo "$COMMAND found"
+# fi
 FILE=~/.local/share/applications/obsidian.desktop
 if [ -f "$FILE" ]; then
     echo "$FILE exists."
@@ -129,15 +138,15 @@ Categories=Development
 MimeType=x-scheme-handler/obsidian;text/html;
 EOL
 fi
-COMMAND=brave-browser
-if ! command -v $COMMAND &> /dev/null; then
-    sudo apt install apt-transport-https curl
-    sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-    echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-    sudo apt update
-    sudo apt install -y brave-browser
-else
-    echo "$COMMAND found"
+# COMMAND=brave-browser
+# if ! command -v $COMMAND &> /dev/null; then
+#     sudo apt install apt-transport-https curl
+#     sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+#     echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+#     sudo apt update
+#     sudo apt install -y brave-browser
+# else
+#     echo "$COMMAND found"
 fi
 FILE=~/.local/share/applications/freecad_realthunder.desktop
 if [ -f "$FILE" ]; then
