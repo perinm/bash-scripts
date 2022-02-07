@@ -238,7 +238,7 @@ if [ -f "$FILE" ]; then
 else
     curl https://software.ultimaker.com/cura/Ultimaker_Cura-4.13.1.AppImage --create-dirs -o ${HOME}/apps/cura/cura.AppImage
     curl https://user-images.githubusercontent.com/18035735/48554277-46064580-e8de-11e8-8c4c-b682081a2219.png -o ${HOME}/apps/app-icons/cura.png
-    sudo chmod a+x ${HOME}/apps/cura/Cura.AppImage
+    sudo chmod a+x ${HOME}/apps/cura/cura.AppImage
     cat >$FILE <<EOL
 [Desktop Entry]
 Name=Cura
