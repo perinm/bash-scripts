@@ -150,7 +150,7 @@ if [ -f "$FILE" ]; then
 else
     pip install 'lxml == 4.6.3'
     python3 ./python_scripts/download_latest_file_from_github.py
-    chmod a+x ${HOME}/apps/obsidian/Obsidian.AppImage
+    sudo chmod a+x ${HOME}/apps/obsidian/Obsidian.AppImage
     cat >$FILE <<EOL
 [Desktop Entry]
 Name=Obsidian
@@ -212,7 +212,7 @@ if [ -f "$FILE" ]; then
 else
     pip install 'lxml == 4.6.3'
     python3 ./python_scripts/download_latest_freecad_from_github.py
-    chmod a+x ${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
+    sudo chmod a+x ${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
     cat >$FILE <<EOL
 [Desktop Entry]
 Name=FreeCad_RealThunder
@@ -231,4 +231,22 @@ if ! command -v $COMMAND &> /dev/null; then
     rm ~/google-earth.deb
 else
     echo "$COMMAND found"
+fi
+FILE=~/.local/share/applications/cura.desktop
+if [ -f "$FILE" ]; then
+    echo "$FILE exists."
+else
+    curl https://software.ultimaker.com/cura/Ultimaker_Cura-4.13.1.AppImage --create-dirs -o ${HOME}/apps/cura/cura.AppImage
+    curl https://user-images.githubusercontent.com/18035735/48554277-46064580-e8de-11e8-8c4c-b682081a2219.png -o ${HOME}/apps/app-icons/cura.png
+    sudo chmod a+x ${HOME}/apps/cura/Cura.AppImage
+    cat >$FILE <<EOL
+[Desktop Entry]
+Name=Cura
+Comment=Cura
+Exec=${HOME}/apps/cura/cura.AppImage
+Icon=${HOME}/apps/app-icons/cura.png
+Terminal=false
+Type=Application
+Categories=Development
+EOL
 fi
