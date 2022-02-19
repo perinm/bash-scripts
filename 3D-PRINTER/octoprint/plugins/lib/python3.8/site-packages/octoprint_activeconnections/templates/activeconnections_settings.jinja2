@@ -1,0 +1,10 @@
+<h3>{{ _('Active Connections') }} <small>{{ _('Version') }}: {{ plugin_activeconnections_plugin_version }}</small></h3>
+<div class="row-fluid">
+    <label class="input">{{ _('Remove Text') }}</label>
+    <div class="control-group">
+        <div class="controls">
+            <input type="text" data-bind="value: settingsViewModel.settings.plugins.activeconnections.remove_string" />
+            <span class="help-inline">Use this to remove bits of unwanted information for example <code>::ffff:</code> in IPv6 addresses. Changing this will require a restart of OctoPrint to completely clear out previous connections.</span>
+        </div>
+    </div>
+</div>

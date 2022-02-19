@@ -1,0 +1,52 @@
+<!--
+##################################################################################
+# Octolapse - A plugin for OctoPrint used for making stabilized timelapse videos.
+# Copyright (C) 2020  Brad Hochgesang
+##################################################################################
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see the following:
+# https://github.com/FormerLurker/Octolapse/blob/master/LICENSE
+#
+# You can contact the author either through the git-hub repository, or at the
+# following email address: FormerLurker@pm.me
+##################################################################################
+-->
+<script type="text/html" id="snapshot-plan-preview-template">
+    <div id="octolapse_snapshot_plan_preview_dialog" class="modal hide fade ">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content octolapse">
+                <form id="octolapse_webcam_settings_popup_form" class="form-horizontal octolapse_form">
+                    <div class="modal-header">
+                        <div>
+                            <a class="close" aria-hidden="true">&times;</a>
+                        </div>
+                        <div>
+                            <h3>Snapshot Plan Preview</h3>
+                        </div>
+                    </div>
+                    <div class="modal-body scrollable" data-bind="template:{name:'snapshot-plan-template', data:Octolapse.Status}">
+                    </div>
+                    <div class="modal-footer" style="bottom:0;position:relative">
+                        <div class="row-fluid">
+                                <button type="button" class="span6 btn btn-default cancel input-block-level" title="Cancel the print">Cancel Print</button>
+                                <button type="button" class="span6 btn btn-primary continue input-block-level" title="Accept the snapshot plan and continue printing">
+                                    Accept and Continue <span data-bind="visible: SnapshotPlanState.autoclose">(<span data-bind="text:SnapshotPlanState.autoclose_seconds"></span> seconds)</span></button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</script>
+{% include "octolapse_status_snapshot_plan.jinja2" %}

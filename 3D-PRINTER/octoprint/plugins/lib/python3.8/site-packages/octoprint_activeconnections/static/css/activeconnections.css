@@ -1,0 +1,11 @@
+#sidebar_plugin_activeconnections > div.accordion-inner > div.border_bottom {
+    border-bottom: 1px solid #ddd;
+}
+
+#sidebar_plugin_activeconnections > div.accordion-inner > div.border_bottom:last-child {
+    border-bottom: 0;
+}
+
+#sidebar_plugin_activeconnections > div.accordion-inner > div.border_bottom:hover {
+    background-color: #f5f5f5;
+}
