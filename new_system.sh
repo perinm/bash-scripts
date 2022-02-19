@@ -87,9 +87,12 @@ else
 fi
 COMMAND=spotify
 if ! command -v $COMMAND &> /dev/null; then
-    curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo apt-key add - 
-    echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-    sudo apt-get update && sudo apt-get install -y spotify-client
+    # curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo apt-key add - 
+    # echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+    # sudo apt-get update && sudo apt-get install -y spotify-client
+    curl -sS https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg | sudo gpg --dearmor -o /usr/share/keyrings/spotify-archive-keyring.gpg
+    echo "deb [signed-by=/usr/share/keyrings/spotify-archive-keyring.gpg] http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+    sudo apt-get update && sudo apt-get install spotify-client
 else
     echo "$COMMAND found"
 fi
@@ -187,15 +190,16 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
-COMMAND=teams
-if ! command -v $COMMAND &> /dev/null; then
-    curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-    sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/ms-teams stable main" > /etc/apt/sources.list.d/teams.list'
-    sudo apt update
-    sudo apt install -y teams
-else
-    echo "$COMMAND found"
-fi
+# un-comment to re-add teams
+# COMMAND=teams
+# if ! command -v $COMMAND &> /dev/null; then
+#     curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+#     sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/ms-teams stable main" > /etc/apt/sources.list.d/teams.list'
+#     sudo apt update
+#     sudo apt install -y teams
+# else
+#     echo "$COMMAND found"
+# fi
 COMMAND=brave-browser
 if ! command -v $COMMAND &> /dev/null; then
     sudo apt install apt-transport-https curl
@@ -210,7 +214,7 @@ FILE=~/.local/share/applications/freecad_realthunder.desktop
 if [ -f "$FILE" ]; then
     echo "$FILE exists."
 else
-    pip install 'lxml == 4.6.3'
+    pip3 install 'lxml == 4.6.3'
     python3 ./python_scripts/download_latest_freecad_from_github.py
     sudo chmod a+x ${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
     cat >$FILE <<EOL
