@@ -62,5 +62,7 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
 
 - ```bash
   # scan local network
-  nmap -sn 192.168.18.0/24
+  sudo nmap -sn 192.168.18.0/24
+  # for simple ip up scan, faster
+  sudo nmap -sn -n -host-timeout 1 192.168.18.0/24
   ```
