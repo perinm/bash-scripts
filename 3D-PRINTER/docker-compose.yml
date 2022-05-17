@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   octoprintENDER:
-    image: octoprint/octoprint:canary
+    image: octoprint/octoprint:1.8.0
     restart: unless-stopped
     ports:
       - 80:80
