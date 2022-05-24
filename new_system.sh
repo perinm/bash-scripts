@@ -163,11 +163,18 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
+COMMAND=projectlibre
+if ! command -v $COMMAND &> /dev/null; then
+    wget -O ~/projectlibre.deb https://megalink.dl.sourceforge.net/project/projectlibre/ProjectLibre/1.9.3/projectlibre_1.9.3-1.deb
+    sudo gdebi -n ~/projectlibre.deb
+else
+    echo "$COMMAND found"
+fi
 # COMMAND=arduino
 # if ! command -v $COMMAND &> /dev/null; then
-#     wget -O ~/arduino1.tar.xz https://downloads.arduino.cc/arduino-1.8.15-linux64.tar.xz
+#     wget -O ~/arduino1.tar.xz https://downloads.arduino.cc/arduino-1.8.19-linux64.tar.xz
 #     tar -xf ~/arduino1.tar.xz -C ~/
-#     sudo ~/arduino-1.8.15/install.sh
+#     sudo ~/arduino-1.8.19/install.sh
 #     sudo usermod -a -G dialout $USER
 # else
 #     echo "$COMMAND found"
