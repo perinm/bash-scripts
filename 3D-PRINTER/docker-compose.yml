@@ -2,21 +2,21 @@ version: '3.9'
 
 services:
   octoprintENDER:
-    image: octoprint/octoprint:1.7.3
+    image: octoprint/octoprint:1.8.0
     restart: unless-stopped
     ports:
       - 80:80
     devices:
     # use `python -m serial.tools.miniterm` to see what the name is of the printer
      - /dev/ttyUSB0:/dev/ttyACM0
-     - /dev/video0:/dev/video0
+    #  - /dev/video0:/dev/video0
     volumes:
      - ./octoprint:/octoprint
     # uncomment the lines below to ensure camera streaming is enabled when
     # you add a video device
-    environment:
-     - ENABLE_MJPG_STREAMER=true
-     - MJPG_STREAMER_INPUT=-y -n -r 1280x720
+    # environment:
+    #  - ENABLE_MJPG_STREAMER=true
+    #  - MJPG_STREAMER_INPUT=-y -n -r 1280x720
   # octoprintANET:
   #   image: octoprint/octoprint:1.7.3
   #   restart: unless-stopped
@@ -53,5 +53,5 @@ services:
   #  volumes:
   #    - octoprint:/octoprint
 
-volumes:
-  octoprint:
+# volumes:
+#   octoprint:
