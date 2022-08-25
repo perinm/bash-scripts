@@ -70,19 +70,13 @@ else
 fi
 COMMAND=docker
 if ! command -v $COMMAND &> /dev/null; then
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    sudo mkdir -p /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
     echo \
-        "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
         $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
     sudo apt-get update
-    sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-else
-    echo "$COMMAND found"
-fi
-COMMAND=docker-compose
-if ! command -v $COMMAND &> /dev/null; then
-    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    sudo chmod +x /usr/local/bin/docker-compose
+    sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 else
     echo "$COMMAND found"
 fi
@@ -126,14 +120,14 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
-COMMAND=slack
-if ! command -v $COMMAND &> /dev/null; then
-    wget -O ~/slack.deb https://downloads.slack-edge.com/releases/linux/4.25.0/prod/x64/slack-desktop-4.25.0-amd64.deb
-    sudo gdebi -n ~/slack.deb
-    # sudo snap install slack --classic
-else
-    echo "$COMMAND found"
-fi
+# COMMAND=slack
+# if ! command -v $COMMAND &> /dev/null; then
+#     wget -O ~/slack.deb https://downloads.slack-edge.com/releases/linux/4.25.0/prod/x64/slack-desktop-4.25.0-amd64.deb
+#     sudo gdebi -n ~/slack.deb
+#     # sudo snap install slack --classic
+# else
+#     echo "$COMMAND found"
+# fi
 # COMMAND=upwork
 # if ! command -v $COMMAND &> /dev/null; then
 #     wget -O ~/upwork.deb https://upwork-usw2-desktopapp.upwork.com/binaries/v5_6_10_1_de501d28cc034306/upwork_5.6.10.1_amd64.deb
@@ -158,7 +152,7 @@ else
 fi
 COMMAND=obsidian
 if ! command -v $COMMAND &> /dev/null; then
-    wget -O ~/obsidian.deb https://github.com/obsidianmd/obsidian-releases/releases/download/v0.14.6/obsidian_0.14.6_amd64.deb
+    wget -O ~/obsidian.deb https://github.com/obsidianmd/obsidian-releases/releases/download/v0.15.9/obsidian_0.15.9_amd64.deb
     sudo gdebi -n ~/obsidian.deb
 else
     echo "$COMMAND found"
@@ -236,24 +230,24 @@ fi
 # else
 #     echo "$COMMAND found"
 # fi
-# FILE=~/.local/share/applications/freecad_realthunder.desktop
-# if [ -f "$FILE" ]; then
-#     echo "$FILE exists."
-# else
-#     pip3 install 'lxml == 4.6.3'
-#     python3 ./python_scripts/download_latest_freecad_from_github.py
-#     sudo chmod a+x ${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
-#     cat >$FILE <<EOL
-# [Desktop Entry]
-# Name=FreeCad_RealThunder
-# Comment=FreeCad RealThunder version
-# Exec=${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
-# Icon=${HOME}/apps/app-icons/freecad_realthunder.png
-# Terminal=false
-# Type=Application
-# Categories=Development
-# EOL
-# fi
+FILE=~/.local/share/applications/freecad_realthunder.desktop
+if [ -f "$FILE" ]; then
+    echo "$FILE exists."
+else
+    pip3 install 'lxml == 4.6.3'
+    python3 ./python_scripts/download_latest_freecad_from_github.py
+    sudo chmod a+x ${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
+    cat >$FILE <<EOL
+[Desktop Entry]
+Name=FreeCad_RealThunder
+Comment=FreeCad RealThunder version
+Exec=${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
+Icon=${HOME}/apps/app-icons/freecad_realthunder.png
+Terminal=false
+Type=Application
+Categories=Development
+EOL
+fi
 COMMAND=google-earth-pro
 if ! command -v $COMMAND &> /dev/null; then
     wget -O ~/google-earth.deb https://dl.google.com/dl/earth/client/current/google-earth-pro-stable_current_amd64.deb
