@@ -252,24 +252,6 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
-# FILE=~/.local/share/applications/cura.desktop
-# if [ -f "$FILE" ]; then
-#     echo "$FILE exists."
-# else
-#     curl https://software.ultimaker.com/cura/Ultimaker_Cura-4.13.1.AppImage --create-dirs -o ${HOME}/apps/cura/cura.AppImage
-#     curl https://user-images.githubusercontent.com/18035735/48554277-46064580-e8de-11e8-8c4c-b682081a2219.png -o ${HOME}/apps/app-icons/cura.png
-#     sudo chmod a+x ${HOME}/apps/cura/cura.AppImage
-#     cat >$FILE <<EOL
-# [Desktop Entry]
-# Name=Cura
-# Comment=Cura
-# Exec=${HOME}/apps/cura/cura.AppImage
-# Icon=${HOME}/apps/app-icons/cura.png
-# Terminal=false
-# Type=Application
-# Categories=Development
-# EOL
-# fi
 COMMAND=gsutil
 if ! command -v $COMMAND &> /dev/null; then
     wget -O ~/gsutil.tar.gz https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-398.0.0-linux-x86_64.tar.gz
