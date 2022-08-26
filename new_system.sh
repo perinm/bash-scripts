@@ -160,37 +160,6 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
-# COMMAND=arduino
-# if ! command -v $COMMAND &> /dev/null; then
-#     wget -O ~/arduino1.tar.xz https://downloads.arduino.cc/arduino-1.8.19-linux64.tar.xz
-#     tar -xf ~/arduino1.tar.xz -C ~/
-#     sudo ~/arduino-1.8.19/install.sh
-#     sudo usermod -a -G dialout $USER
-# else
-#     echo "$COMMAND found"
-# fi
-# FILE=~/.local/share/applications/arduinoide-beta.desktop
-# if [ -f "$FILE" ]; then
-#     echo "$FILE exists."
-# else
-#     pip3 install 'lxml == 4.6.3'
-#     python3 ./python_scripts/download_latest_arduino_from_github.py
-#     sudo chmod a+x ${HOME}/apps/freecad_realthunder/ArduinoIDE_BETA.AppImage
-#     cat >$FILE <<EOL
-# [Desktop Entry]
-# Type=Application
-# Name=Arduino IDE BETA
-# GenericName=Arduino IDE BETA
-# Comment=Open-source electronics prototyping platform
-# Exec=${HOME}/apps/arduinoide_beta/ArduinoIDE_BETA.AppImage
-# Icon=${HOME}/apps/app-icons/ArduinoIDE_BETA.png
-# Terminal=false
-# Categories=Development;IDE;Electronics;
-# MimeType=text/x-arduino-beta;
-# Keywords=embedded electronics;electronics;avr;microcontroller;
-# StartupWMClass=processing-app-Base
-# EOL
-# fi
 # COMMAND=qbittorrent
 # if ! command -v $COMMAND &> /dev/null; then
 #     sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable -y
