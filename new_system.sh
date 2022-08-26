@@ -98,10 +98,9 @@ else
 fi
 COMMAND=obs
 if ! command -v $COMMAND &> /dev/null; then
-    # sudo apt install -y ffmpeg
-    # sudo add-apt-repository ppa:obsproject/obs-studio -y
-    # sudo apt update
-    sudo apt install -y obs-studio
+    sudo add-apt-repository ppa:obsproject/obs-studio -y
+    sudo apt update
+    sudo apt install -y ffmpeg obs-studio
 else
     echo "$COMMAND found"
 fi
