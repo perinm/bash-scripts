@@ -270,3 +270,13 @@ fi
 # Categories=Development
 # EOL
 # fi
+COMMAND=gsutil
+if ! command -v $COMMAND &> /dev/null; then
+    wget -O ~/gsutil.tar.gz https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-398.0.0-linux-x86_64.tar.gz
+    cd ~/
+    tar -xf ~/gsutil.tar.gz
+    ./google-cloud-sdk/install.sh
+    ./google-cloud-sdk/bin/gcloud init
+else
+    echo "$COMMAND found"
+fi
