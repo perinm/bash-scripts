@@ -133,9 +133,6 @@ fi
 # fi
 COMMAND=smplayer
 if ! command -v $COMMAND &> /dev/null; then
-    # sudo add-apt-repository ppa:rvm/smplayer -y
-    # sudo apt-get update 
-    # sudo apt-get install -y smplayer smplayer-themes smplayer-skins 
     sudo snap install smplayer
 else
     echo "$COMMAND found"
