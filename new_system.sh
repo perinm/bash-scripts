@@ -51,7 +51,10 @@ if ! command -v $COMMAND &> /dev/null; then
             ln -s ~/.platformio/penv/bin/$file ~/.local/bin/$file
         fi
     done
-    sudo adduser $USER dialout
+    curl -fsSL https://raw.githubusercontent.com/platformio/platformio-core/master/scripts/99-platformio-udev.rules | sudo tee /etc/udev/rules.d/99-platformio-udev.rules
+    sudo service udev restart
+    sudo usermod -a -G dialout $USER
+    sudo usermod -a -G plugdev $USER
 else
     echo "$COMMAND found"
 fi
