@@ -51,6 +51,7 @@ if ! command -v $COMMAND &> /dev/null; then
             ln -s ~/.platformio/penv/bin/$file ~/.local/bin/$file
         fi
     done
+    sudo adduser $USER dialout
 else
     echo "$COMMAND found"
 fi
