@@ -3,7 +3,6 @@ sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo
 
 # TO-DO:
 # - Prusa
-# - Drovio
 # - Fritzing
 
 # lines below sudo apt install, install docker requirements
