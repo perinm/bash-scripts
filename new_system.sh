@@ -16,7 +16,12 @@ sudo apt install -y gdebi python-is-python3 python3-pip python3-venv htop libcan
 ## system extra settings
 # allows gnome workspace to work with 2 monitors instead of only one
 gsettings set org.gnome.mutter workspaces-only-on-primary false
-
+FILE=~/.ssh/id_ed25519
+if [ -f $FILE ]; then
+    echo "$FILE exists."
+else
+    ssh-keygen -o -a 100 -t ed25519 -f $FILE -C "lucasperinm@gmail.com" -q -N ""
+fi
 ## /#
 
 ## Install many apps, each app install consists of
