@@ -7,7 +7,7 @@ sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo
 # - Fritzing
 
 # lines below sudo apt install, install docker requirements
-sudo apt install -y gdebi python3-pip python3-venv htop libcanberra-gtk-module p7zip-full lm-sensors wireshark ppa-purge wireguard wireguard-tools net-tools nmap \
+sudo apt install -y gdebi python-is-python3 python3-pip python3-venv htop libcanberra-gtk-module p7zip-full lm-sensors wireshark ppa-purge wireguard wireguard-tools net-tools nmap \
     apt-transport-https \
     ca-certificates \
     curl \
@@ -26,6 +26,30 @@ gsettings set org.gnome.mutter workspaces-only-on-primary false
 # IF command doesn't exist run code block of installation
 # ELSE tell command exists 
 # FI
+
+COMMAND=platformio
+if ! command -v $COMMAND &> /dev/null; then
+    pip install -U pip
+    pip install -U esptool
+    python -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platformio/master/scripts/get-platformio.py)"
+    LINE='export PATH=$PATH:$HOME/.local/bin'
+    FILE=~/.profile
+    grep -xqF -- "$LINE" $FILE || echo "$LINE" >> "$FILE"
+    declare -a StringArray=(
+        'platformio'
+        'pio'
+        'piodebuggdb'
+    )
+    for file in "${StringArray[@]}"; do
+        if [ -f ~/.local/bin/$file ]; then
+            echo "~/.local/bin/$file exists."
+        else
+            ln -s ~/.platformio/penv/bin/$file ~/.local/bin/$file
+        fi
+    done
+else
+    echo "$COMMAND found"
+fi
 COMMAND=google-chrome
 if ! command -v $COMMAND &> /dev/null; then
     wget -O ~/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
