@@ -66,3 +66,14 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
   # for simple ip up scan, faster
   sudo nmap -sn -n -host-timeout 1 192.168.18.0/24
   ```
+
+- ```bash
+  # All commits started from the next after 8fd7b22 will be rebased with no changes except signing
+  git rebase --exec 'git commit --amend --no-edit -n -S' -i 8fd7b22
+  # To change all commits started from the very first one you may use --root
+  git rebase --exec 'git commit --amend --no-edit -n -S' -i --root
+  #Return commit date as author date and force push (don't forget to backup before).
+  git rebase --committer-date-is-author-date -i --root # return 
+  git push --force
+  ```
+  -> [source](https://stackoverflow.com/questions/41882919/is-there-a-way-to-gpg-sign-all-previous-commits)
