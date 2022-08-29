@@ -31,6 +31,14 @@ fi
 # ELSE tell command exists 
 # FI
 
+COMMAND=appimagelauncher
+if ! command -v $COMMAND &> /dev/null; then
+    sudo add-apt-repository ppa:appimagelauncher-team/stable -y
+    sudo apt update
+    sudo apt install -y appimagelauncher
+else
+    echo "$COMMAND found"
+fi
 COMMAND=platformio
 if ! command -v $COMMAND &> /dev/null; then
     pip install -U pip
