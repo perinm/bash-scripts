@@ -31,7 +31,7 @@ fi
 # ELSE tell command exists 
 # FI
 
-COMMAND=appimagelauncher
+COMMAND=appimagelauncherd
 if ! command -v $COMMAND &> /dev/null; then
     sudo add-apt-repository ppa:appimagelauncher-team/stable -y
     sudo apt update
@@ -128,7 +128,10 @@ fi
 # fi
 COMMAND=spotify
 if ! command -v $COMMAND &> /dev/null; then
-    sudo snap install spotify
+    curl -sS https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg | sudo gpg --dearmor -o /usr/share/keyrings/spotify-archive-keyring.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/spotify-archive-keyring.gpg] http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+    sudo apt update && sudo apt install spotify-client
+    # sudo snap install spotify
 else
     echo "$COMMAND found"
 fi
@@ -194,20 +197,20 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
-COMMAND=projectlibre
-if ! command -v $COMMAND &> /dev/null; then
-    wget -O ~/projectlibre.deb https://megalink.dl.sourceforge.net/project/projectlibre/ProjectLibre/1.9.3/projectlibre_1.9.3-1.deb
-    sudo gdebi -n ~/projectlibre.deb
-else
-    echo "$COMMAND found"
-fi
-# COMMAND=qbittorrent
+# COMMAND=projectlibre
 # if ! command -v $COMMAND &> /dev/null; then
-#     sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable -y
-#     sudo apt-get update && sudo apt-get install -y qbittorrent
+#     wget -O ~/projectlibre.deb https://megalink.dl.sourceforge.net/project/projectlibre/ProjectLibre/1.9.3/projectlibre_1.9.3-1.deb
+#     sudo gdebi -n ~/projectlibre.deb
 # else
 #     echo "$COMMAND found"
 # fi
+COMMAND=qbittorrent
+if ! command -v $COMMAND &> /dev/null; then
+    sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable -y
+    sudo apt-get update && sudo apt-get install -y qbittorrent
+else
+    echo "$COMMAND found"
+fi
 # COMMAND=remmina
 # if ! command -v $COMMAND &> /dev/null; then
 #     sudo apt-add-repository ppa:remmina-ppa-team/remmina-next -y
