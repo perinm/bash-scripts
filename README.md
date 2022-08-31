@@ -58,6 +58,8 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
 
 - [fix slow boot by defining suspend/hibernate SWAP UUID](https://askubuntu.com/questions/1240123/how-to-enable-the-hibernate-option-in-ubuntu-20-04)
 
+- [move spotify to system tray](https://www.maketecheasier.com/minimize-spotify-to-system-tray-linux/)
+
 - [change ubuntu actions for sleep (supend/hibernate) on lid close, etc](https://ubuntuhandbook.org/index.php/2020/05/lid-close-behavior-ubuntu-20-04/)
 
 - ```bash
