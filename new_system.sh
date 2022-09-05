@@ -6,7 +6,7 @@ sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo
 # - Fritzing
 
 sudo apt install -y gdebi python-is-python3 python3-pip python3-venv htop libcanberra-gtk-module p7zip-full lm-sensors wireshark \
-    ncdu ppa-purge wireguard wireguard-tools net-tools nmap \
+    ncdu ppa-purge wireguard wireguard-tools net-tools nmap gparted btrfs-progs \
     apt-transport-https \
     ca-certificates \
     curl \
@@ -163,6 +163,7 @@ if ! command -v $COMMAND &> /dev/null; then
     wget -O ~/slack.deb https://downloads.slack-edge.com/releases/linux/4.27.156/prod/x64/slack-desktop-4.27.156-amd64.deb
     sudo gdebi -n ~/slack.deb
     # https://askubuntu.com/questions/1398344/apt-key-deprecation-warning-when-updating-system
+    # sudo apt-key list
     # sudo apt-key export 038651BD | sudo gpg --dearmour -o /usr/share/keyrings/slack.gpg
     # sudo nano /etc/apt/sources.list.d/slack.list
     # add this line [uncommented]:
