@@ -6,7 +6,7 @@ sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo
 # - Fritzing
 
 sudo apt install -y gdebi python-is-python3 python3-pip python3-venv htop libcanberra-gtk-module p7zip-full lm-sensors wireshark \
-    ncdu ppa-purge wireguard wireguard-tools net-tools nmap gparted btrfs-progs \
+    ncdu ppa-purge wireguard wireguard-tools net-tools nmap gparted btrfs-progs copyq gnome-shell-extension d-feet btrfs-compsize \
     apt-transport-https \
     ca-certificates \
     curl \

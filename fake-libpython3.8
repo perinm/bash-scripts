@@ -1,0 +1,16 @@
+Section: misc
+Priority: optional
+Standards-Version: 3.10.4
+
+Package: fake-libpython3.8
+Version: 1.0
+Depends: libpython3.10
+Provides: libpython3.8, libpython3.8-minimal, libpython3.8-stdlib
+Architecture: all
+Description: Fake libpython3.8 package to satisfy dependencies
+ Fake libpython3.8 package to satisfy dependencies
+
+## MANUAL INSTALL
+#sudo ln -s /usr/lib/x86_64-linux-gnu/libpython3.10.so /usr/lib/x86_64-linux-gnu/libpython3.8.so
+#sudo ln -s /usr/lib/x86_64-linux-gnu/libpython3.10.so /usr/lib/x86_64-linux-gnu/libpython3.8.so.1
+#sudo ln -s /usr/lib/x86_64-linux-gnu/libpython3.10.so /usr/lib/x86_64-linux-gnu/libpython3.8.so.1.0
