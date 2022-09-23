@@ -58,6 +58,8 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
 
 - [fix slow boot by defining suspend/hibernate SWAP UUID](https://askubuntu.com/questions/1240123/how-to-enable-the-hibernate-option-in-ubuntu-20-04)
 
+- [move spotify to system tray](https://www.maketecheasier.com/minimize-spotify-to-system-tray-linux/)
+
 - [change ubuntu actions for sleep (supend/hibernate) on lid close, etc](https://ubuntuhandbook.org/index.php/2020/05/lid-close-behavior-ubuntu-20-04/)
 
 - ```bash
@@ -66,3 +68,14 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
   # for simple ip up scan, faster
   sudo nmap -sn -n -host-timeout 1 192.168.18.0/24
   ```
+
+- ```bash
+  # All commits started from the next after 8fd7b22 will be rebased with no changes except signing
+  git rebase --exec 'git commit --amend --no-edit -n -S' -i 8fd7b22
+  # To change all commits started from the very first one you may use --root
+  git rebase --exec 'git commit --amend --no-edit -n -S' -i --root
+  #Return commit date as author date and force push (don't forget to backup before).
+  git rebase --committer-date-is-author-date -i --root # return 
+  git push --force
+  ```
+  -> [source](https://stackoverflow.com/questions/41882919/is-there-a-way-to-gpg-sign-all-previous-commits)

@@ -2,7 +2,7 @@ from utils import get_latest_release_url
 # from python_scripts.utils import get_latest_release_url
 
 
-url = 'https://github.com/realthunder/FreeCAD_assembly3/releases/latest'
+url = 'https://github.com/realthunder/FreeCAD/releases/latest'
 file_name = 'FreeCad_RealThunder'
 xpath_ref = ['.AppImage','Stable']
 url_image = 'https://b.thumbs.redditmedia.com/JLrSjGiPZlSI2FehAewKiAlSXy30RAwuLs_QzDHj1xA.png'

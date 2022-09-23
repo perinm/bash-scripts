@@ -2,13 +2,12 @@
 sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y
 
 # TO-DO:
-# - Arduino
 # - Prusa
-# - Drovio
 # - Fritzing
 
-# lines below sudo apt install, install docker requirements
-sudo apt install -y gdebi python3-pip python3-venv htop libcanberra-gtk-module p7zip-full lm-sensors wireshark ppa-purge wireguard wireguard-tools net-tools nmap \
+sudo apt install -y gdebi python-is-python3 python3-pip python3-venv htop libcanberra-gtk-module p7zip-full lm-sensors wireshark \
+    ncdu ppa-purge wireguard wireguard-tools net-tools nmap gparted btrfs-progs copyq gnome-shell-extensions d-feet btrfs-compsize \
+    steam barrier copyq gimp tilix \
     apt-transport-https \
     ca-certificates \
     curl \
@@ -18,7 +17,12 @@ sudo apt install -y gdebi python3-pip python3-venv htop libcanberra-gtk-module p
 ## system extra settings
 # allows gnome workspace to work with 2 monitors instead of only one
 gsettings set org.gnome.mutter workspaces-only-on-primary false
-
+FILE=~/.ssh/id_ed25519
+if [ -f $FILE ]; then
+    echo "$FILE exists."
+else
+    ssh-keygen -o -a 100 -t ed25519 -f $FILE -C "lucasperinm@gmail.com" -q -N ""
+fi
 ## /#
 
 ## Install many apps, each app install consists of
@@ -27,6 +31,42 @@ gsettings set org.gnome.mutter workspaces-only-on-primary false
 # IF command doesn't exist run code block of installation
 # ELSE tell command exists 
 # FI
+
+COMMAND=appimagelauncherd
+if ! command -v $COMMAND &> /dev/null; then
+    sudo add-apt-repository ppa:appimagelauncher-team/stable -y
+    sudo apt update
+    sudo apt install -y appimagelauncher
+else
+    echo "$COMMAND found"
+fi
+COMMAND=platformio
+if ! command -v $COMMAND &> /dev/null; then
+    pip install -U pip
+    pip install -U esptool
+    python -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platformio/master/scripts/get-platformio.py)"
+    LINE='export PATH=$PATH:$HOME/.local/bin'
+    FILE=~/.profile
+    grep -xqF -- "$LINE" $FILE || echo "$LINE" >> "$FILE"
+    declare -a StringArray=(
+        'platformio'
+        'pio'
+        'piodebuggdb'
+    )
+    for file in "${StringArray[@]}"; do
+        if [ -f ~/.local/bin/$file ]; then
+            echo "~/.local/bin/$file exists."
+        else
+            ln -s ~/.platformio/penv/bin/$file ~/.local/bin/$file
+        fi
+    done
+    curl -fsSL https://raw.githubusercontent.com/platformio/platformio-core/master/scripts/99-platformio-udev.rules | sudo tee /etc/udev/rules.d/99-platformio-udev.rules
+    sudo service udev restart
+    sudo usermod -a -G dialout $USER
+    sudo usermod -a -G plugdev $USER
+else
+    echo "$COMMAND found"
+fi
 COMMAND=google-chrome
 if ! command -v $COMMAND &> /dev/null; then
     wget -O ~/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -70,9 +110,10 @@ else
 fi
 COMMAND=docker
 if ! command -v $COMMAND &> /dev/null; then
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    sudo mkdir -p /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
     echo \
-        "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
         $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
     sudo apt-get update
     sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
@@ -95,19 +136,18 @@ fi
 # fi
 COMMAND=spotify
 if ! command -v $COMMAND &> /dev/null; then
-    # curl -sS https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg | sudo gpg --dearmor -o /usr/share/keyrings/spotify-archive-keyring.gpg
-    # echo "deb [signed-by=/usr/share/keyrings/spotify-archive-keyring.gpg] http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-    # sudo apt-get update && sudo apt-get install spotify-client
-    sudo snap install spotify
+    curl -sS https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg | sudo gpg --dearmor -o /usr/share/keyrings/spotify-archive-keyring.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/spotify-archive-keyring.gpg] http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+    sudo apt update && sudo apt install spotify-client
+    # sudo snap install spotify
 else
     echo "$COMMAND found"
 fi
 COMMAND=obs
 if ! command -v $COMMAND &> /dev/null; then
-    # sudo apt install -y ffmpeg
-    # sudo add-apt-repository ppa:obsproject/obs-studio -y
-    # sudo apt update
-    sudo apt install -y obs-studio
+    sudo add-apt-repository ppa:obsproject/obs-studio -y
+    sudo apt update
+    sudo apt install -y ffmpeg obs-studio
 else
     echo "$COMMAND found"
 fi
@@ -128,8 +168,14 @@ else
 fi
 COMMAND=slack
 if ! command -v $COMMAND &> /dev/null; then
-    wget -O ~/slack.deb https://downloads.slack-edge.com/releases/linux/4.25.0/prod/x64/slack-desktop-4.25.0-amd64.deb
+    wget -O ~/slack.deb https://downloads.slack-edge.com/releases/linux/4.27.156/prod/x64/slack-desktop-4.27.156-amd64.deb
     sudo gdebi -n ~/slack.deb
+    # https://askubuntu.com/questions/1398344/apt-key-deprecation-warning-when-updating-system
+    # sudo apt-key list
+    # sudo apt-key export 038651BD | sudo gpg --dearmour -o /usr/share/keyrings/slack.gpg
+    # sudo nano /etc/apt/sources.list.d/slack.list
+    # add this line [uncommented]:
+    # deb [signed-by=/usr/share/keyrings/slack.gpg] https://packagecloud.io/slacktechnologies/slack/debian/ jessie main
     # sudo snap install slack --classic
 else
     echo "$COMMAND found"
@@ -143,9 +189,6 @@ fi
 # fi
 COMMAND=smplayer
 if ! command -v $COMMAND &> /dev/null; then
-    # sudo add-apt-repository ppa:rvm/smplayer -y
-    # sudo apt-get update 
-    # sudo apt-get install -y smplayer smplayer-themes smplayer-skins 
     sudo snap install smplayer
 else
     echo "$COMMAND found"
@@ -158,56 +201,25 @@ else
 fi
 COMMAND=obsidian
 if ! command -v $COMMAND &> /dev/null; then
-    wget -O ~/obsidian.deb https://github.com/obsidianmd/obsidian-releases/releases/download/v0.14.6/obsidian_0.14.6_amd64.deb
+    wget -O ~/obsidian.deb https://github.com/obsidianmd/obsidian-releases/releases/download/v0.15.9/obsidian_0.15.9_amd64.deb
     sudo gdebi -n ~/obsidian.deb
 else
     echo "$COMMAND found"
 fi
-COMMAND=projectlibre
+# COMMAND=projectlibre
+# if ! command -v $COMMAND &> /dev/null; then
+#     wget -O ~/projectlibre.deb https://megalink.dl.sourceforge.net/project/projectlibre/ProjectLibre/1.9.3/projectlibre_1.9.3-1.deb
+#     sudo gdebi -n ~/projectlibre.deb
+# else
+#     echo "$COMMAND found"
+# fi
+COMMAND=qbittorrent
 if ! command -v $COMMAND &> /dev/null; then
-    wget -O ~/projectlibre.deb https://megalink.dl.sourceforge.net/project/projectlibre/ProjectLibre/1.9.3/projectlibre_1.9.3-1.deb
-    sudo gdebi -n ~/projectlibre.deb
+    sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable -y
+    sudo apt-get update && sudo apt-get install -y qbittorrent
 else
     echo "$COMMAND found"
 fi
-# COMMAND=arduino
-# if ! command -v $COMMAND &> /dev/null; then
-#     wget -O ~/arduino1.tar.xz https://downloads.arduino.cc/arduino-1.8.19-linux64.tar.xz
-#     tar -xf ~/arduino1.tar.xz -C ~/
-#     sudo ~/arduino-1.8.19/install.sh
-#     sudo usermod -a -G dialout $USER
-# else
-#     echo "$COMMAND found"
-# fi
-# FILE=~/.local/share/applications/arduinoide-beta.desktop
-# if [ -f "$FILE" ]; then
-#     echo "$FILE exists."
-# else
-#     pip3 install 'lxml == 4.6.3'
-#     python3 ./python_scripts/download_latest_arduino_from_github.py
-#     sudo chmod a+x ${HOME}/apps/freecad_realthunder/ArduinoIDE_BETA.AppImage
-#     cat >$FILE <<EOL
-# [Desktop Entry]
-# Type=Application
-# Name=Arduino IDE BETA
-# GenericName=Arduino IDE BETA
-# Comment=Open-source electronics prototyping platform
-# Exec=${HOME}/apps/arduinoide_beta/ArduinoIDE_BETA.AppImage
-# Icon=${HOME}/apps/app-icons/ArduinoIDE_BETA.png
-# Terminal=false
-# Categories=Development;IDE;Electronics;
-# MimeType=text/x-arduino-beta;
-# Keywords=embedded electronics;electronics;avr;microcontroller;
-# StartupWMClass=processing-app-Base
-# EOL
-# fi
-# COMMAND=qbittorrent
-# if ! command -v $COMMAND &> /dev/null; then
-#     sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable -y
-#     sudo apt-get update && sudo apt-get install -y qbittorrent
-# else
-#     echo "$COMMAND found"
-# fi
 # COMMAND=remmina
 # if ! command -v $COMMAND &> /dev/null; then
 #     sudo apt-add-repository ppa:remmina-ppa-team/remmina-next -y
@@ -236,24 +248,24 @@ fi
 # else
 #     echo "$COMMAND found"
 # fi
-# FILE=~/.local/share/applications/freecad_realthunder.desktop
-# if [ -f "$FILE" ]; then
-#     echo "$FILE exists."
-# else
-#     pip3 install 'lxml == 4.6.3'
-#     python3 ./python_scripts/download_latest_freecad_from_github.py
-#     sudo chmod a+x ${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
-#     cat >$FILE <<EOL
-# [Desktop Entry]
-# Name=FreeCad_RealThunder
-# Comment=FreeCad RealThunder version
-# Exec=${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
-# Icon=${HOME}/apps/app-icons/freecad_realthunder.png
-# Terminal=false
-# Type=Application
-# Categories=Development
-# EOL
-# fi
+FILE=~/.local/share/applications/freecad_realthunder.desktop
+if [ -f "$FILE" ]; then
+    echo "$FILE exists."
+else
+    pip3 install 'lxml == 4.6.3'
+    python3 ./python_scripts/download_latest_freecad_from_github.py
+    sudo chmod a+x ${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
+    cat >$FILE <<EOL
+[Desktop Entry]
+Name=FreeCad_RealThunder
+Comment=FreeCad RealThunder version
+Exec=${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
+Icon=${HOME}/apps/app-icons/freecad_realthunder.png
+Terminal=false
+Type=Application
+Categories=Development
+EOL
+fi
 COMMAND=google-earth-pro
 if ! command -v $COMMAND &> /dev/null; then
     wget -O ~/google-earth.deb https://dl.google.com/dl/earth/client/current/google-earth-pro-stable_current_amd64.deb
@@ -262,21 +274,13 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
-# FILE=~/.local/share/applications/cura.desktop
-# if [ -f "$FILE" ]; then
-#     echo "$FILE exists."
-# else
-#     curl https://software.ultimaker.com/cura/Ultimaker_Cura-4.13.1.AppImage --create-dirs -o ${HOME}/apps/cura/cura.AppImage
-#     curl https://user-images.githubusercontent.com/18035735/48554277-46064580-e8de-11e8-8c4c-b682081a2219.png -o ${HOME}/apps/app-icons/cura.png
-#     sudo chmod a+x ${HOME}/apps/cura/cura.AppImage
-#     cat >$FILE <<EOL
-# [Desktop Entry]
-# Name=Cura
-# Comment=Cura
-# Exec=${HOME}/apps/cura/cura.AppImage
-# Icon=${HOME}/apps/app-icons/cura.png
-# Terminal=false
-# Type=Application
-# Categories=Development
-# EOL
-# fi
+COMMAND=gsutil
+if ! command -v $COMMAND &> /dev/null; then
+    wget -O ~/gsutil.tar.gz https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-398.0.0-linux-x86_64.tar.gz
+    cd ~/
+    tar -xf ~/gsutil.tar.gz
+    ./google-cloud-sdk/install.sh
+    ./google-cloud-sdk/bin/gcloud init
+else
+    echo "$COMMAND found"
+fi
