@@ -277,3 +277,9 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
+# COMMAND=waynergy
+# if ! command -v $COMMAND &> /dev/null; then
+#     sudo apt install -y libxkbcommon-dev libtls-dev wl-clipboard wayland-scanner++
+# else
+#     echo "$COMMAND found"
+# fi
