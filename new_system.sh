@@ -40,33 +40,33 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
-COMMAND=platformio
-if ! command -v $COMMAND &> /dev/null; then
-    pip install -U pip
-    pip install -U esptool
-    python -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platformio/master/scripts/get-platformio.py)"
-    LINE='export PATH=$PATH:$HOME/.local/bin'
-    FILE=~/.profile
-    grep -xqF -- "$LINE" $FILE || echo "$LINE" >> "$FILE"
-    declare -a StringArray=(
-        'platformio'
-        'pio'
-        'piodebuggdb'
-    )
-    for file in "${StringArray[@]}"; do
-        if [ -f ~/.local/bin/$file ]; then
-            echo "~/.local/bin/$file exists."
-        else
-            ln -s ~/.platformio/penv/bin/$file ~/.local/bin/$file
-        fi
-    done
-    curl -fsSL https://raw.githubusercontent.com/platformio/platformio-core/master/scripts/99-platformio-udev.rules | sudo tee /etc/udev/rules.d/99-platformio-udev.rules
-    sudo service udev restart
-    sudo usermod -a -G dialout $USER
-    sudo usermod -a -G plugdev $USER
-else
-    echo "$COMMAND found"
-fi
+# COMMAND=platformio
+# if ! command -v $COMMAND &> /dev/null; then
+#     pip install -U pip
+#     pip install -U esptool
+#     python -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platformio/master/scripts/get-platformio.py)"
+#     LINE='export PATH=$PATH:$HOME/.local/bin'
+#     FILE=~/.profile
+#     grep -xqF -- "$LINE" $FILE || echo "$LINE" >> "$FILE"
+#     declare -a StringArray=(
+#         'platformio'
+#         'pio'
+#         'piodebuggdb'
+#     )
+#     for file in "${StringArray[@]}"; do
+#         if [ -f ~/.local/bin/$file ]; then
+#             echo "~/.local/bin/$file exists."
+#         else
+#             ln -s ~/.platformio/penv/bin/$file ~/.local/bin/$file
+#         fi
+#     done
+#     curl -fsSL https://raw.githubusercontent.com/platformio/platformio-core/master/scripts/99-platformio-udev.rules | sudo tee /etc/udev/rules.d/99-platformio-udev.rules
+#     sudo service udev restart
+#     sudo usermod -a -G dialout $USER
+#     sudo usermod -a -G plugdev $USER
+# else
+#     echo "$COMMAND found"
+# fi
 COMMAND=google-chrome
 if ! command -v $COMMAND &> /dev/null; then
     wget -O ~/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -166,27 +166,27 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
-COMMAND=slack
-if ! command -v $COMMAND &> /dev/null; then
-    wget -O ~/slack.deb https://downloads.slack-edge.com/releases/linux/4.27.156/prod/x64/slack-desktop-4.27.156-amd64.deb
-    sudo gdebi -n ~/slack.deb
-    # https://askubuntu.com/questions/1398344/apt-key-deprecation-warning-when-updating-system
-    # sudo apt-key list
-    # sudo apt-key export 038651BD | sudo gpg --dearmour -o /usr/share/keyrings/slack.gpg
-    # sudo nano /etc/apt/sources.list.d/slack.list
-    # add this line [uncommented]:
-    # deb [signed-by=/usr/share/keyrings/slack.gpg] https://packagecloud.io/slacktechnologies/slack/debian/ jessie main
-    # sudo snap install slack --classic
-else
-    echo "$COMMAND found"
-fi
-# COMMAND=upwork
+# COMMAND=slack
 # if ! command -v $COMMAND &> /dev/null; then
-#     wget -O ~/upwork.deb https://upwork-usw2-desktopapp.upwork.com/binaries/v5_6_10_1_de501d28cc034306/upwork_5.6.10.1_amd64.deb
-#     sudo gdebi -n ~/upwork.deb
+#     wget -O ~/slack.deb https://downloads.slack-edge.com/releases/linux/4.27.156/prod/x64/slack-desktop-4.27.156-amd64.deb
+#     sudo gdebi -n ~/slack.deb
+#     # https://askubuntu.com/questions/1398344/apt-key-deprecation-warning-when-updating-system
+#     # sudo apt-key list
+#     # sudo apt-key export 038651BD | sudo gpg --dearmour -o /usr/share/keyrings/slack.gpg
+#     # sudo nano /etc/apt/sources.list.d/slack.list
+#     # add this line [uncommented]:
+#     # deb [signed-by=/usr/share/keyrings/slack.gpg] https://packagecloud.io/slacktechnologies/slack/debian/ jessie main
+#     # sudo snap install slack --classic
 # else
 #     echo "$COMMAND found"
 # fi
+COMMAND=upwork
+if ! command -v $COMMAND &> /dev/null; then
+    wget -O ~/upwork.deb https://upwork-usw2-desktopapp.upwork.com/binaries/v5_6_10_1_de501d28cc034306/upwork_5.6.10.1_amd64.deb
+    sudo gdebi -n ~/upwork.deb
+else
+    echo "$COMMAND found"
+fi
 COMMAND=smplayer
 if ! command -v $COMMAND &> /dev/null; then
     sudo snap install smplayer
@@ -248,24 +248,24 @@ fi
 # else
 #     echo "$COMMAND found"
 # fi
-FILE=~/.local/share/applications/freecad_realthunder.desktop
-if [ -f "$FILE" ]; then
-    echo "$FILE exists."
-else
-    pip3 install 'lxml == 4.6.3'
-    python3 ./python_scripts/download_latest_freecad_from_github.py
-    sudo chmod a+x ${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
-    cat >$FILE <<EOL
-[Desktop Entry]
-Name=FreeCad_RealThunder
-Comment=FreeCad RealThunder version
-Exec=${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
-Icon=${HOME}/apps/app-icons/freecad_realthunder.png
-Terminal=false
-Type=Application
-Categories=Development
-EOL
-fi
+# FILE=~/.local/share/applications/freecad_realthunder.desktop
+# if [ -f "$FILE" ]; then
+#     echo "$FILE exists."
+# else
+#     pip3 install 'lxml == 4.6.3'
+#     python3 ./python_scripts/download_latest_freecad_from_github.py
+#     sudo chmod a+x ${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
+#     cat >$FILE <<EOL
+# [Desktop Entry]
+# Name=FreeCad_RealThunder
+# Comment=FreeCad RealThunder version
+# Exec=${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
+# Icon=${HOME}/apps/app-icons/freecad_realthunder.png
+# Terminal=false
+# Type=Application
+# Categories=Development
+# EOL
+# fi
 COMMAND=google-earth-pro
 if ! command -v $COMMAND &> /dev/null; then
     wget -O ~/google-earth.deb https://dl.google.com/dl/earth/client/current/google-earth-pro-stable_current_amd64.deb
@@ -290,3 +290,20 @@ fi
 # else
 #     echo "$COMMAND found"
 # fi
+COMMAND=dbeaver-ce
+if ! command -v $COMMAND &> /dev/null; then
+    curl -fsSL https://dbeaver.io/debs/dbeaver.gpg.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/dbeaver.gpg
+    echo "deb https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
+    sudo apt update
+    sudo apt install -y dbeaver-ce
+else
+    echo "$COMMAND found"
+fi
+COMMAND=franz
+if ! command -v $COMMAND &> /dev/null; then
+    wget -O ~/${COMMAND}.deb https://github.com/meetfranz/franz/releases/download/v5.9.2/franz_5.9.2_amd64.deb
+    sudo gdebi -n ~/${COMMAND}.deb
+    rm ~/${COMMAND}.deb
+else
+    echo "$COMMAND found"
+fi
