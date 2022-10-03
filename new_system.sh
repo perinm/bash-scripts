@@ -69,8 +69,9 @@ fi
 # fi
 COMMAND=google-chrome
 if ! command -v $COMMAND &> /dev/null; then
-    wget -O ~/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    sudo gdebi -n ~/google-chrome.deb
+    wget -O ~/${COMMAND}.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    sudo gdebi -n ~/${COMMAND}.deb
+    rm ~/${COMMAND}.deb
 else
     echo "$COMMAND found"
 fi
@@ -153,8 +154,9 @@ else
 fi
 COMMAND=discord
 if ! command -v $COMMAND &> /dev/null; then
-    wget -O ~/discord.deb "https://discordapp.com/api/download?platform=linux&format=deb"
-    sudo gdebi -n ~/discord.deb
+    wget -O ~/${COMMAND}.deb "https://discordapp.com/api/download?platform=linux&format=deb"
+    sudo gdebi -n ~/${COMMAND}.deb
+    rm ~/${COMMAND}.deb
 else
     echo "$COMMAND found"
 fi
@@ -182,8 +184,9 @@ fi
 # fi
 COMMAND=upwork
 if ! command -v $COMMAND &> /dev/null; then
-    wget -O ~/upwork.deb https://upwork-usw2-desktopapp.upwork.com/binaries/v5_6_10_1_de501d28cc034306/upwork_5.6.10.1_amd64.deb
-    sudo gdebi -n ~/upwork.deb
+    wget -O ~/${COMMAND}.deb https://upwork-usw2-desktopapp.upwork.com/binaries/v5_6_10_1_de501d28cc034306/upwork_5.6.10.1_amd64.deb
+    sudo gdebi -n ~/${COMMAND}.deb
+    rm ~/${COMMAND}.deb
 else
     echo "$COMMAND found"
 fi
@@ -201,8 +204,9 @@ else
 fi
 COMMAND=obsidian
 if ! command -v $COMMAND &> /dev/null; then
-    wget -O ~/obsidian.deb https://github.com/obsidianmd/obsidian-releases/releases/download/v0.15.9/obsidian_0.15.9_amd64.deb
-    sudo gdebi -n ~/obsidian.deb
+    wget -O ~/${COMMAND}.deb https://github.com/obsidianmd/obsidian-releases/releases/download/v0.15.9/obsidian_0.15.9_amd64.deb
+    sudo gdebi -n ~/${COMMAND}.deb
+    rm ~/${COMMAND}.deb
 else
     echo "$COMMAND found"
 fi
@@ -268,9 +272,9 @@ fi
 # fi
 COMMAND=google-earth-pro
 if ! command -v $COMMAND &> /dev/null; then
-    wget -O ~/google-earth.deb https://dl.google.com/dl/earth/client/current/google-earth-pro-stable_current_amd64.deb
-    sudo gdebi -n ~/google-earth.deb
-    rm ~/google-earth.deb
+    wget -O ~/${COMMAND}.deb https://dl.google.com/dl/earth/client/current/google-earth-pro-stable_current_amd64.deb
+    sudo gdebi -n ~/${COMMAND}.deb
+    rm ~/${COMMAND}.deb
 else
     echo "$COMMAND found"
 fi
