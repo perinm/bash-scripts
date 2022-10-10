@@ -168,10 +168,11 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
-# COMMAND=slack
-# if ! command -v $COMMAND &> /dev/null; then
-#     wget -O ~/slack.deb https://downloads.slack-edge.com/releases/linux/4.27.156/prod/x64/slack-desktop-4.27.156-amd64.deb
-#     sudo gdebi -n ~/slack.deb
+COMMAND=slack
+if ! command -v $COMMAND &> /dev/null; then
+    wget -O ~/${COMMAND}.deb "https://downloads.slack-edge.com/releases/linux/4.28.182/prod/x64/slack-desktop-4.28.182-amd64.deb"
+    sudo gdebi -n ~/${COMMAND}.deb
+    rm ~/${COMMAND}.deb
 #     # https://askubuntu.com/questions/1398344/apt-key-deprecation-warning-when-updating-system
 #     # sudo apt-key list
 #     # sudo apt-key export 038651BD | sudo gpg --dearmour -o /usr/share/keyrings/slack.gpg
@@ -179,9 +180,9 @@ fi
 #     # add this line [uncommented]:
 #     # deb [signed-by=/usr/share/keyrings/slack.gpg] https://packagecloud.io/slacktechnologies/slack/debian/ jessie main
 #     # sudo snap install slack --classic
-# else
-#     echo "$COMMAND found"
-# fi
+else
+    echo "$COMMAND found"
+fi
 COMMAND=upwork
 if ! command -v $COMMAND &> /dev/null; then
     wget -O ~/${COMMAND}.deb https://upwork-usw2-desktopapp.upwork.com/binaries/v5_6_10_1_de501d28cc034306/upwork_5.6.10.1_amd64.deb
