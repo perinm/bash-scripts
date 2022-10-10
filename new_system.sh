@@ -320,12 +320,44 @@ service_exists() {
         return 1
     fi
 }
-SERVICE=plexmediaserver
+# SERVICE=plexmediaserver
+# if service_exists SERVICE; then
+#     echo "$SERVICE found"
+# else
+#     curl -fsSL https://downloads.plex.tv/plex-keys/PlexSign.key | gpg --dearmor | sudo tee /usr/share/keyrings/plexmediaserver.gpg  > /dev/null
+#     echo "deb [signed-by=/usr/share/keyrings/plexmediaserver.gpg] https://downloads.plex.tv/repo/deb public main" | sudo tee /etc/apt/sources.list.d/plexmediaserver.list
+#     sudo apt update
+#     sudo apt install -y plexmediaserver
+# fi
+SERVICE=ums.service
+VERSION=11.4.1
 if service_exists SERVICE; then
     echo "$SERVICE found"
 else
-    curl -fsSL https://downloads.plex.tv/plex-keys/PlexSign.key | gpg --dearmor | sudo tee /usr/share/keyrings/plexmediaserver.gpg  > /dev/null
-    echo "deb [signed-by=/usr/share/keyrings/plexmediaserver.gpg] https://downloads.plex.tv/repo/deb public main" | sudo tee /etc/apt/sources.list.d/plexmediaserver.list
-    sudo apt update
-    sudo apt install -y plexmediaserver
+    sudo apt install -y mediainfo dcraw vlc mplayer mencoder openjdk-18-jre
+    wget -O ~/${SERVICE}.tgz https://github.com/UniversalMediaServer/UniversalMediaServer/releases/download/${VERSION}/UMS-${VERSION}-x86_64.tgz
+    sudo tar -zxvf ~/${SERVICE}.tgz -C /opt/ --transform s/ums-${VERSION}/ums/
+    FILE=/etc/systemd/system/ums.service
+    if [ -f "$FILE" ]; then
+        echo "$FILE exists."
+    else
+        cat >$FILE <<EOL
+[Unit]
+Description=Run UMS as hari
+DefaultDependencies=no
+After=network.target
+
+[Service]
+Type=simple
+User=hari
+Group=hari
+ExecStart=/opt/ums/UMS.sh
+TimeoutStartSec=0
+RemainAfterExit=yes
+Environment="UMS_MAX_MEMORY=2048M"
+
+[Install]
+WantedBy=default.target
+EOL
+    fi
 fi
