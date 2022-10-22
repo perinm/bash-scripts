@@ -7,7 +7,7 @@ sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo
 
 sudo apt install -y gdebi python-is-python3 python3-pip python3-venv htop libcanberra-gtk-module p7zip-full lm-sensors wireshark \
     ncdu ppa-purge wireguard wireguard-tools net-tools nmap gparted btrfs-progs copyq gnome-shell-extensions d-feet btrfs-compsize \
-    steam barrier copyq gimp tilix \
+    steam barrier copyq gimp tilix minidlna \
     apt-transport-https \
     ca-certificates \
     curl \
@@ -329,35 +329,35 @@ service_exists() {
 #     sudo apt update
 #     sudo apt install -y plexmediaserver
 # fi
-SERVICE=ums.service
-VERSION=11.4.1
-if service_exists SERVICE; then
-    echo "$SERVICE found"
-else
-    sudo apt install -y mediainfo dcraw vlc mplayer mencoder openjdk-18-jre
-    wget -O ~/${SERVICE}.tgz https://github.com/UniversalMediaServer/UniversalMediaServer/releases/download/${VERSION}/UMS-${VERSION}-x86_64.tgz
-    sudo tar -zxvf ~/${SERVICE}.tgz -C /opt/ --transform s/ums-${VERSION}/ums/
-    FILE=/etc/systemd/system/ums.service
-    if [ -f "$FILE" ]; then
-        echo "$FILE exists."
-    else
-        cat >$FILE <<EOL
-[Unit]
-Description=Run UMS as hari
-DefaultDependencies=no
-After=network.target
+# SERVICE=ums.service
+# VERSION=11.4.1
+# if service_exists SERVICE; then
+#     echo "$SERVICE found"
+# else
+#     sudo apt install -y mediainfo dcraw vlc mplayer mencoder openjdk-18-jre
+#     wget -O ~/${SERVICE}.tgz https://github.com/UniversalMediaServer/UniversalMediaServer/releases/download/${VERSION}/UMS-${VERSION}-x86_64.tgz
+#     sudo tar -zxvf ~/${SERVICE}.tgz -C /opt/ --transform s/ums-${VERSION}/ums/
+#     FILE=/etc/systemd/system/ums.service
+#     if [ -f "$FILE" ]; then
+#         echo "$FILE exists."
+#     else
+#         cat >$FILE <<EOL
+# [Unit]
+# Description=Run UMS as hari
+# DefaultDependencies=no
+# After=network.target
 
-[Service]
-Type=simple
-User=hari
-Group=hari
-ExecStart=/opt/ums/UMS.sh
-TimeoutStartSec=0
-RemainAfterExit=yes
-Environment="UMS_MAX_MEMORY=2048M"
+# [Service]
+# Type=simple
+# User=hari
+# Group=hari
+# ExecStart=/opt/ums/UMS.sh
+# TimeoutStartSec=0
+# RemainAfterExit=yes
+# Environment="UMS_MAX_MEMORY=2048M"
 
-[Install]
-WantedBy=default.target
-EOL
-    fi
-fi
+# [Install]
+# WantedBy=default.target
+# EOL
+#     fi
+# fi
