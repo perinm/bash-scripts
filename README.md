@@ -62,6 +62,8 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
 
 - [change ubuntu actions for sleep (supend/hibernate) on lid close, etc](https://ubuntuhandbook.org/index.php/2020/05/lid-close-behavior-ubuntu-20-04/)
 
+- [fix acer predator fan](https://github.com/JafarAkhondali/acer-predator-turbo-and-rgb-keyboard-linux-module)
+
 - ```bash
   # scan local network
   sudo nmap -sn 192.168.18.0/24
