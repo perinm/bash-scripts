@@ -1,0 +1,12 @@
+[user]
+        email = lucasperinm@gmail.com
+        name = Lucas Manchine
+        # signingkey = 
+#[url "ssh://git@github.com:"]
+#       insteadOf = https://github.com/
+[gpg]
+        format = ssh
+[alias]
+        commit = commit -S
+[commit]
+        gpgsign = true
