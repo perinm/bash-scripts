@@ -1,8 +1,7 @@
-PYTHON_VERSION=3.11.0
+PYTHON_VERSION=3.11.1
 nproc=12
 
-sudo apt update
-sudo apt upgrade -y
+sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y
 
 sudo apt install -y make build-essential libssl-dev zlib1g-dev \
        libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
