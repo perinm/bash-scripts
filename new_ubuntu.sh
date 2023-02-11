@@ -69,6 +69,15 @@ fi
 # else
 #     echo "$COMMAND found"
 # fi
+# COMMAND=deb-get
+# if ! command -v $COMMAND &> /dev/null; then
+#     # remember to set DEBGET_TOKEN before running
+#     DEBGET_TOKEN=<my-secret-token>
+#     export DEBGET_TOKEN=$DEBGET_TOKEN
+#     curl -sL https://raw.githubusercontent.com/wimpysworld/deb-get/main/deb-get | sudo -E bash -s install deb-get
+# else
+#     echo "$COMMAND found"
+# fi
 COMMAND=google-chrome
 if ! command -v $COMMAND &> /dev/null; then
     wget -O ~/${COMMAND}.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -205,14 +214,18 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
-# COMMAND=obsidian
-# if ! command -v $COMMAND &> /dev/null; then
-#     wget -O ~/${COMMAND}.deb https://github.com/obsidianmd/obsidian-releases/releases/download/v0.15.9/obsidian_0.15.9_amd64.deb
-#     sudo gdebi -n ~/${COMMAND}.deb
-#     rm ~/${COMMAND}.deb
-# else
-#     echo "$COMMAND found"
-# fi
+COMMAND=obsidian
+if ! command -v $COMMAND &> /dev/null; then
+    if ! command -v deb-get &> /dev/null; then
+        echo "$COMMAND failed to install because deb-get is not installed or missing DEBGET_TOKEN env variable."
+    else
+        wget -O ~/${COMMAND}.deb https://github.com/obsidianmd/obsidian-releases/releases/download/v0.15.9/obsidian_0.15.9_amd64.deb
+        sudo gdebi -n ~/${COMMAND}.deb
+        rm ~/${COMMAND}.deb
+    fi
+else
+    echo "$COMMAND found"
+fi
 # COMMAND=projectlibre
 # if ! command -v $COMMAND &> /dev/null; then
 #     wget -O ~/projectlibre.deb https://megalink.dl.sourceforge.net/project/projectlibre/ProjectLibre/1.9.3/projectlibre_1.9.3-1.deb
@@ -303,6 +316,15 @@ if ! command -v $COMMAND &> /dev/null; then
     echo "deb https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
     sudo apt update
     sudo apt install -y dbeaver-ce
+else
+    echo "$COMMAND found"
+fi
+COMMAND=syncthing
+if ! command -v $COMMAND &> /dev/null; then
+    curl -fsSL https://syncthing.net/release-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/syncthing-archive-keyring.gpg
+    echo "deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable" | sudo tee /etc/apt/sources.list.d/syncthing.list
+    sudo apt update
+    sudo apt install -y $COMMAND
 else
     echo "$COMMAND found"
 fi
