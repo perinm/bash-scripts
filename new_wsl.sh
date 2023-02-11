@@ -1,7 +1,7 @@
 #!/bin/bash
 sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y
 
-sudo apt install -y gdebi python3-pip python3-venv htop p7zip-full lm-sensors \
+sudo apt install -y python-is-python3 gdebi python3-pip python3-venv htop p7zip-full lm-sensors \
     ncdu ppa-purge nmap whois \
     ca-certificates \
     curl \
