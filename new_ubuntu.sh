@@ -194,14 +194,14 @@ fi
 # else
 #     echo "$COMMAND found"
 # fi
-# COMMAND=upwork
-# if ! command -v $COMMAND &> /dev/null; then
-#     wget --user-agent="Mozilla" -O ~/${COMMAND}.deb https://upwork-usw2-desktopapp.upwork.com/binaries/v5_6_10_24_a85440d50c944857/upwork_5.6.10.24_amd64.deb
-#     sudo gdebi -n ~/${COMMAND}.deb
-#     rm ~/${COMMAND}.deb
-# else
-#     echo "$COMMAND found"
-# fi
+COMMAND=upwork
+if ! command -v $COMMAND &> /dev/null; then
+    wget --user-agent="Mozilla" -O ~/${COMMAND}.deb https://upwork-usw2-desktopapp.upwork.com/binaries/v5_8_0_24_aef0dc8c37cf46a8/upwork_5.8.0.24_amd64.deb
+    sudo gdebi -n ~/${COMMAND}.deb
+    rm ~/${COMMAND}.deb
+else
+    echo "$COMMAND found"
+fi
 COMMAND=smplayer
 if ! command -v $COMMAND &> /dev/null; then
     sudo snap install smplayer
