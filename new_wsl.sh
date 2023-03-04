@@ -2,23 +2,37 @@
 sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y
 
 sudo apt install -y python-is-python3 gdebi python3-pip python3-venv htop p7zip-full lm-sensors \
-    ncdu ppa-purge nmap whois \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
+    ncdu ppa-purge nmap whois
+
+FILE=~/.ssh/id_ed25519
+if [ -f $FILE ]; then
+    echo "$FILE exists."
+else
+    ssh-keygen -o -a 100 -t ed25519 -f $FILE -C "lucasperinm@gmail.com" -q -N ""
+fi
 
 
 COMMAND=docker
 if ! command -v $COMMAND &> /dev/null; then
-    sudo mkdir -m 0755 -p /etc/apt/keyrings
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-    echo \
-        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-        $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-    sudo apt-get update
-    sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-    # sudo service docker start
+    curl https://get.docker.com | sh
 else
     echo "$COMMAND found"
+fi
+
+COMMAND=nvidia-smi
+if ! command -v $COMMAND &> /dev/null; then
+    echo "$COMMAND not found"
+else
+    distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+    # curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
+    # curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+    # sudo apt-get update
+    # sudo apt-get install -y nvidia-docker2
+    wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-wsl-ubuntu.pin
+    sudo mv cuda-wsl-ubuntu.pin /etc/apt/preferences.d/cuda-repository-pin-600
+    wget https://developer.download.nvidia.com/compute/cuda/12.1.0/local_installers/cuda-repo-wsl-ubuntu-12-1-local_12.1.0-1_amd64.deb
+    sudo dpkg -i cuda-repo-wsl-ubuntu-12-1-local_12.1.0-1_amd64.deb
+    sudo cp /var/cuda-repo-wsl-ubuntu-12-1-local/cuda-*-keyring.gpg /usr/share/keyrings/
+    sudo apt-get update
+    sudo apt-get -y install cuda
 fi
