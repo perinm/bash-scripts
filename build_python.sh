@@ -1,11 +1,12 @@
-PYTHON_VERSION=3.11.1
+PYTHON_VERSION=3.11.2
 nproc=12
 
 sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y
 
 sudo apt install -y make build-essential libssl-dev zlib1g-dev \
        libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-       libncurses5-dev libncursesw5-dev xz-utils tk-dev
+       libncurses5-dev libncursesw5-dev xz-utils tk-dev \
+       libgdbm-dev libnss3-dev libffi-dev
 
 mkdir python_installation && cd python_installation
 
@@ -25,6 +26,6 @@ sudo make altinstall
 # apt autoremove -y
 # apt clean
 
-python$PYTHON_VERSION -m pip install -U pip
+python$PYTHON_VERSION -m pip install -U pip setuptools wheel setuptools-rust
 # python3.7 -m pip install -U pip
 # echo '$alias pip3="python3.7 -m pip"' >> ~/.bashrc
