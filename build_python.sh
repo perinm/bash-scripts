@@ -1,4 +1,4 @@
-PYTHON_VERSION=3.11.2
+PYTHON_VERSION=3.10.10
 nproc=12
 
 sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y
