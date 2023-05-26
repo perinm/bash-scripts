@@ -1,8 +1,8 @@
 #!/bin/bash
-sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y
+sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y
 
-# lines below sudo apt install, install docker requirements
-sudo apt install -y gdebi python3-pip python3-venv htop libcanberra-gtk-module p7zip-full lm-sensors wireshark ppa-purge wireguard wireguard-tools net-tools nmap \
+# lines below sudo apt-get install, install docker requirements
+sudo apt-get install -y gdebi git python3-pip python3-venv htop libcanberra-gtk-module p7zip-full lm-sensors wireshark ppa-purge wireguard wireguard-tools net-tools nmap \
     apt-transport-https \
     ca-certificates \
     curl \
@@ -30,14 +30,14 @@ sudo apt install -y gdebi python3-pip python3-venv htop libcanberra-gtk-module p
 # fi
 COMMAND=code
 if ! command -v $COMMAND &> /dev/null; then
-    sudo apt install -y software-properties-common apt-transport-https curl
+    sudo apt-get install -y software-properties-common apt-transport-https curl
     wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
     sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
     sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
     rm -f packages.microsoft.gpg
-    sudo apt install -y apt-transport-https
-    sudo apt update
-    sudo apt install -y code
+    sudo apt-get install -y apt-transport-https
+    sudo apt-get update
+    sudo apt-get install -y code
     declare -a StringArray=(
         'GitHub.copilot'
         'GitHub.vscode-pull-request-github'
@@ -119,50 +119,50 @@ fi
 # else
 #     echo "$COMMAND found"
 # fi
-FILE=~/.local/share/applications/obsidian.desktop
-if [ -f "$FILE" ]; then
-    echo "$FILE exists."
-else
-    pip install 'lxml == 4.6.3'
-    python3 ./python_scripts/download_latest_file_from_github.py
-    chmod a+x ${HOME}/apps/obsidian/Obsidian.AppImage
-    cat >$FILE <<EOL
-[Desktop Entry]
-Name=Obsidian
-Comment=Obsidian - A second brain, for you, forever.
-Exec=${HOME}/apps/obsidian/Obsidian.AppImage
-Icon=${HOME}/apps/app-icons/obsidian.png
-Terminal=false
-Type=Application
-Categories=Development
-MimeType=x-scheme-handler/obsidian;text/html;
-EOL
-fi
+# FILE=~/.local/share/applications/obsidian.desktop
+# if [ -f "$FILE" ]; then
+#     echo "$FILE exists."
+# else
+#     pip install 'lxml == 4.6.3'
+#     python3 ./python_scripts/download_latest_file_from_github.py
+#     chmod a+x ${HOME}/apps/obsidian/Obsidian.AppImage
+#     cat >$FILE <<EOL
+# [Desktop Entry]
+# Name=Obsidian
+# Comment=Obsidian - A second brain, for you, forever.
+# Exec=${HOME}/apps/obsidian/Obsidian.AppImage
+# Icon=${HOME}/apps/app-icons/obsidian.png
+# Terminal=false
+# Type=Application
+# Categories=Development
+# MimeType=x-scheme-handler/obsidian;text/html;
+# EOL
+# fi
 # COMMAND=brave-browser
 # if ! command -v $COMMAND &> /dev/null; then
-#     sudo apt install apt-transport-https curl
+#     sudo apt-get install apt-transport-https curl
 #     sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 #     echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-#     sudo apt update
-#     sudo apt install -y brave-browser
+#     sudo apt-get update
+#     sudo apt-get install -y brave-browser
 # else
 #     echo "$COMMAND found"
-fi
-FILE=~/.local/share/applications/freecad_realthunder.desktop
-if [ -f "$FILE" ]; then
-    echo "$FILE exists."
-else
-    pip install 'lxml == 4.6.3'
-    python3 ./python_scripts/download_latest_freecad_from_github.py
-    chmod a+x ${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
-    cat >$FILE <<EOL
-[Desktop Entry]
-Name=FreeCad_RealThunder
-Comment=FreeCad RealThunder version
-Exec=${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
-Icon=${HOME}/apps/app-icons/freecad_realthunder.png
-Terminal=false
-Type=Application
-Categories=Development
-EOL
-fi
+# fi
+# FILE=~/.local/share/applications/freecad_realthunder.desktop
+# if [ -f "$FILE" ]; then
+#     echo "$FILE exists."
+# else
+#     pip install 'lxml == 4.6.3'
+#     python3 ./python_scripts/download_latest_freecad_from_github.py
+#     chmod a+x ${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
+#     cat >$FILE <<EOL
+# [Desktop Entry]
+# Name=FreeCad_RealThunder
+# Comment=FreeCad RealThunder version
+# Exec=${HOME}/apps/freecad_realthunder/FreeCad_RealThunder.AppImage
+# Icon=${HOME}/apps/app-icons/freecad_realthunder.png
+# Terminal=false
+# Type=Application
+# Categories=Development
+# EOL
+# fi
