@@ -219,7 +219,7 @@ if ! command -v $COMMAND &> /dev/null; then
     if ! command -v deb-get &> /dev/null; then
         echo "$COMMAND failed to install because deb-get is not installed or missing DEBGET_TOKEN env variable."
     else
-        wget -O ~/${COMMAND}.deb https://github.com/obsidianmd/obsidian-releases/releases/download/v0.15.9/obsidian_0.15.9_amd64.deb
+        wget -O ~/${COMMAND}.deb https://github.com/obsidianmd/obsidian-releases/releases/download/v1.3.4/obsidian_1.3.4_amd64.deb
         sudo gdebi -n ~/${COMMAND}.deb
         rm ~/${COMMAND}.deb
     fi
