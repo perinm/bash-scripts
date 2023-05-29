@@ -1,0 +1,91 @@
+version: '3.9'
+
+x-docker-anchor-defaults: &docker-anchor-defaults
+  restart: unless-stopped
+  networks:
+    - proxy
+
+services:
+  traefik:
+    image: traefik:v2.10.1
+    container_name: traefik
+    command:
+      - "--api.insecure=true"
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.email=example@gmail.com" # change this line
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      # - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.myresolver.acme.caserver=https://acme-v02.api.letsencrypt.org/directory"
+      - "--accesslog=true"
+      - "--accessLog.filePath=/logs/access.log"
+      - "--accessLog.bufferingSize=10"
+      - "--log.level=DEBUG"
+      # - "--log.level=ERROR"
+      - "--log.filePath=/logs/traefik.log"
+      # - 
+    ports:
+      - target: 80
+        published: 80
+        mode: host
+      - target: 443
+        published: 443
+        mode: host
+      # - target: 8080
+      #   published: 8080
+      #   mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./letsencrypt:/letsencrypt
+      - ./logs/:/logs
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.traefik-dash.entrypoints=websecure
+      - traefik.http.routers.traefik-dash.rule=Host(`traefik-dash.example.com`)
+      - traefik.http.routers.traefik-dash.tls.certresolver=myresolver
+      - traefik.http.routers.traefik-dash.service=api@internal
+      - traefik.http.routers.traefik-dash.middlewares=test-compress@docker,access-auth@docker,sslheader@docker
+      - traefik.http.middlewares.test-compress.compress=true
+      - traefik.http.middlewares.test-ratelimit.ratelimit.average=80
+      - traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https
+      - traefik.http.middlewares.sslheader.headers.frameDeny=true
+      - traefik.http.middlewares.sslheader.headers.browserXssFilter=true
+      - traefik.http.middlewares.sslheader.headers.contentTypeNosniff=true
+      - traefik.http.middlewares.sslheader.headers.forceSTSHeader=true
+      - traefik.http.middlewares.sslheader.headers.stsIncludeSubdomains=true
+      - traefik.http.middlewares.sslheader.headers.stsPreload=true
+      - traefik.http.middlewares.sslheader.headers.stsSeconds=31536000
+      # - traefik.http.middlewares.sslheader.contenttype.autodetect=false
+      - traefik.http.middlewares.sslheader.headers.customFrameOptionsValue=SAMEORIGIN
+      - traefik.http.middlewares.access-auth.basicauth.realm=Login Required
+      - traefik.http.middlewares.access-auth.basicauth.users=user:$$apr1$$q8eZFHjF$$Fvmkk//V6Btlaf2i/ju5n/
+    networks:
+      - proxy
+
+    whoami:
+      <<: *docker-anchor-defaults
+      image: traefik/whoami
+      container_name: whoami
+      environment:
+        - TZ=UTC
+      volumes:
+        - ./volumes/whoami:/volume
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.whoami.entrypoints=websecure"
+        - "traefik.http.routers.whoami.rule=Host(`example.com`) || Host(`www.example.com`)"
+        - "traefik.http.routers.whoami.tls.certresolver=myresolver"
+        - "traefik.http.services.whoami.loadbalancer.server.port=80"
+        - "traefik.http.routers.whoami.middlewares=test-compress@docker,sslheader@docker" # ,test-ratelimit@docker"
+
+networks:
+  proxy:
+    external: true
