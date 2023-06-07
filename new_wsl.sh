@@ -1,8 +1,12 @@
 #!/bin/bash
-sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y
+sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y
 
-sudo apt install -y python-is-python3 gdebi python3-pip python3-venv htop p7zip-full lm-sensors \
+sudo apt-get install -y python-is-python3 gdebi python3-pip python3-venv htop p7zip-full lm-sensors \
   ncdu ppa-purge nmap whois
+
+sudo add-apt-repository ppa:deadsnakes/ppa -y
+sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y
+sudo apt-get install -y python3.11 python3.11-venv
 
 FILE=~/.ssh/id_ed25519
 if [ -f $FILE ]; then
@@ -15,6 +19,7 @@ fi
 COMMAND=docker
 if ! command -v $COMMAND &> /dev/null; then
   curl https://get.docker.com | sh
+  sudo usermod -aG docker ubuntu
 else
   echo "$COMMAND found"
 fi
