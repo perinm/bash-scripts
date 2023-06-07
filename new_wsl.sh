@@ -2,7 +2,7 @@
 sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y
 
 sudo apt-get install -y python-is-python3 gdebi python3-pip python3-venv htop p7zip-full lm-sensors \
-  ncdu ppa-purge nmap whois
+  ncdu ppa-purge nmap whois gcc g++ make
 
 sudo add-apt-repository ppa:deadsnakes/ppa -y
 sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y
@@ -15,6 +15,20 @@ else
   ssh-keygen -o -a 100 -t ed25519 -f $FILE -C "lucasperinm@gmail.com" -q -N ""
 fi
 
+COMMAND=n
+if ! command -v $COMMAND &> /dev/null; then
+  # sudo npm install -g n
+  # sudo n install lts
+  # sudo npm update -g
+  curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+  sudo apt-get install -y nodejs
+  sudo npm install -g @githubnext/github-copilot-cli
+  # github-copilot-cli auth
+  # add following line to bashrc
+  # eval "$(github-copilot-cli alias -- "$0")"
+else
+  echo "$COMMAND found"
+fi
 
 COMMAND=docker
 if ! command -v $COMMAND &> /dev/null; then
