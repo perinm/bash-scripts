@@ -15,6 +15,8 @@ else
   ssh-keygen -o -a 100 -t ed25519 -f $FILE -C "lucasperinm@gmail.com" -q -N ""
 fi
 
+# https://askubuntu.com/questions/426750/how-can-i-update-my-nodejs-to-the-latest-version
+# https://www.npmjs.com/package/@githubnext/github-copilot-cli
 COMMAND=n
 if ! command -v $COMMAND &> /dev/null; then
   # sudo npm install -g n
