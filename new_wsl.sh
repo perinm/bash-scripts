@@ -15,19 +15,15 @@ else
   ssh-keygen -o -a 100 -t ed25519 -f $FILE -C "lucasperinm@gmail.com" -q -N ""
 fi
 
-# https://askubuntu.com/questions/426750/how-can-i-update-my-nodejs-to-the-latest-version
+# https://github.com/nodesource/distributions/blob/master/README.md
 # https://www.npmjs.com/package/@githubnext/github-copilot-cli
-COMMAND=n
+COMMAND=??
 if ! command -v $COMMAND &> /dev/null; then
-  # sudo npm install -g n
-  # sudo n install lts
-  # sudo npm update -g
-  curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-  sudo apt-get install -y nodejs
+  curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - && sudo apt-get install -y nodejs
+  sudo npm install -g npm@latest
   sudo npm install -g @githubnext/github-copilot-cli
-  # github-copilot-cli auth
-  # add following line to bashrc
-  # eval "$(github-copilot-cli alias -- "$0")"
+  echo 'eval "$(github-copilot-cli alias -- "$0")"' >> ~/.bashrc
+  github-copilot-cli auth
 else
   echo "$COMMAND found"
 fi
