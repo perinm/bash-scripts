@@ -22,8 +22,16 @@ To run this demo you need to edit cloudflare credentinials and domain name.
 
 ## Run
 
+```bash
+docker network create proxy
+docker-compose up -d --build
 ```
-docker-compose up
+
+or if docker swarm
+
+```bash
+docker network create --driver overlay proxy
+docker stack deploy -c docker-compose.yml traefik
 ```
 
 ## Urls
@@ -40,3 +48,16 @@ Traefik has basic auth middleware, so you need to enter this user password.
 | Username | Password |
 |----------|----------|
 | user     | password |
+
+To generate new user password you can use `htpasswd`.
+Make sure to have apache2-utils installed on your system in order to use htpasswd command.
+
+```bash
+htpasswd -nb user password
+```
+
+which will output
+
+```
+user:$$apr1$$q8eZFHjF$$Fvmkk//V6Btlaf2i/ju5n/
+```

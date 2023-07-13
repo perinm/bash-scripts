@@ -5,12 +5,20 @@ x-docker-anchor-defaults: &docker-anchor-defaults
   networks:
     - proxy
 
+networks:
+  proxy:
+    external: true
+    name: proxy
+    # driver: overlay   # uncomment this line if you want to use docker swarm
+    # attachable: true  # uncomment this line if you want to use docker swarm
+
 services:
   traefik:
-    image: traefik:v2.10.1
+    <<: *docker-anchor-defaults
+    image: traefik:v2.10.3
     container_name: traefik
     command:
-      - "--api.insecure=true"
+      # - "--api.insecure=true"
       - "--api.dashboard=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
@@ -19,10 +27,15 @@ services:
       - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
       - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.websecure.http.tls.certresolver=myresolver"
       - "--certificatesresolvers.myresolver.acme.email=example@gmail.com" # change this line
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
       - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
       - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      # - "--certificatesresolvers.myresolver.acme.dnschallenge=true"                   # uncomment this line if you want to use dns challenge
+      # - "--certificatesresolvers.myresolver.acme.dnschallenge.provider=gcloud"        # uncomment this line if you want to use dns challenge
+      # - "--certificatesresolvers.myresolver.acme.dnschallenge.resolvers=8.8.8.8:53"   # uncomment this line if you want to use dns challenge
+      # - "--certificatesresolvers.myresolver.acme.dnschallenge.delayBeforeCheck=5"     # uncomment this line if you want to use dns challenge
       # - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
       - "--certificatesresolvers.myresolver.acme.caserver=https://acme-v02.api.letsencrypt.org/directory"
       - "--accesslog=true"
@@ -31,7 +44,6 @@ services:
       - "--log.level=DEBUG"
       # - "--log.level=ERROR"
       - "--log.filePath=/logs/traefik.log"
-      # - 
     ports:
       - target: 80
         published: 80
@@ -50,25 +62,26 @@ services:
       - traefik.enable=true
       - traefik.http.routers.traefik-dash.entrypoints=websecure
       - traefik.http.routers.traefik-dash.rule=Host(`traefik-dash.example.com`)
-      - traefik.http.routers.traefik-dash.tls.certresolver=myresolver
       - traefik.http.routers.traefik-dash.service=api@internal
       - traefik.http.routers.traefik-dash.middlewares=test-compress@docker,access-auth@docker,sslheader@docker
       - traefik.http.middlewares.test-compress.compress=true
       - traefik.http.middlewares.test-ratelimit.ratelimit.average=80
-      - traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https
-      - traefik.http.middlewares.sslheader.headers.frameDeny=true
-      - traefik.http.middlewares.sslheader.headers.browserXssFilter=true
+      
+      - traefik.http.middlewares.access-auth.basicauth.realm=Login Required
+      - traefik.http.middlewares.access-auth.basicauth.users=user:$$apr1$$q8eZFHjF$$Fvmkk//V6Btlaf2i/ju5n/
+      
+      # - traefik.http.middlewares.sslheader.contenttype.autodetect=false
       - traefik.http.middlewares.sslheader.headers.contentTypeNosniff=true
+
+      - traefik.http.middlewares.sslheader.headers.browserXssFilter=true
+      - traefik.http.middlewares.sslheader.headers.customFrameOptionsValue=SAMEORIGIN
+      - traefik.http.middlewares.sslheader.headers.frameDeny=true
+      
       - traefik.http.middlewares.sslheader.headers.forceSTSHeader=true
       - traefik.http.middlewares.sslheader.headers.stsIncludeSubdomains=true
       - traefik.http.middlewares.sslheader.headers.stsPreload=true
       - traefik.http.middlewares.sslheader.headers.stsSeconds=31536000
-      # - traefik.http.middlewares.sslheader.contenttype.autodetect=false
-      - traefik.http.middlewares.sslheader.headers.customFrameOptionsValue=SAMEORIGIN
-      - traefik.http.middlewares.access-auth.basicauth.realm=Login Required
-      - traefik.http.middlewares.access-auth.basicauth.users=user:$$apr1$$q8eZFHjF$$Fvmkk//V6Btlaf2i/ju5n/
-    networks:
-      - proxy
+      - traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https
 
     whoami:
       <<: *docker-anchor-defaults
@@ -82,10 +95,5 @@ services:
         - "traefik.enable=true"
         - "traefik.http.routers.whoami.entrypoints=websecure"
         - "traefik.http.routers.whoami.rule=Host(`example.com`) || Host(`www.example.com`)"
-        - "traefik.http.routers.whoami.tls.certresolver=myresolver"
         - "traefik.http.services.whoami.loadbalancer.server.port=80"
         - "traefik.http.routers.whoami.middlewares=test-compress@docker,sslheader@docker" # ,test-ratelimit@docker"
-
-networks:
-  proxy:
-    external: true
