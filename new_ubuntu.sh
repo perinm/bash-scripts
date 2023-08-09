@@ -1,13 +1,13 @@
 #!/bin/bash
-sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y
+sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y
 
 # TO-DO:
 # - Prusa
 # - Fritzing
 
-# lines below sudo apt install, install docker requirements
+# lines below sudo apt-get install, install docker requirements
 # steam
-sudo apt install -y gdebi python-is-python3 python3-pip python3-venv htop libcanberra-gtk-module p7zip-full lm-sensors wireshark \
+sudo apt-get install -y gdebi python-is-python3 python3-pip python3-venv htop libcanberra-gtk-module p7zip-full lm-sensors wireshark \
     ncdu ppa-purge wireguard wireguard-tools net-tools nmap gparted btrfs-progs copyq gnome-shell-extensions d-feet btrfs-compsize \
     copyq gimp tilix minidlna whois \
     apt-transport-https \
@@ -37,8 +37,8 @@ fi
 # COMMAND=appimagelauncherd
 # if ! command -v $COMMAND &> /dev/null; then
 #     sudo add-apt-repository ppa:appimagelauncher-team/stable -y
-#     sudo apt update
-#     sudo apt install -y appimagelauncher
+#     sudo apt-get update
+#     sudo apt-get install -y appimagelauncher
 # else
 #     echo "$COMMAND found"
 # fi
@@ -93,8 +93,8 @@ if ! command -v $COMMAND &> /dev/null; then
     sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
     sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
     rm -f packages.microsoft.gpg
-    sudo apt update
-    sudo apt install -y code
+    sudo apt-get update
+    sudo apt-get install -y code
     declare -a StringArray=(
         'Dart-Code.dart-code'
         'Dart-Code.flutter'
@@ -150,7 +150,7 @@ COMMAND=spotify
 if ! command -v $COMMAND &> /dev/null; then
     curl -sS https://download.spotify.com/debian/pubkey_7A3A762FAFD4A51F.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
     echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-    sudo apt update && sudo apt install -y spotify-client
+    sudo apt-get update && sudo apt-get install -y spotify-client
     # sudo snap install spotify
 else
     echo "$COMMAND found"
@@ -158,8 +158,8 @@ fi
 # COMMAND=obs
 # if ! command -v $COMMAND &> /dev/null; then
 #     sudo add-apt-repository ppa:obsproject/obs-studio -y
-#     sudo apt update
-#     sudo apt install -y ffmpeg obs-studio
+#     sudo apt-get update
+#     sudo apt-get install -y ffmpeg obs-studio
 # else
 #     echo "$COMMAND found"
 # fi
@@ -219,7 +219,7 @@ if ! command -v $COMMAND &> /dev/null; then
     if ! command -v deb-get &> /dev/null; then
         echo "$COMMAND failed to install because deb-get is not installed or missing DEBGET_TOKEN env variable."
     else
-        wget -O ~/${COMMAND}.deb https://github.com/obsidianmd/obsidian-releases/releases/download/v0.15.9/obsidian_0.15.9_amd64.deb
+        wget -O ~/${COMMAND}.deb https://github.com/obsidianmd/obsidian-releases/releases/download/v1.3.4/obsidian_1.3.4_amd64.deb
         sudo gdebi -n ~/${COMMAND}.deb
         rm ~/${COMMAND}.deb
     fi
@@ -243,8 +243,8 @@ fi
 # COMMAND=remmina
 # if ! command -v $COMMAND &> /dev/null; then
 #     sudo apt-add-repository ppa:remmina-ppa-team/remmina-next -y
-#     sudo apt update
-#     sudo apt install -y remmina remmina-plugin-rdp remmina-plugin-secret
+#     sudo apt-get update
+#     sudo apt-get install -y remmina remmina-plugin-rdp remmina-plugin-secret
 # else
 #     echo "$COMMAND found"
 # fi
@@ -253,18 +253,18 @@ fi
 # if ! command -v $COMMAND &> /dev/null; then
 #     curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
 #     sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/ms-teams stable main" > /etc/apt/sources.list.d/teams.list'
-#     sudo apt update
-#     sudo apt install -y teams
+#     sudo apt-get update
+#     sudo apt-get install -y teams
 # else
 #     echo "$COMMAND found"
 # fi
 # COMMAND=brave-browser
 # if ! command -v $COMMAND &> /dev/null; then
-#     sudo apt install apt-transport-https curl
+#     sudo apt-get install apt-transport-https curl
 #     sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 #     echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-#     sudo apt update
-#     sudo apt install -y brave-browser
+#     sudo apt-get update
+#     sudo apt-get install -y brave-browser
 # else
 #     echo "$COMMAND found"
 # fi
@@ -306,7 +306,7 @@ fi
 # fi
 # COMMAND=waynergy
 # if ! command -v $COMMAND &> /dev/null; then
-#     sudo apt install -y libxkbcommon-dev libtls-dev wl-clipboard wayland-scanner++
+#     sudo apt-get install -y libxkbcommon-dev libtls-dev wl-clipboard wayland-scanner++
 # else
 #     echo "$COMMAND found"
 # fi
@@ -314,8 +314,8 @@ COMMAND=dbeaver-ce
 if ! command -v $COMMAND &> /dev/null; then
     curl -fsSL https://dbeaver.io/debs/dbeaver.gpg.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/dbeaver.gpg
     echo "deb https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
-    sudo apt update
-    sudo apt install -y dbeaver-ce
+    sudo apt-get update
+    sudo apt-get install -y dbeaver-ce
 else
     echo "$COMMAND found"
 fi
@@ -323,8 +323,8 @@ COMMAND=syncthing
 if ! command -v $COMMAND &> /dev/null; then
     curl -fsSL https://syncthing.net/release-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/syncthing-archive-keyring.gpg
     echo "deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable" | sudo tee /etc/apt/sources.list.d/syncthing.list
-    sudo apt update
-    sudo apt install -y $COMMAND
+    sudo apt-get update
+    sudo apt-get install -y $COMMAND
 else
     echo "$COMMAND found"
 fi
@@ -350,15 +350,15 @@ service_exists() {
 # else
 #     curl -fsSL https://downloads.plex.tv/plex-keys/PlexSign.key | gpg --dearmor | sudo tee /usr/share/keyrings/plexmediaserver.gpg  > /dev/null
 #     echo "deb [signed-by=/usr/share/keyrings/plexmediaserver.gpg] https://downloads.plex.tv/repo/deb public main" | sudo tee /etc/apt/sources.list.d/plexmediaserver.list
-#     sudo apt update
-#     sudo apt install -y plexmediaserver
+#     sudo apt-get update
+#     sudo apt-get install -y plexmediaserver
 # fi
 # SERVICE=ums.service
 # VERSION=11.4.1
 # if service_exists SERVICE; then
 #     echo "$SERVICE found"
 # else
-#     sudo apt install -y mediainfo dcraw vlc mplayer mencoder openjdk-18-jre
+#     sudo apt-get install -y mediainfo dcraw vlc mplayer mencoder openjdk-18-jre
 #     wget -O ~/${SERVICE}.tgz https://github.com/UniversalMediaServer/UniversalMediaServer/releases/download/${VERSION}/UMS-${VERSION}-x86_64.tgz
 #     sudo tar -zxvf ~/${SERVICE}.tgz -C /opt/ --transform s/ums-${VERSION}/ums/
 #     FILE=/etc/systemd/system/ums.service
