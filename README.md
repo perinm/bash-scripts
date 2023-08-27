@@ -81,3 +81,12 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
   git push --force
   ```
   -> [source](https://stackoverflow.com/questions/41882919/is-there-a-way-to-gpg-sign-all-previous-commits)
+
+- ```bash
+  echo "Host personal\nHostname github.com\nIdentityFile /home/ubuntu/.ssh/rasp_2023_08_27\nIdentitiesOnly yes" >> ~/.ssh/config
+  git remote rm origin
+  # swap username and repository accordignly
+  git remote add origin git@personal:username/repository.git
+  ```
+
+  -> [source](https://www.howtogeek.com/devops/how-to-switch-a-github-repository-to-ssh-authentication/)
