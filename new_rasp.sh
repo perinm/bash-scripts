@@ -84,20 +84,20 @@ sudo apt-get install -y gdebi git htop python3-pip python3-venv htop libcanberra
 # else
 #     echo "$COMMAND found"
 # fi
-# COMMAND=raspotify
-# if ! command -v $COMMAND &> /dev/null; then
-#     curl -sL https://dtcooper.github.io/raspotify/install.sh | sh
-# else
-#     echo "$COMMAND found"
-# fi
-COMMAND=spocon
+COMMAND=raspotify
 if ! command -v $COMMAND &> /dev/null; then
-    sudo add-apt-repository ppa:spocon/spocon
-    sudo apt-get -y update
-    sudo apt-get install spocon 
+    sudo apt-get -y install curl && curl -sL https://dtcooper.github.io/raspotify/install.sh | sh
 else
     echo "$COMMAND found"
 fi
+# COMMAND=spocon
+# if ! command -v $COMMAND &> /dev/null; then
+#     sudo add-apt-repository ppa:spocon/spocon
+#     sudo apt-get -y update
+#     sudo apt-get install spocon 
+# else
+#     echo "$COMMAND found"
+# fi
 COMMAND=brave-browser
 if ! command -v $COMMAND &> /dev/null; then
     sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
