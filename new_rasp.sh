@@ -9,6 +9,16 @@ sudo apt-get install -y gdebi git htop python3-pip python3-venv htop libcanberra
     gnupg \
     lsb-release
 
+KEY_BASE_NAME=rasp
+KEY_NAME=${KEY_BASE_NAME}_$(date +%Y_%m_%d)
+FILE=~/.ssh/$KEY_NAME
+if [ -f $FILE ]; then
+  echo "$FILE exists."
+else
+  ssh-keygen -o -a 100 -t ed25519 -f $FILE -C "$KEY_NAME" -q -N ""
+fi
+cat $FILE.pub
+
 ## system extra settings
 # allows gnome workspace to work with 2 monitors instead of only one
 # gsettings set org.gnome.mutter workspaces-only-on-primary false

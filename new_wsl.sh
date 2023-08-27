@@ -9,13 +9,15 @@ sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremov
 sudo apt-get install -y python3.11 python3.11-venv python3.11-dev
 python3.11 -m pip install -U pip setuptools wheel setuptools-rust
 
-FILE=~/.ssh/id_ed25519
+KEY_BASE_NAME=id_ed25519
+KEY_NAME=${KEY_BASE_NAME}_$(date +%Y_%m_%d)
+FILE=~/.ssh/$KEY_NAME
 if [ -f $FILE ]; then
   echo "$FILE exists."
 else
-  ssh-keygen -o -a 100 -t ed25519 -f $FILE -C "lucasperinm@gmail.com" -q -N ""
+  ssh-keygen -o -a 100 -t ed25519 -f $FILE -C "$KEY_NAME" -q -N ""
 fi
-cat $FILE
+cat $FILE.pub
 
 # https://github.com/nodesource/distributions/blob/master/README.md
 # https://www.npmjs.com/package/@githubnext/github-copilot-cli
