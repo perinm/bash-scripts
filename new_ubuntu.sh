@@ -7,24 +7,27 @@ sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremov
 
 # lines below sudo apt-get install, install docker requirements
 # steam
-sudo apt-get install -y gdebi python-is-python3 python3-pip python3-venv htop libcanberra-gtk-module p7zip-full lm-sensors wireshark \
-    ncdu ppa-purge wireguard wireguard-tools net-tools nmap gparted btrfs-progs copyq gnome-shell-extensions d-feet btrfs-compsize \
-    copyq gimp tilix minidlna whois \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
+sudo apt-get install -y gdebi python-is-python3 python3-pip python3-venv htop tilix apt-transport-https curl whois nmap ncdu lm-sensors wget gpg gnome-shell-extensions
+
+# sudo apt-get install -y libcanberra-gtk-module p7zip-full wireshark \
+#     ncdu ppa-purge wireguard wireguard-tools net-tools gparted btrfs-progs copyq gnome-shell-extensions d-feet btrfs-compsize \
+#     copyq gimp minidlna \
+#     ca-certificates \
+#     gnupg \
+#     lsb-release
 
 ## system extra settings
 # allows gnome workspace to work with 2 monitors instead of only one
 # gsettings set org.gnome.mutter workspaces-only-on-primary false
-FILE=~/.ssh/id_ed25519
+KEY_BASE_NAME=id_ed25519
+KEY_NAME=${KEY_BASE_NAME}_$(date +%Y_%m_%d)
+FILE=~/.ssh/$KEY_NAME
 if [ -f $FILE ]; then
-    echo "$FILE exists."
+  echo "$FILE exists."
 else
-    ssh-keygen -o -a 100 -t ed25519 -f $FILE -C "lucasperinm@gmail.com" -q -N ""
+  ssh-keygen -o -a 100 -t ed25519 -f $FILE -C "$KEY_NAME" -q -N ""
 fi
+cat $FILE.pub
 ## /#
 
 ## Install many apps, each app install consists of
@@ -88,57 +91,44 @@ else
 fi
 COMMAND=code
 if ! command -v $COMMAND &> /dev/null; then
-    sudo apt-get install -y wget gpg
     wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-    sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
-    sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+    sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+    sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
     rm -f packages.microsoft.gpg
     sudo apt-get update
     sudo apt-get install -y code
-    declare -a StringArray=(
-        'Dart-Code.dart-code'
-        'Dart-Code.flutter'
-        'DavidAnson.vscode-markdownlint'
-        'GitHub.copilot'
-        'GitHub.vscode-pull-request-github'
-        'GrapeCity.gc-excelviewer'
-        'ms-azuretools.vscode-docker'
-        'ms-python.python'
-        'ms-python.vscode-pylance'
-        'ms-toolsai.jupyter'
-        'ms-vscode-remote.remote-ssh'
-        'ms-vscode-remote.remote-ssh-edit'
-        'ms-vscode.cpptools'
-        'tomoki1207.pdf'
-        'WakaTime.vscode-wakatime'
-        'yzane.markdown-pdf'
-    )
-    for val in "${StringArray[@]}"; do
-        code --install-extension $val
-    done
-    pip install ipykernel
+    # declare -a StringArray=(
+    #     'Dart-Code.dart-code'
+    #     'Dart-Code.flutter'
+    #     'DavidAnson.vscode-markdownlint'
+    #     'GitHub.copilot'
+    #     'GitHub.vscode-pull-request-github'
+    #     'GrapeCity.gc-excelviewer'
+    #     'ms-azuretools.vscode-docker'
+    #     'ms-python.python'
+    #     'ms-python.vscode-pylance'
+    #     'ms-toolsai.jupyter'
+    #     'ms-vscode-remote.remote-ssh'
+    #     'ms-vscode-remote.remote-ssh-edit'
+    #     'ms-vscode.cpptools'
+    #     'tomoki1207.pdf'
+    #     'WakaTime.vscode-wakatime'
+    #     'yzane.markdown-pdf'
+    # )
+    # for val in "${StringArray[@]}"; do
+    #     code --install-extension $val
+    # done
+    # pip install ipykernel
 else
     echo "$COMMAND found"
 fi
 COMMAND=docker
 if ! command -v $COMMAND &> /dev/null; then
-    sudo mkdir -p /etc/apt/keyrings
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-    echo \
-        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-        $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-    sudo apt-get update
-    sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+  curl https://get.docker.com | sh
+  sudo usermod -aG docker $USER
 else
-    echo "$COMMAND found"
+  echo "$COMMAND found"
 fi
-# COMMAND=docker-compose
-# if ! command -v $COMMAND &> /dev/null; then
-#     sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-#     sudo chmod +x /usr/local/bin/docker-compose
-# else
-#     echo "$COMMAND found"
-# fi
 # COMMAND=drovio
 # if ! command -v $COMMAND &> /dev/null; then
 #     wget -O ~/drovio.deb https://repository.drovio.com/stable/drovio/linux/latest_version/drovio.deb
@@ -148,10 +138,10 @@ fi
 # fi
 COMMAND=spotify
 if ! command -v $COMMAND &> /dev/null; then
-    curl -sS https://download.spotify.com/debian/pubkey_7A3A762FAFD4A51F.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
-    echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-    sudo apt-get update && sudo apt-get install -y spotify-client
-    # sudo snap install spotify
+    # curl -sS https://download.spotify.com/debian/pubkey_7A3A762FAFD4A51F.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
+    # echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+    # sudo apt-get update && sudo apt-get install -y spotify-client
+    sudo snap install spotify
 else
     echo "$COMMAND found"
 fi
@@ -172,13 +162,14 @@ fi
 #     echo "$COMMAND found"
 # fi
 # # run telegram-desktop afterwards
-# COMMAND=telegram-desktop
-# if ! command -v $COMMAND &> /dev/null; then
-#     wget -O- https://telegram.org/dl/desktop/linux | sudo tar xJ -C /opt/
-#     sudo ln -s /opt/Telegram/Telegram /usr/local/bin/telegram-desktop
-# else
-#     echo "$COMMAND found"
-# fi
+COMMAND=telegram-desktop
+if ! command -v $COMMAND &> /dev/null; then
+    # wget -O- https://telegram.org/dl/desktop/linux | sudo tar xJ -C /opt/
+    # sudo ln -s /opt/Telegram/Telegram /usr/local/bin/telegram-desktop
+    sudo snap install telegram-desktop
+else
+    echo "$COMMAND found"
+fi
 # COMMAND=slack
 # if ! command -v $COMMAND &> /dev/null; then
 #     wget -O ~/${COMMAND}.deb "https://downloads.slack-edge.com/releases/linux/4.28.182/prod/x64/slack-desktop-4.28.182-amd64.deb"
@@ -194,23 +185,41 @@ fi
 # else
 #     echo "$COMMAND found"
 # fi
-COMMAND=upwork
-if ! command -v $COMMAND &> /dev/null; then
-    wget --user-agent="Mozilla" -O ~/${COMMAND}.deb https://upwork-usw2-desktopapp.upwork.com/binaries/v5_8_0_24_aef0dc8c37cf46a8/upwork_5.8.0.24_amd64.deb
-    sudo gdebi -n ~/${COMMAND}.deb
-    rm ~/${COMMAND}.deb
-else
-    echo "$COMMAND found"
-fi
+# COMMAND=upwork
+# if ! command -v $COMMAND &> /dev/null; then
+#     wget --user-agent="Mozilla" -O ~/${COMMAND}.deb https://upwork-usw2-desktopapp.upwork.com/binaries/v5_8_0_24_aef0dc8c37cf46a8/upwork_5.8.0.24_amd64.deb
+#     sudo gdebi -n ~/${COMMAND}.deb
+#     rm ~/${COMMAND}.deb
+# else
+#     echo "$COMMAND found"
+# fi
 COMMAND=smplayer
 if ! command -v $COMMAND &> /dev/null; then
-    sudo snap install smplayer
+    sudo snap install $COMMAND
 else
     echo "$COMMAND found"
 fi
-COMMAND=youtube-dl
+# COMMAND=youtube-dl
+# if ! command -v $COMMAND &> /dev/null; then
+#     sudo -H pip install --upgrade youtube-dl
+# else
+#     echo "$COMMAND found"
+# fi
+COMMAND=authy
 if ! command -v $COMMAND &> /dev/null; then
-    sudo -H pip install --upgrade youtube-dl
+    sudo snap install $COMMAND
+else
+    echo "$COMMAND found"
+fi
+COMMAND=skype
+if ! command -v $COMMAND &> /dev/null; then
+    sudo snap install $COMMAND
+else
+    echo "$COMMAND found"
+fi
+COMMAND=postman
+if ! command -v $COMMAND &> /dev/null; then
+    sudo snap install $COMMAND
 else
     echo "$COMMAND found"
 fi
@@ -219,9 +228,14 @@ if ! command -v $COMMAND &> /dev/null; then
     if ! command -v deb-get &> /dev/null; then
         echo "$COMMAND failed to install because deb-get is not installed or missing DEBGET_TOKEN env variable."
     else
-        wget -O ~/${COMMAND}.deb https://github.com/obsidianmd/obsidian-releases/releases/download/v1.3.4/obsidian_1.3.4_amd64.deb
-        sudo gdebi -n ~/${COMMAND}.deb
-        rm ~/${COMMAND}.deb
+        # wget -O ~/${COMMAND}.deb https://github.com/obsidianmd/obsidian-releases/releases/download/v1.4.16/obsidian_1.4.16_amd64.deb
+        # sudo gdebi -n ~/${COMMAND}.deb
+        # rm ~/${COMMAND}.deb
+        # 
+        # wget -O ~/${COMMAND}.snap https://github.com/obsidianmd/obsidian-releases/releases/download/v1.4.16/obsidian_1.4.16_amd64.snap
+        # snap install ~/${COMMAND}.snap --dangerous --classic
+        # 
+        snap install obsidian --classic
     fi
 else
     echo "$COMMAND found"
@@ -312,22 +326,23 @@ fi
 # fi
 COMMAND=dbeaver-ce
 if ! command -v $COMMAND &> /dev/null; then
-    curl -fsSL https://dbeaver.io/debs/dbeaver.gpg.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/dbeaver.gpg
-    echo "deb https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
-    sudo apt-get update
-    sudo apt-get install -y dbeaver-ce
+    # curl -fsSL https://dbeaver.io/debs/dbeaver.gpg.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/dbeaver.gpg
+    # echo "deb https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
+    # sudo apt-get update
+    # sudo apt-get install -y dbeaver-ce
+    sudo snap install $COMMAND
 else
     echo "$COMMAND found"
 fi
-COMMAND=syncthing
-if ! command -v $COMMAND &> /dev/null; then
-    curl -fsSL https://syncthing.net/release-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/syncthing-archive-keyring.gpg
-    echo "deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable" | sudo tee /etc/apt/sources.list.d/syncthing.list
-    sudo apt-get update
-    sudo apt-get install -y $COMMAND
-else
-    echo "$COMMAND found"
-fi
+# COMMAND=syncthing
+# if ! command -v $COMMAND &> /dev/null; then
+#     curl -fsSL https://syncthing.net/release-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/syncthing-archive-keyring.gpg
+#     echo "deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable" | sudo tee /etc/apt/sources.list.d/syncthing.list
+#     sudo apt-get update
+#     sudo apt-get install -y $COMMAND
+# else
+#     echo "$COMMAND found"
+# fi
 # COMMAND=franz
 # if ! command -v $COMMAND &> /dev/null; then
 #     wget -O ~/${COMMAND}.deb https://github.com/meetfranz/franz/releases/download/v5.9.2/franz_5.9.2_amd64.deb
