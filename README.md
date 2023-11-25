@@ -90,3 +90,8 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
   ```
 
   -> [source](https://www.howtogeek.com/devops/how-to-switch-a-github-repository-to-ssh-authentication/)
+
+# Gnome must have shell extensions
+
+- https://github.com/GnomeSnapExtensions/gSnap
+- https://github.com/SUPERCILEX/gnome-clipboard-history
