@@ -146,15 +146,16 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
-# COMMAND=obs
-# if ! command -v $COMMAND &> /dev/null; then
-#     sudo add-apt-repository ppa:obsproject/obs-studio -y
-#     sudo apt-get update
-#     sudo apt-get install -y ffmpeg obs-studio
-# else
-#     echo "$COMMAND found"
-# fi
-COMMAND=chatgpt
+COMMAND=obs
+if ! command -v $COMMAND &> /dev/null; then
+    # sudo add-apt-repository ppa:obsproject/obs-studio -y
+    # sudo apt-get update
+    # sudo apt-get install -y ffmpeg obs-studio
+    sudo snap install obs-studio
+else
+    echo "$COMMAND found"
+fi
+COMMAND=chat-gpt
 if ! command -v $COMMAND &> /dev/null; then
     wget -O ~/${COMMAND}.deb "https://github.com/lencx/ChatGPT/releases/download/v1.1.0/ChatGPT_1.1.0_linux_x86_64.deb"
     sudo gdebi -n ~/${COMMAND}.deb
@@ -179,8 +180,8 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
-# COMMAND=slack
-# if ! command -v $COMMAND &> /dev/null; then
+COMMAND=slack
+if ! command -v $COMMAND &> /dev/null; then
 #     wget -O ~/${COMMAND}.deb "https://downloads.slack-edge.com/releases/linux/4.28.182/prod/x64/slack-desktop-4.28.182-amd64.deb"
 #     sudo gdebi -n ~/${COMMAND}.deb
 #     rm ~/${COMMAND}.deb
@@ -190,10 +191,10 @@ fi
 # #     # sudo nano /etc/apt/sources.list.d/slack.list
 # #     # add this line [uncommented]:
 # #     # deb [signed-by=/usr/share/keyrings/slack.gpg] https://packagecloud.io/slacktechnologies/slack/debian/ jessie main
-# #     # sudo snap install slack --classic
-# else
-#     echo "$COMMAND found"
-# fi
+    sudo snap install slack
+else
+    echo "$COMMAND found"
+fi
 # COMMAND=upwork
 # if ! command -v $COMMAND &> /dev/null; then
 #     wget --user-agent="Mozilla" -O ~/${COMMAND}.deb https://upwork-usw2-desktopapp.upwork.com/binaries/v5_8_0_24_aef0dc8c37cf46a8/upwork_5.8.0.24_amd64.deb
@@ -245,11 +246,7 @@ if ! command -v $COMMAND &> /dev/null; then
     else
         # wget -O ~/${COMMAND}.deb https://github.com/obsidianmd/obsidian-releases/releases/download/v1.4.16/obsidian_1.4.16_amd64.deb
         # sudo gdebi -n ~/${COMMAND}.deb
-        # rm ~/${COMMAND}.deb
-        # 
-        # wget -O ~/${COMMAND}.snap https://github.com/obsidianmd/obsidian-releases/releases/download/v1.4.16/obsidian_1.4.16_amd64.snap
-        # snap install ~/${COMMAND}.snap --dangerous --classic
-        # 
+        # rm ~/${COMMAND}.deb 
         snap install obsidian --classic
     fi
 else

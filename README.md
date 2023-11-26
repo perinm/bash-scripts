@@ -91,7 +91,18 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
 
   -> [source](https://www.howtogeek.com/devops/how-to-switch-a-github-repository-to-ssh-authentication/)
 
-# Gnome must have shell extensions
+- ```bash
+  # set chrome as default browser inside snaps
+  xdg-mime default google-chrome.desktop x-scheme-handler/http
+  xdg-mime default google-chrome.desktop x-scheme-handler/https
+
+  gio mime x-scheme-handler/https google-chrome.desktop
+  gio mime x-scheme-handler/http google-chrome.desktop
+  ```
+
+  -> [source](https://forum.obsidian.md/t/obsidian-doesnt-use-default-browser-on-ubuntu-22-04/68177/5)
+
+## Gnome must have shell extensions
 
 - https://github.com/GnomeSnapExtensions/gSnap
 - https://github.com/SUPERCILEX/gnome-clipboard-history
