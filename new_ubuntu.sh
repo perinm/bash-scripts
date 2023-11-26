@@ -7,7 +7,8 @@ sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremov
 
 # lines below sudo apt-get install, install docker requirements
 # steam
-sudo apt-get install -y gdebi python-is-python3 python3-pip python3-venv htop tilix apt-transport-https curl whois nmap ncdu lm-sensors wget gpg gnome-shell-extensions
+sudo apt-get install -y gdebi python-is-python3 python3-pip python3-venv htop tilix apt-transport-https \
+                        curl whois nmap ncdu lm-sensors wget gpg gnome-shell-extensions
 
 # sudo apt-get install -y libcanberra-gtk-module p7zip-full wireshark \
 #     ncdu ppa-purge wireguard wireguard-tools net-tools gparted btrfs-progs copyq gnome-shell-extensions d-feet btrfs-compsize \
@@ -153,6 +154,14 @@ fi
 # else
 #     echo "$COMMAND found"
 # fi
+COMMAND=chatgpt
+if ! command -v $COMMAND &> /dev/null; then
+    wget -O ~/${COMMAND}.deb "https://github.com/lencx/ChatGPT/releases/download/v1.1.0/ChatGPT_1.1.0_linux_x86_64.deb"
+    sudo gdebi -n ~/${COMMAND}.deb
+    rm ~/${COMMAND}.deb
+else
+    echo "$COMMAND found"
+fi
 # COMMAND=discord
 # if ! command -v $COMMAND &> /dev/null; then
 #     wget -O ~/${COMMAND}.deb "https://discordapp.com/api/download?platform=linux&format=deb"
@@ -194,6 +203,12 @@ fi
 #     echo "$COMMAND found"
 # fi
 COMMAND=smplayer
+if ! command -v $COMMAND &> /dev/null; then
+    sudo snap install $COMMAND
+else
+    echo "$COMMAND found"
+fi
+COMMAND=pinta
 if ! command -v $COMMAND &> /dev/null; then
     sudo snap install $COMMAND
 else
