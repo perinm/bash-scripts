@@ -102,7 +102,17 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
 
   -> [source](https://forum.obsidian.md/t/obsidian-doesnt-use-default-browser-on-ubuntu-22-04/68177/5)
 
+- ```bash
+  # set other terminal as default
+  sudo update-alternatives --config x-terminal-emulator
+  ```
+
+  -> [source](https://devicetests.com/change-terminal-tilix-shortcut-ubuntu)
+
+-> config bashrc to show only currrent directory instead of full relative path to home [source](https://askubuntu.com/a/232101)
+
 ## Gnome must have shell extensions
 
 - https://github.com/GnomeSnapExtensions/gSnap
 - https://github.com/SUPERCILEX/gnome-clipboard-history
+- https://github.com/mgalgs/gnome-shell-system-monitor-applet

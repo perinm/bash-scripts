@@ -8,7 +8,8 @@ sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremov
 # lines below sudo apt-get install, install docker requirements
 # steam
 sudo apt-get install -y gdebi python-is-python3 python3-pip python3-venv htop tilix apt-transport-https \
-                        curl whois nmap ncdu lm-sensors wget gpg gnome-shell-extensions wavemon mesa-utils
+                        curl whois nmap ncdu lm-sensors wget gpg gnome-shell-extensions wavemon mesa-utils \
+                        gir1.2-gtop-2.0 gir1.2-nm-1.0 gir1.2-clutter-1.0 gnome-system-monitor
 
 # sudo apt-get install -y libcanberra-gtk-module p7zip-full wireshark \
 #     ppa-purge wireguard wireguard-tools net-tools gparted btrfs-progs d-feet btrfs-compsize \
