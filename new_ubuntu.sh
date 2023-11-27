@@ -91,6 +91,20 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
+COMANND=??
+if ! command -v $COMMAND &> /dev/null; then
+    curl -SLO https://deb.nodesource.com/nsolid_setup_deb.sh
+    chmod 500 nsolid_setup_deb.sh
+    ./nsolid_setup_deb.sh 21
+    apt-get install nodejs -y
+    sudo npm install -g npm@latest
+    sudo npm install -g @githubnext/github-copilot-cli
+    echo 'eval "$(github-copilot-cli alias -- "$0")"' >> ~/.bashrc
+    github-copilot-cli auth
+    rm nsolid_setup_deb.sh
+else
+    echo "$COMMAND found"
+fi
 COMMAND=code
 if ! command -v $COMMAND &> /dev/null; then
     wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
