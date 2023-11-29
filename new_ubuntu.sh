@@ -105,6 +105,15 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
+COMANND=mysql-workbench-community
+if ! command -v $COMMAND &> /dev/null; then
+    # wget -O ~/${COMMAND}.deb https://repo.mysql.com//mysql-apt-config_0.8.28-1_all.deb
+    # sudo gdebi -n ~/${COMMAND}.deb
+    # rm ~/${COMMAND}.deb
+    sudo snap install $COMANND
+else
+    echo "$COMMAND found"
+fi
 COMMAND=code
 if ! command -v $COMMAND &> /dev/null; then
     wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg

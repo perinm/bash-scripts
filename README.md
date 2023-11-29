@@ -110,6 +110,7 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
   -> [source](https://devicetests.com/change-terminal-tilix-shortcut-ubuntu)
 
 -> config bashrc to show only currrent directory instead of full relative path to home [source](https://askubuntu.com/a/232101)
+-> change vs code to LF instead of CRLF [source](https://stackoverflow.com/a/48694365)
 
 ## Gnome must have shell extensions
 
