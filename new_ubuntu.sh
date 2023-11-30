@@ -91,6 +91,23 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
+COMMAND=tofu
+if ! command -v $COMMAND &> /dev/null; then
+    curl -s https://packagecloud.io/install/repositories/opentofu/tofu/script.deb.sh?any=true -o /tmp/tofu-repository-setup.sh
+    sudo bash /tmp/tofu-repository-setup.sh
+    rm /tmp/tofu-repository-setup.sh
+    sudo apt-get install -y tofu
+else
+    echo "$COMMAND found"
+fi
+COMMAND=aws
+if ! command -v $COMMAND &> /dev/null; then
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o awscliv2.zip
+    unzip awscliv2.zip
+    sudo ./aws/install
+else
+    echo "$COMMAND found"
+fi
 COMANND=??
 if ! command -v $COMMAND &> /dev/null; then
     curl -SLO https://deb.nodesource.com/nsolid_setup_deb.sh
