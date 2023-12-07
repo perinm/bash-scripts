@@ -9,7 +9,7 @@ sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremov
 # steam
 sudo apt-get install -y gdebi python-is-python3 python3-pip python3-venv htop tilix apt-transport-https \
                         curl whois nmap ncdu lm-sensors wget gpg gnome-shell-extensions wavemon mesa-utils \
-                        gir1.2-gtop-2.0 gir1.2-nm-1.0 gir1.2-clutter-1.0 gnome-system-monitor
+                        gir1.2-gtop-2.0 gir1.2-nm-1.0 gir1.2-clutter-1.0 gnome-system-monitor apache2-utils
 
 # sudo apt-get install -y libcanberra-gtk-module p7zip-full wireshark \
 #     ppa-purge wireguard wireguard-tools net-tools gparted btrfs-progs d-feet btrfs-compsize \
@@ -91,16 +91,27 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
-COMMAND=terraform
-if ! command -v $COMMAND &> /dev/null; then
-    sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
-    wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
-    # gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint
-    echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-    sudo apt-get update && sudo apt-get install -y $COMMAND
-else
-    echo "$COMMAND found"
-fi
+# keybase not working yet for ubuntu 23.10
+# COMMAND=keybase
+# if ! command -v $COMMAND &> /dev/null; then
+#     curl https://prerelease.keybase.io/keybase_amd64.deb -o ~/${COMMAND}.deb
+#     sudo gdebi -n ~/${COMMAND}.deb
+#     rm ~/${COMMAND}.deb
+#     run_keybase
+# else
+#     echo "$COMMAND found"
+# fi
+# terraform not working yet for ubuntu 23.10
+# COMMAND=terraform
+# if ! command -v $COMMAND &> /dev/null; then
+#     sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
+#     wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+#     # gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint
+#     echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+#     sudo apt-get update && sudo apt-get install -y $COMMAND
+# else
+#     echo "$COMMAND found"
+# fi
 COMMAND=tofu
 if ! command -v $COMMAND &> /dev/null; then
     curl -s https://packagecloud.io/install/repositories/opentofu/tofu/script.deb.sh?any=true -o /tmp/tofu-repository-setup.sh
@@ -199,10 +210,11 @@ else
 fi
 COMMAND=obs
 if ! command -v $COMMAND &> /dev/null; then
-    # sudo add-apt-repository ppa:obsproject/obs-studio -y
-    # sudo apt-get update
-    # sudo apt-get install -y ffmpeg obs-studio
-    sudo snap install obs-studio
+    sudo apt-get install -y ffmpeg
+    sudo add-apt-repository ppa:obsproject/obs-studio -y
+    sudo apt-get update
+    sudo apt-get install -y obs-studio
+    # sudo snap install obs-studio
 else
     echo "$COMMAND found"
 fi
