@@ -292,7 +292,10 @@ else
 fi
 COMMAND=skype
 if ! command -v $COMMAND &> /dev/null; then
-    sudo snap install $COMMAND
+    # sudo snap install $COMMAND
+    wget -O ~/${COMMAND}.deb https://go.skype.com/skypeforlinux-64.deb
+    sudo gdebi -n ~/${COMMAND}.deb
+    rm ~/${COMMAND}.deb
 else
     echo "$COMMAND found"
 fi
