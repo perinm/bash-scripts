@@ -245,16 +245,10 @@ else
 fi
 COMMAND=slack
 if ! command -v $COMMAND &> /dev/null; then
-#     wget -O ~/${COMMAND}.deb "https://downloads.slack-edge.com/releases/linux/4.28.182/prod/x64/slack-desktop-4.28.182-amd64.deb"
-#     sudo gdebi -n ~/${COMMAND}.deb
-#     rm ~/${COMMAND}.deb
-# #     # https://askubuntu.com/questions/1398344/apt-key-deprecation-warning-when-updating-system
-# #     # sudo apt-key list
-# #     # sudo apt-key export 038651BD | sudo gpg --dearmour -o /usr/share/keyrings/slack.gpg
-# #     # sudo nano /etc/apt/sources.list.d/slack.list
-# #     # add this line [uncommented]:
-# #     # deb [signed-by=/usr/share/keyrings/slack.gpg] https://packagecloud.io/slacktechnologies/slack/debian/ jessie main
-    sudo snap install slack
+    wget -O ~/${COMMAND}.deb "https://downloads.slack-edge.com/releases/linux/4.35.131/prod/x64/slack-desktop-4.35.131-amd64.deb"
+    sudo gdebi -n ~/${COMMAND}.deb
+    rm ~/${COMMAND}.deb
+    # sudo snap install slack
 else
     echo "$COMMAND found"
 fi
