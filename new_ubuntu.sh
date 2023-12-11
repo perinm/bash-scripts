@@ -295,7 +295,21 @@ else
 fi
 COMMAND=postman
 if ! command -v $COMMAND &> /dev/null; then
-    sudo snap install $COMMAND
+    # sudo snap install $COMMAND
+    wget -O ~/${COMMAND}.tar.gz https://dl.pstmn.io/download/latest/linux64 
+    sudo tar -xzf ~/${COMMAND}.tar.gz -C /opt
+    sudo ln -s /opt/Postman/Postman /usr/bin/postman
+    cat > ~/.local/share/applications/postman.desktop <<EOL
+[Desktop Entry]
+Encoding=UTF-8
+Name=Postman
+Exec=postman
+Icon=/opt/Postman/app/resources/app/assets/icon.png
+Terminal=false
+Type=Application
+Categories=Development;
+EOL
+    rm ~/${COMMAND}.tar.gz
 else
     echo "$COMMAND found"
 fi
