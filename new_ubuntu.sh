@@ -398,11 +398,11 @@ fi
 # fi
 COMMAND=dbeaver-ce
 if ! command -v $COMMAND &> /dev/null; then
-    # curl -fsSL https://dbeaver.io/debs/dbeaver.gpg.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/dbeaver.gpg
-    # echo "deb https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
-    # sudo apt-get update
-    # sudo apt-get install -y dbeaver-ce
-    sudo snap install $COMMAND
+    curl -fsSL https://dbeaver.io/debs/dbeaver.gpg.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/dbeaver.gpg
+    echo "deb https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
+    sudo apt-get update
+    sudo apt-get install -y dbeaver-ce
+    # sudo snap install $COMMAND
 else
     echo "$COMMAND found"
 fi
