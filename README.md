@@ -111,6 +111,7 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
 
 -> config bashrc to show only currrent directory instead of full relative path to home [source](https://askubuntu.com/a/232101)
 -> change vs code to LF instead of CRLF [source](https://stackoverflow.com/a/48694365)
+-> fix slack screenshare on wayland [soource](https://github.com/flathub/com.slack.Slack/issues/101#issuecomment-1807073763)
 
 ## Gnome must have shell extensions
 
