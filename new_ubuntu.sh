@@ -152,6 +152,25 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
+# COMANND=textshot
+# if ! command -v $COMMAND &> /dev/null; then
+#     sudo apt-get install -y tesseract-ocr
+#     sudo apt-get install -y libtesseract-dev
+#     # sudo snap install --channel=edge tesseract
+#     source /home/ubuntu/venv3.11/bin/pip install -U textshot
+# else
+#     echo "$COMMAND found"
+# fi
+COMANND=textsnatcher
+if ! command -v $COMMAND &> /dev/null; then
+    sudo apt-get install -y flatpak
+    sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    # sudo reboot
+    # flatpak install flathub com.github.rajsolai.textsnatcher
+    # flatpak run com.github.rajsolai.textsnatcher
+else
+    echo "$COMMAND found"
+fi
 COMMAND=code
 if ! command -v $COMMAND &> /dev/null; then
     wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
