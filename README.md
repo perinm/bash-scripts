@@ -22,10 +22,10 @@
 
 Run:
 
-    ```bash
-    chmod +x <script_name>.sh
-    ./<script_name>.sh
-    ```
+```bash
+chmod +x <script_name>.sh
+./<script_name>.sh
+```
 
 ## Extra info ([source](https://askubuntu.com/questions/343268/how-to-use-manual-partitioning-during-installation/343352#343352))
 
@@ -108,6 +108,19 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
   ```
 
   -> [source](https://devicetests.com/change-terminal-tilix-shortcut-ubuntu)
+
+- ```bash
+  # concat all images in current folder to a PDF
+  convert *.jpg -quality 20 file20.pdf
+
+  # before running that, make sure to disable conflicting policy
+  sudo mv /etc/ImageMagick-6/policy.xml /etc/ImageMagick-6/policy.xml.off
+
+  # when done, restore policy by running
+  sudo mv /etc/ImageMagick-6/policy.xml.off /etc/ImageMagick-6/policy.xml
+  ```
+
+  -> [source](https://stackoverflow.com/a/57721936)
 
 -> config bashrc to show only currrent directory instead of full relative path to home [source](https://askubuntu.com/a/232101)
 -> change vs code to LF instead of CRLF [source](https://stackoverflow.com/a/48694365)
