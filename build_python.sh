@@ -1,9 +1,11 @@
-PYTHON_VERSION=3.10.10
-nproc=12
+PYTHON_MAJOR_VERSION=3.12
+PYTHON_MINOR_VERSION=1
+PYTHON_VERSION=${PYTHON_MAJOR_VERSION}.${PYTHON_MINOR_VERSION}
+nproc=6
 
-sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y
+sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y
 
-sudo apt install -y make build-essential libssl-dev zlib1g-dev \
+sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
        libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
        libncurses5-dev libncursesw5-dev xz-utils tk-dev \
        libgdbm-dev libnss3-dev libffi-dev
@@ -22,10 +24,10 @@ sudo make altinstall
 # cd ../..
 # rm -rf python_installation
 
-# apt --purge remove build-essential checkinstall libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev -y
-# apt autoremove -y
-# apt clean
+# apt-get --purge remove build-essential checkinstall libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev -y
+# apt-get autoremove -y
+# apt-get clean
 
-python$PYTHON_VERSION -m pip install -U pip setuptools wheel setuptools-rust
+python$PYTHON_MAJOR_VERSION -m pip install -U pip setuptools wheel setuptools-rust
 # python3.7 -m pip install -U pip
 # echo '$alias pip3="python3.7 -m pip"' >> ~/.bashrc
