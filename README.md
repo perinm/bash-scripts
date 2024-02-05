@@ -122,6 +122,12 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
 
   -> [source](https://stackoverflow.com/a/57721936)
 
+  ```bash
+  for KEY in $(apt-key --keyring /etc/apt/trusted.gpg list | grep -E "(([ ]{1,2}(([0-9A-F]{4}))){10})" | tr -d " " | grep -E "([0-9A-F]){8}\b" ); do K=${KEY:(-8)}; apt-key export $K | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/imported-from-trusted-gpg-$K.gpg; done
+  ```
+  
+  -> [source](https://askubuntu.com/a/1415702)
+
 -> config bashrc to show only currrent directory instead of full relative path to home [source](https://askubuntu.com/a/232101)
 -> change vs code to LF instead of CRLF [source](https://stackoverflow.com/a/48694365)
 -> fix slack screenshare on wayland [soource](https://github.com/flathub/com.slack.Slack/issues/101#issuecomment-1807073763)
