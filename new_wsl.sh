@@ -1,5 +1,6 @@
 #!/bin/bash
-sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y
+sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y \
+    && sudo snap refresh
 
 sudo apt-get install -y python-is-python3 gdebi python3-pip python3-venv htop p7zip-full lm-sensors \
   ncdu ppa-purge nmap whois gcc g++ make

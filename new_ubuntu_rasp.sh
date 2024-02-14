@@ -1,5 +1,6 @@
 #!/bin/bash
-sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y
+sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y \
+    && sudo snap refresh
 
 FILE=~/.ssh/id_ed25519
 if [ -f $FILE ]; then
