@@ -1,16 +1,17 @@
+#!/bin/bash
 PYTHON_MAJOR_VERSION=3.12
-PYTHON_MINOR_VERSION=1
+PYTHON_MINOR_VERSION=2
 PYTHON_VERSION=${PYTHON_MAJOR_VERSION}.${PYTHON_MINOR_VERSION}
-nproc=6
+nproc=7
 
-sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y
+sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y && sudo snap refresh
 
 sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
        libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
        libncurses5-dev libncursesw5-dev xz-utils tk-dev \
-       libgdbm-dev libnss3-dev libffi-dev
+       libgdbm-dev libnss3-dev libffi-dev checkinstall
 
-mkdir python_installation && cd python_installation
+mkdir -p python_installation && cd python_installation
 
 wget "https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz"
 tar xzvf Python-$PYTHON_VERSION.tgz
@@ -19,7 +20,9 @@ rm -f Python-$PYTHON_VERSION.tgz
 cd Python-$PYTHON_VERSION
 ./configure --enable-optimizations --with-ensurepip=install
 make -j $(nproc)
-sudo make altinstall
+make -n altinstall > altinstall_script.sh
+chmod +x altinstall_script.sh
+sudo checkinstall ./altinstall_script.sh
 
 # cd ../..
 # rm -rf python_installation
