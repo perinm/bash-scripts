@@ -3,7 +3,7 @@ sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremov
     && sudo snap refresh
 
 sudo apt-get install -y gdebi curl whois nmap ncdu htop tilix apt-transport-https \
-    lm-sensors wget gpg gnome-shell-extensions wavemon
+    lm-sensors wget gpg gnome-shell-extensions wavemon flatpak
 
 sudo snap install steam
 
@@ -49,4 +49,24 @@ if ! command -v $COMMAND &> /dev/null; then
   sudo ninja install
 else
     echo "$COMMAND found"
+fi
+
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak install flathub com.obsproject.Studio
+flatpak install flathub com.obsproject.Studio.Plugin.BackgroundRemoval
+
+COMMAND=docker
+if ! command -v $COMMAND &> /dev/null; then
+  curl https://get.docker.com | sh
+  sudo usermod -aG docker $USER
+else
+  echo "$COMMAND found"
+fi
+COMMAND=spotify-client
+if ! command -v $COMMAND &> /dev/null; then
+  curl -sS https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
+  echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+  sudo apt-get update && sudo apt-get install spotify-client
+else
+  echo "$COMMAND found"
 fi
