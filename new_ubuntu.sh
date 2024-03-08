@@ -1,4 +1,6 @@
 #!/bin/bash
+PYTHON_MAJOR_VERSION=3.12
+
 sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y \
     && sudo snap refresh
 
@@ -8,7 +10,7 @@ sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremov
 
 # lines below sudo apt-get install, install docker requirements
 # steam
-sudo apt-get install -y gdebi python-is-python3 python3-pip python3-venv htop tilix apt-transport-https \
+sudo apt-get install -y gdebi python3-pip python3-venv htop tilix apt-transport-https \
                         curl whois nmap ncdu lm-sensors wget gpg gnome-shell-extensions wavemon mesa-utils \
                         gir1.2-gtop-2.0 gir1.2-nm-1.0 gir1.2-clutter-1.0 gnome-system-monitor apache2-utils \
                         libvirt-daemon-system bridge-utils cpu-checker libvirt-clients libvirt-daemon qemu-kvm \
@@ -20,6 +22,11 @@ sudo apt-get install -y gdebi python-is-python3 python3-pip python3-venv htop ti
 #     ca-certificates \
 #     gnupg \
 #     lsb-release
+
+# sudo add-apt-repository ppa:deadsnakes/ppa -y
+# sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y
+# sudo apt-get install -y python$PYTHON_MAJOR_VERSION python$PYTHON_MAJOR_VERSION-venv python$PYTHON_MAJOR_VERSION-dev
+# python$PYTHON_MAJOR_VERSION -m pip install -U pip setuptools wheel setuptools-rust
 
 ## system extra settings
 # allows gnome workspace to work with 2 monitors instead of only one
@@ -121,6 +128,15 @@ if ! command -v $COMMAND &> /dev/null; then
     sudo bash /tmp/tofu-repository-setup.sh
     rm /tmp/tofu-repository-setup.sh
     sudo apt-get install -y tofu
+    if ! command -v $COMMAND &> /dev/null; then
+        SUBCOMMAND=terraform
+        if ! command -v $SUBCOMMAND &> /dev/null; then
+            sudo ln -s /usr/bin/tofu /usr/bin/terraform
+        else
+            echo "$SUBCOMMAND found, not creating symlink for $COMMAND"
+        fi
+    else
+        echo "$COMMAND failed to install"
 else
     echo "$COMMAND found"
 fi

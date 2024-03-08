@@ -22,7 +22,7 @@ cd Python-$PYTHON_VERSION
 make -j $(nproc)
 make -n altinstall > altinstall_script.sh
 chmod +x altinstall_script.sh
-sudo checkinstall ./altinstall_script.sh
+sudo checkinstall ./altinstall_script.sh --install=no --pkgname=python$PYTHON_MAJOR_VERSION --pkgversion=$PYTHON_MAJOR_VERSION$PYTHON_VERSION --provides=python$PYTHON_MAJOR_VERSION
 
 # cd ../..
 # rm -rf python_installation
