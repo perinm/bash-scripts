@@ -465,6 +465,14 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
+COMMAND=keepassxc
+if ! command -v $COMMAND &> /dev/null; then
+    sudo add-apt-repository ppa:phoerious/keepassxc -y
+    sudo apt-get update
+    sudo apt-get install -y keepassxc
+else
+    echo "$COMMAND found"
+fi
 # COMMAND=syncthing
 # if ! command -v $COMMAND &> /dev/null; then
 #     curl -fsSL https://syncthing.net/release-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/syncthing-archive-keyring.gpg
