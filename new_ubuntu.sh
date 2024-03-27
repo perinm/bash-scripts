@@ -288,6 +288,12 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
+COMMAND=ksnip
+if ! command -v $COMMAND &> /dev/null; then
+    sudo snap install ksnip
+else
+    echo "$COMMAND found"
+fi
 COMMAND=slack
 if ! command -v $COMMAND &> /dev/null; then
     wget -O ~/${COMMAND}.deb "https://downloads.slack-edge.com/releases/linux/4.35.131/prod/x64/slack-desktop-4.35.131-amd64.deb"
