@@ -71,6 +71,11 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
   sudo nmap -sn -n -host-timeout 1 192.168.18.0/24
   ```
 
+- ````bash
+  # generate a random password
+  pwgen -s 30 -c -n -y | tr -d "\"#$%'"
+  ```
+
 - ```bash
   # All commits started from the next after 8fd7b22 will be rebased with no changes except signing
   git rebase --exec 'git commit --amend --no-edit -n -S' -i 8fd7b22
