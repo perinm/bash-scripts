@@ -73,7 +73,7 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
 
 - ````bash
   # generate a random password
-  pwgen -s 30 -c -n -y | tr -d "\"#$%'"
+  pwgen -s 50 -c -n -y | tr -d "\"#$%'.\\/"
   ```
 
 - ```bash
