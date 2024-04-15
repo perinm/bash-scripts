@@ -1,4 +1,4 @@
-sudo apt install -y \
+sudo apt-get install -y \
     bash \
     curl \
     file \
@@ -7,6 +7,13 @@ sudo apt install -y \
     xz-utils \
     zip \
     libglu1-mesa
+
+sudo apt-get install -y \
+    clang cmake ninja-build libgtk-3-dev
+#     libc6:i386 libncurses5:i386 \
+#     libstdc++6:i386 lib32z1 \
+#     libbz2-1.0:i386
+
 COMMAND=flutter
 if ! command -v $COMMAND &> /dev/null; then
     FOLDER=~/dev

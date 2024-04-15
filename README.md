@@ -134,9 +134,13 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
   -> [source](https://askubuntu.com/a/1415702)
 
 -> config bashrc to show only currrent directory instead of full relative path to home [source](https://askubuntu.com/a/232101)
+
 -> change vs code to LF instead of CRLF [source](https://stackoverflow.com/a/48694365)
+
 -> fix slack screenshare on wayland [source](https://github.com/flathub/com.slack.Slack/issues/101#issuecomment-1807073763)
+
 -> fix slack screenshare on wayland debian package [source](https://github.com/flathub/com.slack.Slack/issues/101#issuecomment-1808323806)
+
 -> CopyQ Not Saving Clipboard Copy Paste in Ubuntu 23.04 [source](https://itsfoss.community/t/copyq-not-saving-clipboard-copy-paste-in-ubuntu-23-04/10829/3)
 
 ## Gnome must have shell extensions
