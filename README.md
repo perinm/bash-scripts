@@ -143,6 +143,8 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
 
 -> CopyQ Not Saving Clipboard Copy Paste in Ubuntu 23.04 [source](https://itsfoss.community/t/copyq-not-saving-clipboard-copy-paste-in-ubuntu-23-04/10829/3)
 
+-> 2024-04-17, fix to google-chrome on ubuntu, stopped working on wayaland [source](https://www.reddit.com/r/linux/comments/1c63fgz/latest_update_of_chrome_on_wayland/)
+
 ## Gnome must have shell extensions
 
 - https://github.com/GnomeSnapExtensions/gSnap
