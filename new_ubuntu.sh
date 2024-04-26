@@ -32,7 +32,7 @@ sudo apt-get install -y gdebi python3-pip python3-venv htop tilix apt-transport-
 # allows gnome workspace to work with 2 monitors instead of only one
 # gsettings set org.gnome.mutter workspaces-only-on-primary false
 KEY_BASE_NAME=id_ed25519
-KEY_NAME=${KEY_BASE_NAME}_$(date +%Y_%m_%d)
+KEY_NAME=${KEY_BASE_NAME}_$(date +%Y_%m_%d_%H_%M_%S)
 FILE=~/.ssh/$KEY_NAME
 if [ -f $FILE ]; then
   echo "$FILE exists."
