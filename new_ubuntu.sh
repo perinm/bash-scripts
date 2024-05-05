@@ -169,7 +169,7 @@ if ! command -v $COMMAND &> /dev/null; then
     rm ~/${COMMAND}.deb
     sudo apt-get update
     # sudo apt-get install -y mysql-workbench-community
-    wget -O ~/${COMMAND}.deb https://dev.mysql.com/downloads/file/?id=525960
+    wget -O ~/${COMMAND}.deb https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.36-1ubuntu23.10_amd64.deb
     sudo gdebi -n ~/${COMMAND}.deb
     rm ~/${COMMAND}.deb
     sudo apt-get update
