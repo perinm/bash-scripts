@@ -148,7 +148,7 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
-COMANND=??
+COMMAND=??
 if ! command -v $COMMAND &> /dev/null; then
     curl -SLO https://deb.nodesource.com/nsolid_setup_deb.sh
     chmod 500 nsolid_setup_deb.sh
@@ -162,16 +162,16 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
-COMANND=mysql-workbench-community
+COMMAND=mysql-workbench-community
 if ! command -v $COMMAND &> /dev/null; then
     # wget -O ~/${COMMAND}.deb https://repo.mysql.com//mysql-apt-config_0.8.28-1_all.deb
     # sudo gdebi -n ~/${COMMAND}.deb
     # rm ~/${COMMAND}.deb
-    sudo snap install $COMANND
+    sudo snap install $COMMAND
 else
     echo "$COMMAND found"
 fi
-# COMANND=textshot
+# COMMAND=textshot
 # if ! command -v $COMMAND &> /dev/null; then
 #     sudo apt-get install -y tesseract-ocr
 #     sudo apt-get install -y libtesseract-dev
@@ -180,13 +180,13 @@ fi
 # else
 #     echo "$COMMAND found"
 # fi
-COMANND=pygpt
+COMMAND=pygpt
 if ! command -v $COMMAND &> /dev/null; then
     sudo snap install pygpt
 else
     echo "$COMMAND found"
 fi
-COMANND=textsnatcher
+COMMAND=textsnatcher
 if ! command -v $COMMAND &> /dev/null; then
     sudo apt-get install -y flatpak
     sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
