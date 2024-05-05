@@ -168,7 +168,11 @@ if ! command -v $COMMAND &> /dev/null; then
     sudo gdebi -n ~/${COMMAND}.deb
     rm ~/${COMMAND}.deb
     sudo apt-get update
-    sudo apt-get install -y mysql-workbench-community
+    # sudo apt-get install -y mysql-workbench-community
+    wget -O ~/${COMMAND}.deb https://dev.mysql.com/downloads/file/?id=525960
+    sudo gdebi -n ~/${COMMAND}.deb
+    rm ~/${COMMAND}.deb
+    sudo apt-get update
     # sudo snap install $COMMAND
 else
     echo "$COMMAND found"
