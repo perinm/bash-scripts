@@ -164,10 +164,12 @@ else
 fi
 COMMAND=mysql-workbench-community
 if ! command -v $COMMAND &> /dev/null; then
-    # wget -O ~/${COMMAND}.deb https://repo.mysql.com//mysql-apt-config_0.8.28-1_all.deb
-    # sudo gdebi -n ~/${COMMAND}.deb
-    # rm ~/${COMMAND}.deb
-    sudo snap install $COMMAND
+    wget -O ~/${COMMAND}.deb https://dev.mysql.com/get/mysql-apt-config_0.8.30-1_all.deb
+    sudo gdebi -n ~/${COMMAND}.deb
+    rm ~/${COMMAND}.deb
+    sudo apt-get update
+    sudo apt-get install -y mysql-workbench-community
+    # sudo snap install $COMMAND
 else
     echo "$COMMAND found"
 fi
