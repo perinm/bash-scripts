@@ -17,3 +17,6 @@
 # sudo ubuntu-drivers autoinstall
 # sudo bash -c "echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
 # sudo bash -c "echo options nouveau modeset=0 >> /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
+
+sudo apt-get remove --purge '^nvidia-.*'
+sudo apt-get install nvidia-driver-550 nvidia-dkms-550
