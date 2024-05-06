@@ -1,5 +1,6 @@
 #!/bin/bash
 PYTHON_MAJOR_VERSION=3.12
+NVIDIA=0
 
 sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y \
     && sudo snap refresh
@@ -247,6 +248,17 @@ if ! command -v $COMMAND &> /dev/null; then
 else
   echo "$COMMAND found"
 fi
+# COMMAND=steam
+# if ! command -v $COMMAND &> /dev/null; then
+#   sudo add-apt-repository multiverse -y
+#   sudo apt-get update && sudo apt-get upgrade -y
+#   if [ $NVIDIA -eq 1 ]; then
+#     sudo apt-get install -y nvidia-driver-libs:i386
+#   fi
+#   sudo apt-get install -y steam
+# else
+#   echo "$COMMAND found"
+# fi
 # COMMAND=drovio
 # if ! command -v $COMMAND &> /dev/null; then
 #     wget -O ~/drovio.deb https://repository.drovio.com/stable/drovio/linux/latest_version/drovio.deb
@@ -281,15 +293,49 @@ fi
 # else
 #     echo "$COMMAND found"
 # fi
-# COMMAND=discord
+COMMAND=discord
+if ! command -v $COMMAND &> /dev/null; then
+    wget -O ~/${COMMAND}.deb "https://discordapp.com/api/download?platform=linux&format=deb"
+    sudo gdebi -n ~/${COMMAND}.deb
+    rm ~/${COMMAND}.deb
+    # sudo snap install discord
+else
+    echo "$COMMAND found"
+fi
+# COMMAND=whatsapp
 # if ! command -v $COMMAND &> /dev/null; then
-#     wget -O ~/${COMMAND}.deb "https://discordapp.com/api/download?platform=linux&format=deb"
-#     sudo gdebi -n ~/${COMMAND}.deb
-#     rm ~/${COMMAND}.deb
+#     wget -qO - https://dl.winehq.org/wine-builds/winehq.key | gpg --dearmor | sudo tee /etc/apt/keyrings/winehq-archive.key
+#     sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/`lsb_release -sc`/winehq-`lsb_release -sc`.sources
+#     sudo apt-get update
+#     sudo apt-get install -y --install-recommends winehq-staging
+#     # sudo apt-get install -y wine64 wine-stable winbind winetricks
+#     wineboot -u
+#     # WINE_GECKO_VERSION=2.47.4
+#     # wget http://dl.winehq.org/wine/wine-gecko/${WINE_GECKO_VERSION}/wine-gecko-${WINE_GECKO_VERSION}-x86_64.msi
+#     # wine msiexec /i wine-gecko-${WINE_GECKO_VERSION}-x86_64.msi
+#     # rm wine-gecko-${WINE_GECKO_VERSION}-x86_64.msi
+#     # wget http://dl.winehq.org/wine/wine-gecko/${WINE_GECKO_VERSION}/wine-gecko-${WINE_GECKO_VERSION}-x86.msi
+#     # wine msiexec /i wine-gecko-${WINE_GECKO_VERSION}-x86.msi
+#     # rm wine-gecko-${WINE_GECKO_VERSION}-x86.msi
+#     wine iexplore
+#     winecfg
+#     # winetricks dotnet45
+#     wget https://web.whatsapp.com/desktop/windows/release/x64/WhatsAppSetup.exe
+#     # https://web.whatsapp.com/desktop/windows/release/ia32/WhatsAppSetup.exe
+#     wine WhatsAppSetup.exe
 # else
 #     echo "$COMMAND found"
 # fi
-# # run telegram-desktop afterwards
+COMMAND=gsnap
+if ! command -v $COMMAND &> /dev/null; then
+    wget -O ~/${COMMAND}.zip https://extensions.gnome.org/extension-data/gSnapmicahosborne.v19.shell-extension.zip
+    # .local/share/gnome-shell/extensions
+    mkdir -p ~/.local/share/gnome-shell/extensions/gSnap@micahosborne
+    unzip ~/${COMMAND}.zip -d ~/.local/share/gnome-shell/extensions/gSnap@micahosborne
+    gnome-extensions enable gSnap@micahosborne
+else
+    echo "$COMMAND found"
+fi
 COMMAND=telegram-desktop
 if ! command -v $COMMAND &> /dev/null; then
     # wget -O- https://telegram.org/dl/desktop/linux | sudo tar xJ -C /opt/
