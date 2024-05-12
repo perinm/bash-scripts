@@ -127,6 +127,14 @@ fi
 # else
 #     echo "$COMMAND found"
 # fi
+COMMAND=npm
+if ! command -v $COMMAND &> /dev/null; then
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc
+    nvm install --lts
+else
+    echo "$COMMAND found"
+fi
 COMMAND=tofu
 if ! command -v $COMMAND &> /dev/null; then
     curl -s https://packagecloud.io/install/repositories/opentofu/tofu/script.deb.sh?any=true -o /tmp/tofu-repository-setup.sh
