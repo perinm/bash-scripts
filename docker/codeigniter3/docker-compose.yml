@@ -1,0 +1,94 @@
+x-docker-defaults: &docker-defaults
+  restart: unless-stopped
+  networks:
+    - proxy
+networks:
+  proxy:
+    external: true
+    name: proxy
+services:
+  traefik:
+    <<: *docker-defaults
+    image: traefik:v3.0.0
+    container_name: traefik
+    command:
+      - "--api.insecure=true"
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.websecure.http3=true"
+      - "--entrypoints.websecure.http3.advertisedPort=443"
+      - "--certificatesresolvers.myresolver.acme.email=example@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      # - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory" # uncomment this line and also comment the next, to use staging acme server
+      - "--certificatesresolvers.myresolver.acme.caserver=https://acme-v02.api.letsencrypt.org/directory"
+      - "--accesslog=true"
+      - "--accessLog.filePath=/logs/access.log"
+      - "--accessLog.bufferingSize=10"
+      - "--log.level=DEBUG"
+      # - "--log.level=ERROR"
+      - "--log.filePath=/logs/traefik.log"
+    ports:
+      - target: 80
+        published: 80
+        mode: host
+      - target: 443
+        published: 443
+        mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./letsencrypt:/letsencrypt
+      - ./logs/:/logs
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.traefik-https.entrypoints=websecure
+      - traefik.http.routers.traefik-https.rule=Host(`${TRAEFIK_HOST_DOMAIN}`)
+      - traefik.http.routers.traefik-https.tls.certresolver=myresolver
+      - traefik.http.routers.traefik-https.service=api@internal
+      - traefik.http.routers.traefik-https.middlewares=test-compress@docker,sslheader@docker
+      - traefik.http.middlewares.test-compress.compress=true
+      - traefik.http.middlewares.test-ratelimit.ratelimit.average=80
+      # - traefik.http.middlewares.sslheader.headers.sslRedirect=true
+      
+      - traefik.http.middlewares.content-type.contenttype.autodetect=false # leaves the Content-Type header as is from Source APP
+      # if true, and response doesn't have Content-Type header, traefik identifies the Content-Type of the response
+      # and adds the identified Content-Type header to the response before being sent to the client
+      - traefik.http.middlewares.sslheader.headers.contentTypeNosniff=true # adds X-Content-Type-Options: nosniff
+      
+      - traefik.http.middlewares.sslheader.headers.browserXssFilter=true # adds X-XSS-Protection: 1; mode=block
+      - traefik.http.middlewares.sslheader.headers.customFrameOptionsValue=SAMEORIGIN # affects X-Frame-Options
+      # "used to indicate whether or not a browser should be allowed to render a page in a <frame>, <iframe>, <embed> or <object>"
+      # I fear the above line is creating problems with blog posts not being able to be embedded in main sites.
+      # Basically it defines the X-Frame-Options header to be SAMEORIGIN, which means that the blog posts can only be embedded
+      # in the same domain as the blog itself. I think this is the reason why the blog posts are not being embedded in the main site.
+
+      # the acronym STS below means Strict-Transport-Security
+      - traefik.http.middlewares.sslheader.headers.forceSTSHeader=true # add the STS header even when the connection is HTTP
+      - traefik.http.middlewares.sslheader.headers.stsIncludeSubdomains=true # the includeSubDomains flag is appended to the STS header
+      - traefik.http.middlewares.sslheader.headers.stsPreload=true # the preload flag is appended to the STS header
+      - traefik.http.middlewares.sslheader.headers.stsSeconds=31536000 # max-age of the STS header
+      - traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https # HSTS
+  app:
+    <<: *docker-defaults
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: my-codeigniter-app
+    volumes:
+      - ./src:/var/www/html
+    env_file:
+      - .env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.app.entrypoints=websecure
+      - traefik.http.routers.app.rule=Host(`${HOST_DOMAIN}`) || Host(`www.${HOST_DOMAIN}`)
+      - traefik.http.routers.app.tls.certresolver=myresolver
+      - traefik.http.services.app.loadbalancer.server.port=80
+      - traefik.http.routers.app.middlewares=test-compress@docker,sslheader@docker # ,test-ratelimit@docker

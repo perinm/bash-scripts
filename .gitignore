@@ -15,3 +15,5 @@ cuda-repo-wsl-ubuntu-12-0-local_12.0.0-1_amd64.deb
 *.deb
 nsolid_setup_deb.sh
 alacritty
+docker/codeigniter3/src/**/*
+!docker/codeigniter3/src/README.md
