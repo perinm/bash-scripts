@@ -561,6 +561,10 @@ if ! command -v $COMMAND &> /dev/null; then
     cp extra/completions/alacritty.bash ~/.bash_completion/alacritty
     echo "source ~/.bash_completion/alacritty" >> ~/.bashrc
     sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator $(which alacritty) 50
+    sudo apt-get install -y python3-nautilus
+    pip install --user nautilus-open-any-terminal
+    glib-compile-schemas ~/.local/share/glib-2.0/schemas/
+    gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal alacritty
 else
     echo "$COMMAND found"
 fi
