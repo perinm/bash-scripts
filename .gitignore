@@ -17,3 +17,4 @@ nsolid_setup_deb.sh
 alacritty
 docker/codeigniter3/src/**/*
 !docker/codeigniter3/src/README.md
+scrcpy

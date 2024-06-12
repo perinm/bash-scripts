@@ -568,7 +568,20 @@ if ! command -v $COMMAND &> /dev/null; then
 else
     echo "$COMMAND found"
 fi
-
+COMMAND=scrcpy
+if ! command -v $COMMAND &> /dev/null; then
+    sudo apt install ffmpeg libsdl2-2.0-0 adb wget \
+        gcc git pkg-config meson ninja-build libsdl2-dev \
+        libavcodec-dev libavdevice-dev libavformat-dev libavutil-dev \
+        libswresample-dev libusb-1.0-0 libusb-1.0-0-dev
+    git clone https://github.com/Genymobile/scrcpy
+    cd scrcpy
+    ./install_release.sh
+    # to uninstall
+    # sudo ninja -Cbuild-auto uninstall
+else
+    echo "$COMMAND found"
+fi
 # COMMAND=syncthing
 # if ! command -v $COMMAND &> /dev/null; then
 #     curl -fsSL https://syncthing.net/release-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/syncthing-archive-keyring.gpg
