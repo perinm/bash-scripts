@@ -133,6 +133,19 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
   
   -> [source](https://askubuntu.com/a/1415702)
 
+  ```bash
+  # remove an app and its data
+  flatpak uninstall --delete-data <app_name>
+
+  # remove all unused apps and their data
+  flatpak uninstall --unused --delete-data
+
+  # run an update just for the ifs
+  sudo flatpak update
+  ```
+
+  -> [source](https://forums.linuxmint.com/viewtopic.php?t=395080)
+
 -> config bashrc to show only currrent directory instead of full relative path to home [source](https://askubuntu.com/a/232101)
 
 -> change vs code to LF instead of CRLF [source](https://stackoverflow.com/a/48694365)
