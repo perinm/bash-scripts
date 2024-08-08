@@ -199,12 +199,12 @@ fi
 # else
 #     echo "$COMMAND found"
 # fi
-COMMAND=pygpt
-if ! command -v $COMMAND &> /dev/null; then
-    sudo snap install pygpt
-else
-    echo "$COMMAND found"
-fi
+# COMMAND=pygpt
+# if ! command -v $COMMAND &> /dev/null; then
+#     sudo snap install pygpt
+# else
+#     echo "$COMMAND found"
+# fi
 # COMMAND=textsnatcher
 # if ! command -v $COMMAND &> /dev/null; then
 #     sudo apt-get install -y flatpak
@@ -525,16 +525,16 @@ fi
 # else
 #     echo "$COMMAND found"
 # fi
-COMMAND=dbeaver-ce
-if ! command -v $COMMAND &> /dev/null; then
-    curl -fsSL https://dbeaver.io/debs/dbeaver.gpg.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/dbeaver.gpg
-    echo "deb https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
-    sudo apt-get update
-    sudo apt-get install -y dbeaver-ce
-    # sudo snap install $COMMAND
-else
-    echo "$COMMAND found"
-fi
+# COMMAND=dbeaver-ce
+# if ! command -v $COMMAND &> /dev/null; then
+#     curl -fsSL https://dbeaver.io/debs/dbeaver.gpg.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/dbeaver.gpg
+#     echo "deb https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
+#     sudo apt-get update
+#     sudo apt-get install -y dbeaver-ce
+#     # sudo snap install $COMMAND
+# else
+#     echo "$COMMAND found"
+# fi
 COMMAND=keepassxc
 if ! command -v $COMMAND &> /dev/null; then
     sudo add-apt-repository ppa:phoerious/keepassxc -y
