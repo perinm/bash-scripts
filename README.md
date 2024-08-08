@@ -163,3 +163,101 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
 - https://github.com/GnomeSnapExtensions/gSnap
 - https://github.com/SUPERCILEX/gnome-clipboard-history
 - https://github.com/mgalgs/gnome-shell-system-monitor-applet
+
+# ARCH
+
+## Installation Boot
+
+```bash
+# set keyboard layout
+loadkeys br-abnt
+
+# check UEFI
+cat /sys/firmware/efi/fw_platform_size
+
+# Connect to the internet
+iwtcl
+
+# inside iwtcl
+device list
+station wlan0 scan
+station wlan0 get-networks
+station wlan0 connect <SSID>
+station wlan0 show
+exit
+# outside of iwtcl
+
+ip link
+
+# list disks
+lsblk
+
+# format the drive
+sudo fdisk /dev/nvme0n1
+
+# inside it type 'p' to print partitions
+# ('d' to delete, 'g' to create GPT, 'n' to create, 'w' to write changes)
+# then start disk fresh with 'g'
+# then create partitions
+
+# 1. 1GB for EFI
+# 2. 1GB for Boot
+# 3. Rest for LVM
+
+# 1. by typing
+# 'n'
+# enter
+# enter
+# +1G
+
+# then type 't' to change type
+# 'uefi'
+
+# 2. by typing  
+# 'n'
+# enter
+# enter
+# +1G
+
+# then type 't' to change type
+# 'linux'
+
+# 3. by typing
+# 'n'
+# enter
+# enter
+# enter
+
+# then type 't' to change type
+# 'linux'
+
+# 'p' to print all partitions
+# 'w' to write changes
+
+# format partitions
+mkfs.fat -F 32 /dev/nvme0n1p1
+mkfs.ext4 /dev/nvme0n1p2
+
+# Set up the encrypted partition.
+cryptsetup --use-random luksFormat /dev/nvme0n1p3
+cryptsetup luksOpen /dev/nvme0n1p3 cryptlvm
+
+# Create Volume Group
+pvcreate /dev/mapper/cryptlvm
+vgcreate vg0 /dev/mapper/cryptlvm
+
+# Create Logical Volumes
+lvcreate --size 150G vg0 --name root
+lvcreate -l +100%FREE vg0 --name home
+lvreduce --size -256M vg0/home
+
+# Format Logical Volumes
+mkfs.ext4 /dev/vg0/root
+mkfs.ext4 /dev/vg0/home
+
+# Mount new filesystems
+mount /dev/vg0/root /mnt
+mount --mkdir /dev/nvme0n1p1 /mnt/efi
+mount --mkdir /dev/nvme0n1p2 /mnt/boot
+mount --mkdir /dev/vg0/home /mnt/home
+```
