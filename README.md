@@ -176,16 +176,16 @@ loadkeys br-abnt
 cat /sys/firmware/efi/fw_platform_size
 
 # Connect to the internet
-iwtcl
+iwctl
 
-# inside iwtcl
+# inside iwctl
 device list
 station wlan0 scan
 station wlan0 get-networks
 station wlan0 connect <SSID>
 station wlan0 show
 exit
-# outside of iwtcl
+# outside of iwctl
 
 ip link
 
@@ -260,4 +260,70 @@ mount /dev/vg0/root /mnt
 mount --mkdir /dev/nvme0n1p1 /mnt/efi
 mount --mkdir /dev/nvme0n1p2 /mnt/boot
 mount --mkdir /dev/vg0/home /mnt/home
+
+# Install base system
+pacstrap -K /mnt base linux linux-firmware openssh git vim sudo
+
+# Generate fstab
+genfstab -U /mnt >> /mnt/etc/fstab
+
+# Chroot into the new system
+arch-chroot /mnt /bin/bash
+
+# See available timezones
+ls /usr/share/zoneinfo/
+
+# Set the timezone
+ln -s /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
+
+# Set the hardware clock
+hwclock --systohc
+
+# Set the hostname
+echo hostname > /etc/hostname
+
+# Create a user
+useradd -m -G wheel --shell /bin/bash username
+passwd username
+visudo
+# ---> Uncomment '%wheel ALL=(ALL) ALL'
+
+# configure mkinitcpio
+pacman -S lvm2
+vim /etc/mkinitcpio.conf
+# ---> Add 'encrypt' and 'lvm2' to HOOKS before 'filesystems'
+
+# Regenerate the initramfs
+mkinitcpio -P
+
+# Setup GRUB
+pacman -S grub efibootmgr
+grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
+
+vim /etc/default/grub
+# edit the line GRUB_CMDLINE_LINUX
+# GRUB_CMDLINE_LINUX="cryptdevice=/dev/nvme0n1p3:cryptlvm root=/dev/vg0/root"
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+# Install network manager
+pacman -S networkmanager
+systemctl enable NetworkManager
+
+# Exit new system
+exit
+umount -R /mnt
+
+# Arch Linux is now installed. Reboot the system.
+reboot
+
+# After rebooting, login as the user you created
+# connect to the internet
+nmcli device wifi connect <SSID> password <password>
+
+# check internet connectivity
+ping google.com
+
+# Install gnome desktop
+sudo pacman -S gnome gdm gnome-tweaks gnome-shell-extensions
 ```
