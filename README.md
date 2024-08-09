@@ -326,4 +326,11 @@ ping google.com
 
 # Install gnome desktop
 sudo pacman -S gnome gdm gnome-tweaks gnome-shell-extensions
+# ALL
+# default font
+# pipewire
+# y
+
+# Enable GDM
+sudo systemctl enable gdm
 ```
