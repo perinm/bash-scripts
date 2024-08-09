@@ -168,6 +168,8 @@ ssh-keygen -t ed25519 -C "<example@email.com>"
 
 ## Installation Boot
 
+- below is based on [this](https://gist.github.com/mjnaderi/28264ce68f87f52f2cabb823a503e673), credits goes to the author, [mjnaderi](https://gist.github.com/mjnaderi)
+
 ```bash
 # set keyboard layout
 loadkeys br-abnt

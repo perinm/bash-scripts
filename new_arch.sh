@@ -4,10 +4,15 @@ NVIDIA=0
 
 sudo pacman -Syu --noconfirm
 sudo pacman -S --needed --noconfirm \
-    python-pip python-virtualenv htop tilix \
+    python-pip python-virtualenv htop \
     curl whois nmap ncdu lm_sensors wget gpg gnome-shell-extensions wavemon mesa-demos \
     gnome-system-monitor apache-tools libvirt bridge-utils virt-manager qemu \
-    mpv ghex imagemagick ghostscript hwinfo
+    mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils
+
+sudo systemctl enable bluetooth.service
+bluetoothctl power on
+sudo pacman -S --needed --noconfirm \
+    bluez-hid2hci
 
 # Note: gdebi, snap, apt-get, and add-apt-repository are skipped as they are not relevant in Arch.
 
