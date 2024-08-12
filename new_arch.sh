@@ -3,10 +3,12 @@ PYTHON_MAJOR_VERSION=3.12
 NVIDIA=0
 
 sudo pacman -Syu --noconfirm
+sudo pacman -Syu intel-ucode linux-firmware --noconfirm
+# apache-tools gpg qemu
 sudo pacman -S --needed --noconfirm \
     python-pip python-virtualenv htop \
-    curl whois nmap ncdu lm_sensors wget gpg gnome-shell-extensions wavemon mesa-demos \
-    gnome-system-monitor apache-tools libvirt bridge-utils virt-manager qemu \
+    curl whois nmap ncdu lm_sensors wget gnome-shell-extensions wavemon mesa-demos \
+    gnome-system-monitor libvirt bridge-utils virt-manager \
     mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils
 
 sudo systemctl enable bluetooth.service
@@ -35,6 +37,9 @@ else
 fi
 cat $FILE.pub
 
+eval "$(ssh-agent -s)"
+ssh-add $FILE
+
 # Git configuration
 git config --global user.email "lucasperinm@gmail.com"
 git config --global user.name "Lucas Manchine"
@@ -50,11 +55,23 @@ install_app_if_not_exists() {
     fi
 }
 
-# Google Chrome
-install_app_if_not_exists google-chrome-stable "yay -S --noconfirm google-chrome"
+# Install Yay (Yet Another Yaourt)
+install_app_if_not_exists yay "
+    sudo pacman -S --needed base-devel git
+    git clone https://aur.archlinux.org/yay.git
+    cd yay/
+    makepkg -si --noconfirm
+    yay --version
+    cd ~/
+"
 
 # NVM & NPM
-install_app_if_not_exists npm "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash && source ~/.bashrc && nvm install --lts"
+install_app_if_not_exists npm "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash && source ~/.bashrc && nvm install --lts"
+
+yay -S --no-confirm gnome-shell-extension-gsnap
+
+# Google Chrome
+install_app_if_not_exists google-chrome-stable "yay -S --noconfirm google-chrome"
 
 # OpenTofu (Project formerly Terraform)
 install_app_if_not_exists tofu "
@@ -72,8 +89,7 @@ install_app_if_not_exists github-copilot-cli "
     curl -SLO https://deb.nodesource.com/nsolid_setup_deb.sh
     chmod 500 nsolid_setup_deb.sh
     ./nsolid_setup_deb.sh 21
-    sudo pacman -S --needed --noconfirm nodejs npm
-    sudo npm install -g @githubnext/github-copilot-cli
+    npm install -g @githubnext/github-copilot-cli
     echo 'eval \"$(github-copilot-cli alias -- \"$0\")\"' >> ~/.bashrc
     github-copilot-cli auth
     rm nsolid_setup_deb.sh
@@ -83,11 +99,13 @@ install_app_if_not_exists github-copilot-cli "
 install_app_if_not_exists mysql-workbench "yay -S --noconfirm mysql-workbench"
 
 # Visual Studio Code
-install_app_if_not_exists code "sudo pacman -S --needed --noconfirm code"
+install_app_if_not_exists code "yay -S visual-studio-code-bin"
 
 # Docker
 install_app_if_not_exists docker "
-    curl https://get.docker.com | sh
+    sudo pacman -S --needed --noconfirm docker docker-compose
+    sudo systemctl enable docker.service
+    sudo systemctl start docker.service
     sudo usermod -aG docker $USER
 "
 
@@ -145,7 +163,7 @@ EOL
 "
 
 # Obsidian
-install_app_if_not_exists obsidian-snap "yay -S --noconfirm obsidian"
+install_app_if_not_exists obsidian "sudo pacman -S --needed --noconfirm obsidian"
 
 # KeePassXC
 install_app_if_not_exists keepassxc "sudo pacman -S --needed --noconfirm keepassxc"
