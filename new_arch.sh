@@ -171,21 +171,8 @@ install_app_if_not_exists keepassxc "sudo pacman -S --needed --noconfirm keepass
 # Alacritty
 install_app_if_not_exists alacritty "
     sudo pacman -S --needed --noconfirm alacritty
-    cargo build --release --no-default-features --features=wayland
-    sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
-    sudo cp target/release/alacritty /usr/local/bin
-    sudo cp extra/logo/alacritty-term.svg /usr/share/pixmaps/Alacritty.svg
-    sudo desktop-file-install extra/linux/Alacritty.desktop
-    sudo update-desktop-database
-    sudo mkdir -p /usr/local/share/man/man1
-    sudo mkdir -p /usr/local/share/man/man5
-    mkdir -p ~/.bash_completion
-    cp extra/completions/alacritty.bash ~/.bash_completion/alacritty
-    echo "source ~/.bash_completion/alacritty" >> ~/.bashrc
-    sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator $(which alacritty) 50
     python3-nautilus
     pip install --user nautilus-open-any-terminal
-    glib-compile-schemas ~/.local/share/glib-2.0/schemas/
     gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal alacritty
 "
 
