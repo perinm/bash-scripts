@@ -9,7 +9,8 @@ sudo pacman -S --needed --noconfirm \
     python-pip python-virtualenv htop \
     curl whois nmap ncdu lm_sensors wget gnome-shell-extensions wavemon mesa-demos \
     gnome-system-monitor libvirt bridge-utils virt-manager \
-    mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils
+    mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils \
+    nano
 
 sudo systemctl enable bluetooth.service
 bluetoothctl power on
