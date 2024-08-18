@@ -190,6 +190,8 @@ install_app_if_not_exists alacritty "
     gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'alacritty'
     gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Control><Alt>T'
     gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings
+    mkdir -p ~/.config/alacritty/themes
+    git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
 "
 
 # Scrcpy
