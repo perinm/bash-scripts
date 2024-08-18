@@ -171,9 +171,17 @@ install_app_if_not_exists keepassxc "sudo pacman -S --needed --noconfirm keepass
 # Alacritty
 install_app_if_not_exists alacritty "
     sudo pacman -S --needed --noconfirm alacritty
-    python3-nautilus
-    pip install --user nautilus-open-any-terminal
+    yay -S --noconfirm nautilus-open-any-terminal
     gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal alacritty
+    # gsettings set com.github.stunkymonkey.nautilus-open-any-terminal keybindings '<Ctrl><Alt>t'
+    # gsettings set com.github.stunkymonkey.nautilus-open-any-terminal new-tab true
+    # gsettings set com.github.stunkymonkey.nautilus-open-any-terminal flatpak system
+    gsettings set org.gnome.desktop.default-applications.terminal exec 'alacritty'
+    gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Open Alacritty Terminal'
+    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'alacritty'
+    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Control><Alt>T'
+    gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings
 "
 
 # Scrcpy
