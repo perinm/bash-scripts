@@ -71,7 +71,10 @@ install_app_if_not_exists npm "curl -o- https://raw.githubusercontent.com/nvm-sh
 yay -S --no-confirm gnome-shell-extension-gsnap
 
 # Google Chrome
-install_app_if_not_exists google-chrome-stable "yay -S --noconfirm google-chrome"
+install_app_if_not_exists google-chrome-stable "
+    yay -S --noconfirm google-chrome
+    sudo ln -s /usr/bin/google-chrome-stable /usr/bin/google-chrome
+"
 
 # OpenTofu (Project formerly Terraform)
 install_app_if_not_exists tofu "
@@ -198,3 +201,5 @@ service_exists() {
         return 1
     fi
 }
+
+yay -Syu --noconfirm
