@@ -10,7 +10,7 @@ sudo pacman -S --needed --noconfirm \
     curl whois nmap ncdu lm_sensors wget gnome-shell-extensions wavemon mesa-demos \
     gnome-system-monitor libvirt bridge-utils virt-manager \
     mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils \
-    nano copyq discord
+    nano discord
 
 sudo systemctl enable bluetooth.service
 bluetoothctl power on
@@ -91,6 +91,16 @@ install_app_if_not_exists tofu "
 
 # AWS CLI
 install_app_if_not_exists aws "yay -S --noconfirm aws-cli-v2"
+
+install_app_if_not_exists copyq "
+    sudo pacman -S --needed --noconfirm copyq
+    # Exec=env QT_QPA_PLATFORM=xcb copyq
+    # gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']"
+    # gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ name 'CopyQ'
+    # gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command 'copyq show'
+    # gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding '<Super><Shift>v'
+    # gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings
+" 
 
 # GitHub Copilot CLI
 install_app_if_not_exists github-copilot-cli "
