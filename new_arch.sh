@@ -10,7 +10,7 @@ sudo pacman -S --needed --noconfirm \
     curl whois nmap ncdu lm_sensors wget gnome-shell-extensions wavemon mesa-demos \
     gnome-system-monitor libvirt bridge-utils virt-manager \
     mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils \
-    nano
+    nano copyq discord
 
 sudo systemctl enable bluetooth.service
 bluetoothctl power on
@@ -75,6 +75,10 @@ yay -S --no-confirm gnome-shell-extension-gsnap
 install_app_if_not_exists google-chrome-stable "
     yay -S --noconfirm google-chrome
     sudo ln -s /usr/bin/google-chrome-stable /usr/bin/google-chrome
+    echo '--enable-blink-features=MiddleClickAutoscroll' >> ~/.config/chrome-flags.conf
+    echo '--enable-features=UseOzonePlatform' >> ~/.config/chrome-flags.conf
+    echo '--ozone-platform=wayland' >> ~/.config/chrome-flags.conf
+    echo '--ozone-platform-hint=auto' >> ~/.config/chrome-flags.conf
 "
 
 # OpenTofu (Project formerly Terraform)
