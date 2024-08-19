@@ -10,7 +10,7 @@ sudo pacman -S --needed --noconfirm \
     curl whois nmap ncdu lm_sensors wget gnome-shell-extensions wavemon mesa-demos \
     gnome-system-monitor libvirt bridge-utils virt-manager \
     mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils \
-    nano discord solaar gnome-shell-extension-appindicator
+    nano discord solaar gnome-shell-extension-appindicator less
 
 # Don' t forget to enable extensions in GNOME Tweaks
 
