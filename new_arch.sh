@@ -8,7 +8,7 @@ sudo pacman -Syu intel-ucode linux-firmware --noconfirm
 sudo pacman -S --needed --noconfirm \
     python-pip python-virtualenv htop \
     curl whois nmap ncdu lm_sensors wget gnome-shell-extensions wavemon mesa-demos \
-    gnome-system-monitor libvirt bridge-utils virt-manager \
+    gnome-system-monitor libvirt bridge-utils virt-manager jq \
     mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils \
     nano discord solaar less os-prober openvpn networkmanager-openvpn \
     gnome-shell-extension-appindicator
@@ -76,7 +76,8 @@ install_app_if_not_exists yay "
 # NVM & NPM
 install_app_if_not_exists npm "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash && source ~/.bashrc && nvm install --lts"
 
-yay -S --no-confirm gnome-shell-extension-gsnap
+yay -S --noconfirm gnome-shell-extension-dash-to-dock
+yay -S --noconfirm gnome-shell-extension-gsnap
 
 # Google Chrome
 install_app_if_not_exists google-chrome-stable "
