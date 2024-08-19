@@ -10,7 +10,9 @@ sudo pacman -S --needed --noconfirm \
     curl whois nmap ncdu lm_sensors wget gnome-shell-extensions wavemon mesa-demos \
     gnome-system-monitor libvirt bridge-utils virt-manager \
     mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils \
-    nano discord solaar
+    nano discord solaar gnome-shell-extension-appindicator
+
+# Don' t forget to enable extensions in GNOME Tweaks
 
 sudo groupadd -f plugdev
 sudo usermod -aG plugdev $USER
@@ -102,7 +104,7 @@ install_app_if_not_exists copyq "
     # gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']"
     # gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ name 'CopyQ'
     # gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command 'copyq show'
-    # gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding '<Super><Shift>v'
+    # gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding '<Super>v'
     # gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings
 " 
 
