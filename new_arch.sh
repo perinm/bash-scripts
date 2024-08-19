@@ -176,7 +176,7 @@ install_app_if_not_exists slack-desktop "yay -S --noconfirm slack-desktop"
 install_app_if_not_exists zoom "yay -S --noconfirm zoom"
 
 # DataGrip
-install_app_if_not_exists datagrip "yay -S --noconfirm datagrip"
+install_app_if_not_exists datagrip "yay -S --noconfirm datagrip datagrip-jre"
 
 # SMPlayer
 install_app_if_not_exists smplayer "sudo pacman -S --needed --noconfirm smplayer"
