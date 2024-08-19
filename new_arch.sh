@@ -10,7 +10,9 @@ sudo pacman -S --needed --noconfirm \
     curl whois nmap ncdu lm_sensors wget gnome-shell-extensions wavemon mesa-demos \
     gnome-system-monitor libvirt bridge-utils virt-manager \
     mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils \
-    nano discord solaar gnome-shell-extension-appindicator less
+    nano discord solaar less os-prober \
+    gnome-shell-extension-appindicator \
+    gnome-shell-extension-dash-to-panel
 
 # Don' t forget to enable extensions in GNOME Tweaks
 
@@ -162,6 +164,9 @@ install_app_if_not_exists ksnip "yay -S --noconfirm ksnip"
 # Slack
 install_app_if_not_exists slack-desktop "yay -S --noconfirm slack-desktop"
 
+# Zoom
+install_app_if_not_exists zoom "yay -S --noconfirm zoom"
+
 # SMPlayer
 install_app_if_not_exists smplayer "sudo pacman -S --needed --noconfirm smplayer"
 
@@ -170,6 +175,9 @@ install_app_if_not_exists pinta "sudo pacman -S --needed --noconfirm pinta"
 
 # Skype
 install_app_if_not_exists skypeforlinux-stable-bin "yay -S --noconfirm skypeforlinux-stable-bin"
+
+# Resources
+install_app_if_not_exists resources "yay -S --noconfirm resources"
 
 # Postman
 install_app_if_not_exists postman-bin "
