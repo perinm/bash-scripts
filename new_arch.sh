@@ -11,8 +11,7 @@ sudo pacman -S --needed --noconfirm \
     gnome-system-monitor libvirt bridge-utils virt-manager \
     mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils \
     nano discord solaar less os-prober \
-    gnome-shell-extension-appindicator \
-    gnome-shell-extension-dash-to-panel
+    gnome-shell-extension-appindicator
 
 # Don' t forget to enable extensions in GNOME Tweaks
 
