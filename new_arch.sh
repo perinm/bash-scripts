@@ -10,7 +10,7 @@ sudo pacman -S --needed --noconfirm \
     curl whois nmap ncdu lm_sensors wget gnome-shell-extensions wavemon mesa-demos \
     gnome-system-monitor libvirt bridge-utils virt-manager \
     mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils \
-    nano discord solaar less os-prober \
+    nano discord solaar less os-prober openvpn networkmanager-openvpn \
     gnome-shell-extension-appindicator
 
 # Don' t forget to enable extensions in GNOME Tweaks
@@ -94,6 +94,15 @@ install_app_if_not_exists tofu "
     if ! command -v terraform &> /dev/null; then
         sudo ln -s /usr/bin/tofu /usr/bin/terraform
     fi
+    echo '
+    tf() {
+        if [ -f .env ]; then
+            source .env
+        fi
+        tofu \\"\\$@\\"
+    }
+    alias tf=tf
+    ' >> ~/.bashrc
 "
 
 # AWS CLI
@@ -165,6 +174,9 @@ install_app_if_not_exists slack-desktop "yay -S --noconfirm slack-desktop"
 
 # Zoom
 install_app_if_not_exists zoom "yay -S --noconfirm zoom"
+
+# DataGrip
+install_app_if_not_exists datagrip "yay -S --noconfirm datagrip"
 
 # SMPlayer
 install_app_if_not_exists smplayer "sudo pacman -S --needed --noconfirm smplayer"
