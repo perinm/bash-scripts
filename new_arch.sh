@@ -10,7 +10,11 @@ sudo pacman -S --needed --noconfirm \
     curl whois nmap ncdu lm_sensors wget gnome-shell-extensions wavemon mesa-demos \
     gnome-system-monitor libvirt bridge-utils virt-manager \
     mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils \
-    nano discord
+    nano discord solaar
+
+sudo groupadd -f plugdev
+sudo usermod -aG plugdev $USER
+sudo udevadm control --reload-rules
 
 sudo systemctl enable bluetooth.service
 bluetoothctl power on
