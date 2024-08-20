@@ -13,8 +13,13 @@ sudo pacman -S --needed --noconfirm \
     nano discord solaar less os-prober openvpn networkmanager-openvpn \
     gnome-shell-extension-appindicator
 
-# if on a intel machine
-sudo pacman -Syu --needed --noconfirm intel-ucode libva-utils intel-media-driver
+# Check if the CPU is Intel
+if grep -qi "GenuineIntel" /proc/cpuinfo; then
+    echo "Intel CPU detected. Running package installation script."
+    sudo pacman -Syu --needed --noconfirm intel-ucode libva-utils intel-media-driver
+else
+    echo "The CPU is not an Intel CPU. Skipping Intel CPU specific packages."
+fi
 
 # Don' t forget to enable extensions in GNOME Tweaks
 
