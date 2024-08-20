@@ -3,7 +3,7 @@ PYTHON_MAJOR_VERSION=3.12
 NVIDIA=0
 
 sudo pacman -Syu --noconfirm
-sudo pacman -Syu intel-ucode linux-firmware --noconfirm
+sudo pacman -Syu --needed --noconfirm linux-firmware
 # apache-tools gpg qemu
 sudo pacman -S --needed --noconfirm \
     python-pip python-virtualenv htop \
@@ -12,6 +12,9 @@ sudo pacman -S --needed --noconfirm \
     mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils \
     nano discord solaar less os-prober openvpn networkmanager-openvpn \
     gnome-shell-extension-appindicator
+
+# if on a intel machine
+sudo pacman -Syu --needed --noconfirm intel-ucode libva-utils intel-media-driver
 
 # Don' t forget to enable extensions in GNOME Tweaks
 
