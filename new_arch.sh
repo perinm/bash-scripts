@@ -13,6 +13,8 @@ sudo pacman -Syu --needed --noconfirm \
     nano discord solaar less os-prober openvpn networkmanager-openvpn \
     gnome-shell-extension-appindicator
 
+sudo localectl set-locale LANG=en_US.UTF-8
+
 # Check if the CPU is Intel
 if grep -qi "GenuineIntel" /proc/cpuinfo; then
     echo "Intel CPU detected. Running package installation script."
