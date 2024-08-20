@@ -166,6 +166,7 @@ install_app_if_not_exists spotify "yay -S --noconfirm spotify"
 # OBS Studio
 install_app_if_not_exists obs-studio "
     sudo pacman -S --needed --noconfirm obs-studio
+    yay -S --noconfirm obs-backgroundremoval
 "
 
 # Discord
