@@ -21,6 +21,14 @@ else
     echo "The CPU is not an Intel CPU. Skipping Intel CPU specific packages."
 fi
 
+# Check if the CPU is AMD
+if grep -qi "AuthenticAMD" /proc/cpuinfo; then
+    echo "AMD CPU detected. Running package installation script."
+    sudo pacman -Syu --needed --noconfirm amd-ucode
+else
+    echo "The CPU is not an AMD CPU. Skipping AMD CPU specific packages."
+fi
+
 # Don' t forget to enable extensions in GNOME Tweaks
 
 sudo groupadd -f plugdev
