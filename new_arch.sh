@@ -15,22 +15,6 @@ sudo pacman -Syu --needed --noconfirm \
 
 sudo localectl set-locale LANG=en_US.UTF-8
 
-# Check if the CPU is Intel
-if grep -qi "GenuineIntel" /proc/cpuinfo; then
-    echo "Intel CPU detected. Running package installation script."
-    sudo pacman -Syu --needed --noconfirm intel-ucode libva-utils intel-media-driver
-else
-    echo "The CPU is not an Intel CPU. Skipping Intel CPU specific packages."
-fi
-
-# Check if the CPU is AMD
-if grep -qi "AuthenticAMD" /proc/cpuinfo; then
-    echo "AMD CPU detected. Running package installation script."
-    sudo pacman -Syu --needed --noconfirm amd-ucode
-else
-    echo "The CPU is not an AMD CPU. Skipping AMD CPU specific packages."
-fi
-
 # Don' t forget to enable extensions in GNOME Tweaks
 
 sudo groupadd -f plugdev
@@ -90,6 +74,27 @@ install_app_if_not_exists yay "
     yay --version
     cd ~/
 "
+
+# Check if the CPU is Intel
+if grep -qi "GenuineIntel" /proc/cpuinfo; then
+    echo "Intel CPU detected. Running package installation script."
+    sudo pacman -Syu --needed --noconfirm intel-ucode libva-utils intel-media-driver thermald
+    sudo systemctl enable thermald.service
+    sudo systemctl start thermald.service
+    yay -S --noconfirm tuned tuned-ppd
+    sudo systemctl enable tuned.service tuned-ppd.service
+    sudo systemctl start tuned.service tuned-ppd.service
+else
+    echo "The CPU is not an Intel CPU. Skipping Intel CPU specific packages."
+fi
+
+# Check if the CPU is AMD
+if grep -qi "AuthenticAMD" /proc/cpuinfo; then
+    echo "AMD CPU detected. Running package installation script."
+    sudo pacman -Syu --needed --noconfirm amd-ucode
+else
+    echo "The CPU is not an AMD CPU. Skipping AMD CPU specific packages."
+fi
 
 # NVM & NPM
 install_app_if_not_exists npm "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash && source ~/.bashrc && nvm install --lts"
