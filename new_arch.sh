@@ -101,6 +101,7 @@ install_app_if_not_exists npm "curl -o- https://raw.githubusercontent.com/nvm-sh
 
 yay -S --noconfirm gnome-shell-extension-dash-to-dock
 yay -S --noconfirm gnome-shell-extension-gsnap
+yay -S --noconfirm keybase-bin
 
 # Google Chrome
 install_app_if_not_exists google-chrome-stable "
