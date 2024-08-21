@@ -55,6 +55,7 @@ ssh-add $FILE
 # Git configuration
 git config --global user.email "lucasperinm@gmail.com"
 git config --global user.name "Lucas Manchine"
+git config --global push.default current
 
 # Application Installations
 install_app_if_not_exists() {
