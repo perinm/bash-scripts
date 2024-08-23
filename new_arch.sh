@@ -11,7 +11,7 @@ sudo pacman -Syu --needed --noconfirm \
     gnome-system-monitor libvirt bridge-utils virt-manager jq firefox clutter \
     mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils gnome-browser-connector \
     nano discord solaar less os-prober openvpn networkmanager-openvpn \
-    pipewire-alsa pavucontrol sof-firmware sof-tools \
+    pipewire-alsa pavucontrol sof-firmware sof-tools tlp \
     gnome-shell-extension-appindicator
 
 sudo localectl set-locale LANG=en_US.UTF-8
@@ -23,7 +23,10 @@ sudo usermod -aG plugdev $USER
 sudo usermod -aG audio $USER
 sudo udevadm control --reload-rules
 
+sudo systemctl enable tlp.service
+sudo systemctl start tlp.service
 sudo systemctl enable bluetooth.service
+sudo systemctl start bluetooth.service
 bluetoothctl power on
 sudo pacman -S --needed --noconfirm \
     bluez-hid2hci
