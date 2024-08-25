@@ -223,19 +223,7 @@ install_app_if_not_exists skypeforlinux-stable-bin "yay -S --noconfirm skypeforl
 install_app_if_not_exists resources "yay -S --noconfirm resources"
 
 # Postman
-install_app_if_not_exists postman-bin "
-    yay -S --noconfirm postman-bin
-    cat > ~/.local/share/applications/postman.desktop <<EOL
-[Desktop Entry]
-Encoding=UTF-8
-Name=Postman
-Exec=/usr/bin/postman
-Icon=postman
-Terminal=false
-Type=Application
-Categories=Development;
-EOL
-"
+install_app_if_not_exists postman-bin "yay -S --noconfirm postman-bin"
 
 # Obsidian
 install_app_if_not_exists obsidian "sudo pacman -S --needed --noconfirm obsidian"
