@@ -217,7 +217,7 @@ install_app_if_not_exists smplayer "sudo pacman -S --needed --noconfirm smplayer
 install_app_if_not_exists pinta "sudo pacman -S --needed --noconfirm pinta"
 
 # Skype
-install_app_if_not_exists skypeforlinux-stable-bin "yay -S --noconfirm skypeforlinux-stable-bin"
+install_app_if_not_exists skypeforlinux-bin "yay -S --noconfirm skypeforlinux-bin"
 
 # Resources
 install_app_if_not_exists resources "yay -S --noconfirm resources"
