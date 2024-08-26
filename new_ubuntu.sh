@@ -28,7 +28,7 @@ sudo add-apt-repository ppa:deadsnakes/ppa -y
 sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y \
     && sudo snap refresh
 # sudo apt-get install -y python$PYTHON_MAJOR_VERSION python$PYTHON_MAJOR_VERSION-venv python$PYTHON_MAJOR_VERSION-dev
-# python$PYTHON_MAJOR_VERSION -m pip install -U pip setuptools wheel setuptools-rust
+# python$PYTHON_MAJOR_VERSION -m pip install -U pip setuptools wheel setuptools-rust ruff
 
 ## system extra settings
 # allows gnome workspace to work with 2 monitors instead of only one

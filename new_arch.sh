@@ -37,6 +37,10 @@ sudo pacman -S --needed --noconfirm \
 # Arch typically has the latest version of Python available, but for a specific version:
 # sudo pacman -S --needed --noconfirm python${PYTHON_MAJOR_VERSION}
 
+python -m venv ~/venv${PYTHON_MAJOR_VERSION}
+source ~/venv${PYTHON_MAJOR_VERSION}/bin/activate
+pip install -U pip setuptools wheel setuptools-rust ruff
+
 # For system extra settings:
 # allowing the GNOME workspace to work with 2 monitors instead of only one
 gsettings set org.gnome.mutter workspaces-only-on-primary false
