@@ -11,7 +11,7 @@ sudo pacman -Syu --needed --noconfirm \
     gnome-system-monitor libvirt bridge-utils virt-manager jq firefox clutter \
     mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils gnome-browser-connector \
     nano discord solaar less os-prober openvpn networkmanager-openvpn \
-    pipewire-alsa pavucontrol sof-firmware sof-tools tlp \
+    pipewire-alsa pavucontrol sof-firmware sof-tools tlp pwgen \
     gnome-shell-extension-appindicator
 
 sudo localectl set-locale LANG=en_US.UTF-8
