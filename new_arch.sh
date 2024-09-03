@@ -110,9 +110,29 @@ fi
 # NVM & NPM
 install_app_if_not_exists npm "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash && source ~/.bashrc && nvm install --lts"
 
+if ! grep -qF '# Increase Bash history size' ~/.bashrc; then
+  cat << 'EOF' >> ~/.bashrc
+
+# Increase Bash history size
+HISTSIZE=10000
+HISTFILESIZE=20000
+
+# Avoid duplicate entries in the history
+HISTCONTROL=ignoredups:erasedups
+
+# Append to the history file, rather than overwriting it
+shopt -s histappend
+
+# Add timestamps to history entries
+export HISTTIMEFORMAT="%F %T "
+EOF
+fi
+
 yay -S --noconfirm gnome-shell-extension-dash-to-dock
 yay -S --noconfirm gnome-shell-extension-gsnap
 yay -S --noconfirm keybase-bin
+yay -S --noconfirm koodo-reader-bin
+yay -S --noconfirm 7-zip-full
 
 # Google Chrome
 install_app_if_not_exists google-chrome-stable "
