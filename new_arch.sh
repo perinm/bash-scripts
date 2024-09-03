@@ -114,8 +114,8 @@ if ! grep -qF '# Increase Bash history size' ~/.bashrc; then
   cat << 'EOF' >> ~/.bashrc
 
 # Increase Bash history size
-HISTSIZE=10000
-HISTFILESIZE=20000
+HISTSIZE=100000
+HISTFILESIZE=200000
 
 # Avoid duplicate entries in the history
 HISTCONTROL=ignoredups:erasedups
