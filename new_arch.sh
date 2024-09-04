@@ -10,7 +10,7 @@ sudo pacman -Syu --needed --noconfirm \
     curl whois nmap ncdu lm_sensors wget gnome-shell-extensions wavemon mesa-demos \
     gnome-system-monitor libvirt bridge-utils virt-manager jq firefox clutter \
     mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils gnome-browser-connector \
-    nano discord solaar less os-prober openvpn networkmanager-openvpn \
+    nano discord solaar less os-prober openvpn networkmanager-openvpn bind \
     pipewire-alsa pavucontrol sof-firmware sof-tools tlp pwgen tenacity vi \
     gnome-shell-extension-appindicator
 
