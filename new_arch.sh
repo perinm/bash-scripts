@@ -133,6 +133,8 @@ yay -S --noconfirm gnome-shell-extension-gsnap
 yay -S --noconfirm keybase-bin
 yay -S --noconfirm koodo-reader-bin
 yay -S --noconfirm 7-zip-full
+yay -S --noconfirm aws-cli-v2
+yay -S --noconfirm aws-session-manager-plugin
 
 # Google Chrome
 install_app_if_not_exists google-chrome-stable "
@@ -160,9 +162,6 @@ install_app_if_not_exists tofu "
     alias tf=tf
     ' >> ~/.bashrc
 "
-
-# AWS CLI
-install_app_if_not_exists aws "yay -S --noconfirm aws-cli-v2"
 
 install_app_if_not_exists copyq "
     sudo pacman -S --needed --noconfirm copyq
