@@ -198,6 +198,15 @@ install_app_if_not_exists docker "
     sudo usermod -aG docker $USER
 "
 
+# sudo reboot && nordvpn set technology nordlynx
+# NordVPN
+install_app_if_not_exists nordvpn "
+    yay -S --noconfirm nordvpn-bin
+    sudo gpasswd -a $USER nordvpn
+    sudo usermod -aG nordvpn $USER
+    sudo systemctl enable --now nordvpnd
+"
+
 # Spotify
 install_app_if_not_exists spotify "yay -S --noconfirm spotify"
 
