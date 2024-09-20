@@ -44,6 +44,7 @@ pip install -U pip setuptools wheel setuptools-rust ruff
 # For system extra settings:
 # allowing the GNOME workspace to work with 2 monitors instead of only one
 gsettings set org.gnome.mutter workspaces-only-on-primary false
+gsettings set org.gnome.desktop.interface cursor-size 48
 
 # Generate SSH key if not exists
 KEY_BASE_NAME=id_ed25519
