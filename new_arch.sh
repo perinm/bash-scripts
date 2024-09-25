@@ -12,7 +12,8 @@ sudo pacman -Syu --needed --noconfirm \
     mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils gnome-browser-connector \
     nano discord solaar less os-prober openvpn networkmanager-openvpn spotify-launcher \
     pipewire-alsa pavucontrol sof-firmware sof-tools tlp pwgen tenacity vi dkms \
-    linux-headers v4l2loopback-dkms python-opencv \
+    linux-headers v4l2loopback-dkms python-opencv android-tools java-runtime-common \
+    jre-openjdk \
     gnome-shell-extension-appindicator
 
 sudo localectl set-locale LANG=en_US.UTF-8
@@ -139,6 +140,7 @@ yay -S --noconfirm koodo-reader-bin
 yay -S --noconfirm 7-zip-full
 yay -S --noconfirm aws-cli-v2
 yay -S --noconfirm aws-session-manager-plugin
+yay -S --noconfirm android-studio android-sdk-cmdline-tools-latest android-sdk-build-tools android-sdk-platform-tools android-platform
 
 # Google Chrome
 install_app_if_not_exists google-chrome-stable "
@@ -301,4 +303,4 @@ service_exists() {
     fi
 }
 
-sudo pacman -Syu --noconfirm && yay -Syu --noconfirm
+sudo pacman -Syu --noconfirm && yay -Syu --noconfirm && yay -Yc --noconfirm
