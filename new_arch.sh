@@ -12,7 +12,7 @@ sudo pacman -Syu --needed --noconfirm \
     mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils gnome-browser-connector \
     nano discord solaar less os-prober openvpn networkmanager-openvpn spotify-launcher \
     pipewire-alsa pavucontrol sof-firmware sof-tools tlp pwgen tenacity vi dkms \
-    linux-headers v4l2loopback-dkms \
+    linux-headers v4l2loopback-dkms python-opencv \
     gnome-shell-extension-appindicator
 
 sudo localectl set-locale LANG=en_US.UTF-8
@@ -127,6 +127,8 @@ shopt -s histappend
 
 # Add timestamps to history entries
 export HISTTIMEFORMAT="%F %T "
+
+source /usr/share/git/completion/git-completion.bash
 EOF
 fi
 
