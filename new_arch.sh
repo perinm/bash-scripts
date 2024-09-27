@@ -140,7 +140,9 @@ yay -S --noconfirm koodo-reader-bin
 yay -S --noconfirm 7-zip-full
 yay -S --noconfirm aws-cli-v2
 yay -S --noconfirm aws-session-manager-plugin
-yay -S --noconfirm android-studio android-sdk-cmdline-tools-latest android-sdk-build-tools android-sdk-platform-tools android-platform
+yay -S --noconfirm android-studio android-sdk-cmdline-tools-latest android-sdk-build-tools android-sdk-platform-tools android-platform flutter
+dart --disable-analytics
+flutter --disable-analytics
 
 # Google Chrome
 install_app_if_not_exists google-chrome-stable "
