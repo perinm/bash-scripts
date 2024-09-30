@@ -13,7 +13,7 @@ sudo pacman -Syu --needed --noconfirm \
     nano discord solaar less os-prober openvpn networkmanager-openvpn spotify-launcher \
     pipewire-alsa pavucontrol sof-firmware sof-tools tlp pwgen tenacity vi dkms \
     linux-headers v4l2loopback-dkms python-opencv android-tools java-runtime-common \
-    jre-openjdk \
+    jre-openjdk docker-buildx \
     gnome-shell-extension-appindicator
 
 sudo localectl set-locale LANG=en_US.UTF-8
