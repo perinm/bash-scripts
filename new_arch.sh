@@ -133,13 +133,9 @@ source /usr/share/git/completion/git-completion.bash
 EOF
 fi
 
-yay -S --noconfirm gnome-shell-extension-dash-to-dock
-yay -S --noconfirm gnome-shell-extension-gsnap
-yay -S --noconfirm keybase-bin
-yay -S --noconfirm koodo-reader-bin
-yay -S --noconfirm 7-zip-full
-yay -S --noconfirm aws-cli-v2
-yay -S --noconfirm aws-session-manager-plugin
+yay -S --noconfirm gnome-shell-extension-dash-to-dock gnome-shell-extension-gsnap \
+    keybase-bin koodo-reader-bin 7-zip-full aws-cli-v2 aws-session-manager-plugin \
+    normcap
 yay -S --noconfirm android-studio android-sdk-cmdline-tools-latest android-sdk-build-tools android-sdk-platform-tools android-platform flutter
 dart --disable-analytics
 flutter --disable-analytics
