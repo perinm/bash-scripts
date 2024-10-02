@@ -13,7 +13,7 @@ sudo pacman -Syu --needed --noconfirm \
     nano discord solaar less os-prober openvpn networkmanager-openvpn spotify-launcher \
     pipewire-alsa pavucontrol sof-firmware sof-tools tlp pwgen tenacity vi dkms \
     linux-headers v4l2loopback-dkms python-opencv android-tools java-runtime-common \
-    jre-openjdk docker-buildx \
+    jre-openjdk docker-buildx python-pipx plocate \
     gnome-shell-extension-appindicator
 
 sudo localectl set-locale LANG=en_US.UTF-8
@@ -42,6 +42,11 @@ sudo pacman -S --needed --noconfirm \
 python -m venv ~/venv${PYTHON_MAJOR_VERSION}
 source ~/venv${PYTHON_MAJOR_VERSION}/bin/activate
 pip install -U pip setuptools wheel setuptools-rust ruff
+deactivate
+
+pipx ensurepath
+sudo pipx ensurepath --global # optional to allow pipx actions with --global argument
+sudo updatedb
 
 # For system extra settings:
 # allowing the GNOME workspace to work with 2 monitors instead of only one
