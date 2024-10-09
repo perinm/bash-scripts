@@ -1,4 +1,5 @@
 #!/bin/bash
+LAPTOP_BRAND="Dell"
 PYTHON_MAJOR_VERSION=3.12
 NVIDIA=0
 
@@ -13,7 +14,7 @@ sudo pacman -Syu --needed --noconfirm \
     nano discord solaar less os-prober openvpn networkmanager-openvpn spotify-launcher \
     pipewire-alsa pavucontrol sof-firmware sof-tools tlp pwgen tenacity vi dkms \
     linux-headers v4l2loopback-dkms python-opencv android-tools java-runtime-common \
-    jre-openjdk docker-buildx python-pipx plocate \
+    jre-openjdk docker-buildx python-pipx plocate qemu-full libreoffice-fresh \
     gnome-shell-extension-appindicator
 
 sudo localectl set-locale LANG=en_US.UTF-8
@@ -115,6 +116,16 @@ else
     echo "The CPU is not an AMD CPU. Skipping AMD CPU specific packages."
 fi
 
+# Check if the laptop brand is Dell
+if [ "$LAPTOP_BRAND" == "Dell" ]; then
+    echo "Dell laptop detected. Running package installation script."
+    sudo pacman -Syu --needed --noconfirm acpi tcl tk
+    # sudo pacman -Syu --needed --noconfirm dell-smm-hwmon
+    yay -S --noconfirm i8kutils
+else
+    echo "The laptop brand is not Dell. Skipping Dell laptop specific packages."
+fi
+
 # NVM & NPM
 install_app_if_not_exists npm "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash && source ~/.bashrc && nvm install --lts"
 
@@ -141,9 +152,35 @@ fi
 yay -S --noconfirm gnome-shell-extension-dash-to-dock gnome-shell-extension-gsnap \
     keybase-bin koodo-reader-bin 7-zip-full aws-cli-v2 aws-session-manager-plugin \
     normcap
-yay -S --noconfirm android-studio android-sdk-cmdline-tools-latest android-sdk-build-tools android-sdk-platform-tools android-platform flutter
-dart --disable-analytics
-flutter --disable-analytics
+# yay -S --noconfirm android-studio android-sdk-cmdline-tools-latest android-sdk-build-tools android-sdk-platform-tools android-platform flutter
+# dart --disable-analytics
+# flutter --disable-analytics
+# yay -Rns android-studio android-sdk-cmdline-tools-latest android-sdk-build-tools android-sdk-platform-tools android-platform flutter
+
+# Flutter
+install_app_if_not_exists flutter "
+    yay -S --noconfirm flutter
+
+    sudo groupadd flutterusers
+    sudo gpasswd -a $USER flutterusers
+    sudo chown -R :flutterusers /opt/flutter
+    sudo chmod -R g+w /opt/flutter/
+
+    yay -S --noconfirm android-sdk android-sdk-platform-tools android-sdk-build-tools android-sdk-cmdline-tools-latest
+    yay -S --noconfirm android-platform
+
+    sudo groupadd android-sdk
+    sudo gpasswd -a $USER android-sdk
+    sudo setfacl -R -m g:android-sdk:rwx /opt/android-sdk
+    sudo setfacl -d -m g:android-sdk:rwX /opt/android-sdk
+
+    export JAVA_HOME='/usr/lib/jvm/java-22-openjdk'
+    sudo archlinux-java set java-22-openjdk
+
+    sdkmanager --install "system-images;android-33;default;x86_64"
+
+    yay -S --noconfirm android-studio
+"
 
 # Google Chrome
 install_app_if_not_exists google-chrome-stable "
