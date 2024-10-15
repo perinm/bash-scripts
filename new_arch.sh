@@ -252,6 +252,7 @@ install_app_if_not_exists nordvpn "
     sudo usermod -aG nordvpn $USER
     sudo systemctl enable --now nordvpnd
     nordvpn set lan-discovery enable
+    sudo pacman -S --needed --noconfirm wireguard-tools
 "
 
 # Spotify
