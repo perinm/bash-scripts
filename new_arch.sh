@@ -239,7 +239,10 @@ install_app_if_not_exists github-copilot-cli "
 install_app_if_not_exists mysql-workbench "yay -S --noconfirm mysql-workbench"
 
 # Visual Studio Code
-install_app_if_not_exists code "yay -S visual-studio-code-bin"
+install_app_if_not_exists code "yay -S --noconfirm visual-studio-code-bin"
+
+# Visual Studio Code Insiders
+install_app_if_not_exists code-insiders "yay -S --noconfirm visual-studio-code-insiders-bin"
 
 # Docker
 install_app_if_not_exists docker "
