@@ -7,7 +7,7 @@ sudo pacman -Syu --noconfirm
 sudo pacman -Syu --needed --noconfirm linux-firmware
 # apache-tools gpg qemu
 sudo pacman -Syu --needed --noconfirm \
-    python-pip python-virtualenv htop \
+    python-pip python-virtualenv htop rust rustup \
     curl whois nmap ncdu lm_sensors wget gnome-shell-extensions wavemon mesa-demos \
     gnome-system-monitor libvirt bridge-utils virt-manager jq firefox clutter zip bind \
     mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils gnome-browser-connector \
