@@ -53,6 +53,7 @@ sudo updatedb
 # allowing the GNOME workspace to work with 2 monitors instead of only one
 gsettings set org.gnome.mutter workspaces-only-on-primary false
 gsettings set org.gnome.desktop.interface cursor-size 48
+gsettings set org.gnome.shell disable-extension-version-validation true
 
 # Generate SSH key if not exists
 KEY_BASE_NAME=id_ed25519
@@ -69,10 +70,12 @@ eval "$(ssh-agent -s)"
 ssh-add $FILE
 
 # Git configuration
+git config --global init.defaultBranch main
+git config --global pull.rebase false
+# git config --global push.default current
+git config --global --add --bool push.autoSetupRemote true
 git config --global user.email "lucasperinm@gmail.com"
 git config --global user.name "Lucas Manchine"
-git config --global push.default current
-git config --global --add --bool push.autoSetupRemote true
 
 # Application Installations
 install_app_if_not_exists() {
@@ -149,9 +152,11 @@ source /usr/share/git/completion/git-completion.bash
 EOF
 fi
 
-yay -S --noconfirm gnome-shell-extension-dash-to-dock gnome-shell-extension-gsnap \
-    keybase-bin koodo-reader-bin 7-zip-full aws-cli-v2 aws-session-manager-plugin \
-    normcap
+yay -S --noconfirm keybase-bin koodo-reader-bin 7-zip-full \
+    aws-cli-v2 aws-session-manager-plugin normcap \
+    gnome-shell-extension-another-window-session-manager-git \
+    gnome-shell-extension-dash-to-dock \
+    gnome-shell-extension-gsnap
 # yay -S --noconfirm android-studio android-sdk-cmdline-tools-latest android-sdk-build-tools android-sdk-platform-tools android-platform flutter
 # dart --disable-analytics
 # flutter --disable-analytics
