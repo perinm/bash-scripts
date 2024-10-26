@@ -1,6 +1,7 @@
 #!/bin/bash
 LAPTOP_BRAND="Dell"
-PYTHON_MAJOR_VERSION=3.12
+PYTHON_MAJOR_VERSION=3.13
+PYTHON_AUR_VERSION=313
 NVIDIA=0
 
 sudo pacman -Syu --noconfirm
@@ -35,19 +36,6 @@ sudo pacman -S --needed --noconfirm \
     bluez-hid2hci
 
 # Note: gdebi, snap, apt-get, and add-apt-repository are skipped as they are not relevant in Arch.
-
-# Python specific version:
-# Arch typically has the latest version of Python available, but for a specific version:
-# sudo pacman -S --needed --noconfirm python${PYTHON_MAJOR_VERSION}
-
-python -m venv ~/venv${PYTHON_MAJOR_VERSION}
-source ~/venv${PYTHON_MAJOR_VERSION}/bin/activate
-pip install -U pip setuptools wheel setuptools-rust ruff
-deactivate
-
-pipx ensurepath
-sudo pipx ensurepath --global # optional to allow pipx actions with --global argument
-sudo updatedb
 
 # For system extra settings:
 # allowing the GNOME workspace to work with 2 monitors instead of only one
@@ -167,6 +155,21 @@ yay -S --noconfirm keybase-bin koodo-reader-bin 7-zip-full \
 # dart --disable-analytics
 # flutter --disable-analytics
 # yay -Rns android-studio android-sdk-cmdline-tools-latest android-sdk-build-tools android-sdk-platform-tools android-platform flutter
+
+install_app_if_not_exists python${PYTHON_MAJOR_VERSION} "yay -S --noconfirm python${PYTHON_AUR_VERSION}"
+
+# Python specific version:
+# Arch typically has the latest version of Python available, but for a specific version:
+# sudo pacman -S --needed --noconfirm python${PYTHON_MAJOR_VERSION}
+
+python -m venv ~/venv${PYTHON_MAJOR_VERSION}
+source ~/venv${PYTHON_MAJOR_VERSION}/bin/activate
+pip install -U pip setuptools wheel setuptools-rust ruff
+deactivate
+
+pipx ensurepath
+sudo pipx ensurepath --global # optional to allow pipx actions with --global argument
+sudo updatedb
 
 # Flutter
 install_app_if_not_exists flutter "
