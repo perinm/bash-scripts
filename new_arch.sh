@@ -7,14 +7,14 @@ sudo pacman -Syu --noconfirm
 sudo pacman -Syu --needed --noconfirm linux-firmware
 # apache-tools gpg qemu
 sudo pacman -Syu --needed --noconfirm \
-    python-pip python-virtualenv htop rust rustup \
+    python-pip python-virtualenv htop \
     curl whois nmap ncdu lm_sensors wget gnome-shell-extensions wavemon mesa-demos \
     gnome-system-monitor libvirt bridge-utils virt-manager jq firefox clutter zip bind \
     mpv ghex imagemagick ghostscript hwinfo bluez bluez-utils gnome-browser-connector \
     nano discord solaar less os-prober openvpn networkmanager-openvpn spotify-launcher \
     pipewire-alsa pavucontrol sof-firmware sof-tools tlp pwgen tenacity vi dkms \
     linux-headers v4l2loopback-dkms python-opencv android-tools java-runtime-common \
-    jre-openjdk docker-buildx python-pipx plocate qemu-full libreoffice-fresh \
+    jre-openjdk docker-buildx python-pipx plocate qemu-full libreoffice-fresh texlive \
     gnome-shell-extension-appindicator
 
 sudo localectl set-locale LANG=en_US.UTF-8
@@ -90,12 +90,18 @@ install_app_if_not_exists() {
 
 # Install Yay (Yet Another Yaourt)
 install_app_if_not_exists yay "
-    sudo pacman -S --needed base-devel git
+    sudo pacman -S --needed --noconfirm base-devel git
     git clone https://aur.archlinux.org/yay.git
     cd yay/
     makepkg -si --noconfirm
     yay --version
     cd ~/
+"
+
+install_app_if_not_exists rustup "
+    sudo pacman -S --needed --noconfirm rustup
+    rustup toolchain install stable
+    rustup update
 "
 
 # Check if the CPU is Intel
@@ -153,7 +159,7 @@ EOF
 fi
 
 yay -S --noconfirm keybase-bin koodo-reader-bin 7-zip-full \
-    aws-cli-v2 aws-session-manager-plugin normcap \
+    aws-cli-v2 aws-session-manager-plugin normcap cursor-bin \
     gnome-shell-extension-another-window-session-manager-git \
     gnome-shell-extension-dash-to-dock \
     gnome-shell-extension-gsnap
