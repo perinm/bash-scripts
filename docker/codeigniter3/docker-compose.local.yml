@@ -1,0 +1,28 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: my-codeigniter-app
+    ports:
+      - target: 80
+        published: 80
+        mode: host
+    volumes:
+      - ./src:/var/www/html
+    env_file:
+      - .env
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    ports:
+      - target: 3306
+        published: 3306
+        mode: host
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: my_db
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: my_password
+    volumes:
+      - ./data:/var/lib/mysql

@@ -1,6 +1,11 @@
 # Use an official PHP-Apache image as a base image
 FROM php:8.1-apache
 
+# Modify the 'www-data' user to use UID 1000.
+# No need to create the www-data group since it already exists.
+RUN usermod -u 1000 -s /bin/bash www-data && \
+    groupmod -g 1000 www-data
+
 # Install necessary packages
 RUN apt-get update && apt-get install -y \
     unzip \
@@ -26,8 +31,6 @@ COPY build/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 COPY build/composer.json /var/www/html/composer.json
 # COPY composer.lock /var/www/html/composer.lock
-
-RUN chown -R www-data:www-data /var/www/html/composer.*
 
 # Here should use user: www-data
 USER www-data:www-data
