@@ -20,6 +20,16 @@ else
 fi
 cat $FILE.pub
 
+# Create .ssh/config file
+SSH_CONFIG=~/.ssh/config
+if [ ! -f $SSH_CONFIG ]; then
+  echo "Host github.com" >> $SSH_CONFIG
+  echo "    User git" >> $SSH_CONFIG
+  echo "    Hostname github.com" >> $SSH_CONFIG
+  echo "    PreferredAuthentications publickey" >> $SSH_CONFIG
+  echo "    IdentityFile $FILE" >> $SSH_CONFIG
+fi
+
 # https://github.com/nodesource/distributions/blob/master/README.md
 # https://www.npmjs.com/package/@githubnext/github-copilot-cli
 COMMAND=??
