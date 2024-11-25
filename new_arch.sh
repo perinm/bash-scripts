@@ -96,7 +96,8 @@ install_app_if_not_exists rustup "
 # Check if the CPU is Intel
 if grep -qi "GenuineIntel" /proc/cpuinfo; then
     echo "Intel CPU detected. Running package installation script."
-    sudo pacman -Syu --needed --noconfirm intel-ucode libva-utils intel-media-driver thermald vulkan-intel
+    sudo pacman -Syu --needed --noconfirm intel-ucode libva-utils intel-media-driver \
+        thermald vulkan-intel intel-gpu-tools
     sudo systemctl enable thermald.service
     sudo systemctl start thermald.service
     yay -S --noconfirm tuned tuned-ppd
