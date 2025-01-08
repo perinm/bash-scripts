@@ -16,7 +16,7 @@ sudo pacman -Syu --needed --noconfirm \
     pipewire-alsa pavucontrol sof-firmware sof-tools tlp pwgen tenacity vi dkms \
     linux-headers v4l2loopback-dkms python-opencv android-tools java-runtime-common \
     jre-openjdk docker-buildx python-pipx plocate qemu-full libreoffice-fresh texlive \
-    bash-completion gimp uv \
+    bash-completion gimp uv cmake \
     gnome-shell-extension-appindicator
 
 sudo localectl set-locale LANG=en_US.UTF-8
