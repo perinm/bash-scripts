@@ -16,7 +16,7 @@ sudo pacman -Syu --needed --noconfirm \
     pipewire-alsa pavucontrol sof-firmware sof-tools tlp pwgen tenacity vi dkms \
     linux-headers v4l2loopback-dkms python-opencv android-tools java-runtime-common \
     jre-openjdk docker-buildx python-pipx plocate qemu-full libreoffice-fresh texlive \
-    bash-completion gimp \
+    bash-completion gimp uv \
     gnome-shell-extension-appindicator
 
 sudo localectl set-locale LANG=en_US.UTF-8
@@ -150,7 +150,7 @@ fi
 
 yay -S --noconfirm keybase-bin koodo-reader-bin 7-zip-full \
     aws-cli-v2 aws-session-manager-plugin normcap cursor-bin \
-    google-earth-pro \
+    google-earth-pro windsurf \
     gnome-shell-extension-another-window-session-manager-git \
     gnome-shell-extension-dash-to-dock \
     gnome-shell-extension-gsnap
