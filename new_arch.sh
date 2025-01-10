@@ -151,9 +151,9 @@ fi
 yay -S --noconfirm keybase-bin koodo-reader-bin 7-zip-full \
     aws-cli-v2 aws-session-manager-plugin normcap cursor-bin \
     google-earth-pro windsurf \
-    gnome-shell-extension-another-window-session-manager-git \
     gnome-shell-extension-dash-to-dock \
     gnome-shell-extension-gsnap
+    # gnome-shell-extension-another-window-session-manager-git \
 # yay -S --noconfirm android-studio android-sdk-cmdline-tools-latest android-sdk-build-tools android-sdk-platform-tools android-platform flutter
 # dart --disable-analytics
 # flutter --disable-analytics
