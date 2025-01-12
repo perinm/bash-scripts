@@ -248,7 +248,11 @@ install_app_if_not_exists github-copilot-cli "
 "
 
 # MySQL Workbench
-install_app_if_not_exists mysql-workbench "yay -S --noconfirm mysql-workbench"
+install_app_if_not_exists mysql-workbench "
+    yay -S --noconfirm mysql-workbench
+    sudo ln -s /usr/lib/mysql-workbench/mysql /usr/local/bin/mysql
+    sudo ln -s /usr/lib/mysql-workbench/mysqldump /usr/local/bin/mysqldump
+"
 
 # Visual Studio Code
 install_app_if_not_exists code "yay -S --noconfirm visual-studio-code-bin"
