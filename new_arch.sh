@@ -369,4 +369,4 @@ service_exists() {
     fi
 }
 
-sudo pacman -Syu --noconfirm && yay -Syu --noconfirm && yay -Yc --noconfirm
+sudo pacman -Syu --noconfirm && yay -Syu --noconfirm && yay -Yc --noconfirm && yay -Sc --noconfirm
