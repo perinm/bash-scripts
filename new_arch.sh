@@ -226,14 +226,47 @@ install_app_if_not_exists tofu "
     ' >> ~/.bashrc
 "
 
+# Function to safely add a custom GNOME keybinding
+add_custom_shortcut() {
+    local NAME="$1"
+    local COMMAND="$2"
+    local BINDING="$3"
+    local KEYBINDINGS_PATH="org.gnome.settings-daemon.plugins.media-keys custom-keybindings"
+    local CURRENT_BINDINGS=$(gsettings get $KEYBINDINGS_PATH)
+
+    # Determine the next available index
+    local NEXT_INDEX=0
+    while echo "$CURRENT_BINDINGS" | grep -q "/custom${NEXT_INDEX}/"; do
+        ((NEXT_INDEX++))
+    done
+    local NEW_PATH="/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom${NEXT_INDEX}/"
+
+    # Create the new keybinding path string
+    if [[ "$CURRENT_BINDINGS" == "@as []" ]] || [[ "$CURRENT_BINDINGS" == "[]" ]]; then
+        NEW_BINDINGS="['${NEW_PATH}']"
+    else
+        # Remove trailing ] and append the new path
+        NEW_BINDINGS="${CURRENT_BINDINGS%]*}, '${NEW_PATH}']"
+    fi
+
+    # Set the new array of keybindings
+    gsettings set $KEYBINDINGS_PATH "$NEW_BINDINGS"
+
+    # Assign the properties to the new keybinding
+    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:$NEW_PATH name "$NAME"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:$NEW_PATH command "$COMMAND"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:$NEW_PATH binding "$BINDING"
+
+    echo "Added shortcut: '$NAME' -> '$COMMAND' ('$BINDING')"
+    # Optional: Show resulting keybindings array (for debugging)
+    # gsettings get $KEYBINDINGS_PATH
+}
+
 install_app_if_not_exists copyq "
     sudo pacman -S --needed --noconfirm copyq
     # Exec=env QT_QPA_PLATFORM=xcb copyq
-    gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']"
-    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ name 'CopyQ'
-    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command 'copyq show'
-    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding '<Super>v'
-    gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings
+    add_custom_shortcut 'CopyQ' 'copyq show' '<Super>v'
+    add_custom_shortcut 'CopyQ at cursor' 'copyq showAt' '<Super><Shift>V'
 " 
 
 # GitHub Copilot CLI
@@ -345,11 +378,7 @@ install_app_if_not_exists alacritty "
     # gsettings set com.github.stunkymonkey.nautilus-open-any-terminal new-tab true
     # gsettings set com.github.stunkymonkey.nautilus-open-any-terminal flatpak system
     gsettings set org.gnome.desktop.default-applications.terminal exec 'alacritty'
-    gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']"
-    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Open Alacritty Terminal'
-    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'alacritty'
-    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Control><Alt>T'
-    gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings
+    add_custom_shortcut 'Open Alacritty Terminal' 'alacritty' '<Control><Alt>T'
     mkdir -p ~/.config/alacritty/themes
     git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
 "
