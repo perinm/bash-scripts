@@ -17,7 +17,7 @@ sudo pacman -Syu --needed --noconfirm \
     linux-headers v4l2loopback-dkms python-opencv android-tools java-runtime-common \
     jre-openjdk docker-buildx python-pipx plocate qemu-full libreoffice-fresh texlive \
     bash-completion gimp uv cmake rsync php php-sodium libsodium composer noto-fonts-cjk \
-    gnome-shell-extension-appindicator qt6-wayland
+    gnome-shell-extension-appindicator qt6-wayland tinysparql
 
 sudo localectl set-locale LANG=en_US.UTF-8
 
