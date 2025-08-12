@@ -1,6 +1,9 @@
 #!/bin/bash
 
+xcode-select --install
+
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew update && brew upgrade
 brew install docker docker-compose
 brew install colima
 colima start
@@ -14,3 +17,8 @@ fi
 
 # Configure Git: auto-setup remote on first push
 git config --global push.autoSetupRemote true
+
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv self update
+uv python install
+uv venv ~/resources/python/venv13
