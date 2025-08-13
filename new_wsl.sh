@@ -101,3 +101,5 @@ sudo dpkg -i packages-microsoft-prod.deb
 sudo apt-get install -y apt-transport-https
 sudo apt-get update
 sudo apt-get install -y msopenjdk-17
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
