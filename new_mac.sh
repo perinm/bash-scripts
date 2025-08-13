@@ -22,7 +22,7 @@ git config --global push.autoSetupRemote true
 
 curl -LsSf https://astral.sh/uv/install.sh | sh
 uv self update
-uv python install
-uv venv ~/resources/python/venv13
-source ~/resources/python/venv13/bin/activate
+uv python install 3.13
+uv venv --python 3.13 ~/resources/python/venv3.13 --seed
+source ~/resources/python/venv3.13/bin/activate
 uv pip install -U pip ruff setuptools setuptools-rust wheel
