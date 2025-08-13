@@ -17,3 +17,19 @@ sudo apt-get update
 sudo apt-get install -y nvidia-container-toolkit
 sudo nvidia-ctk runtime configure --runtime=docker
 sudo systemctl restart docker
+# https://nvidia.github.io/TensorRT-LLM/installation/linux.html
+# Install dependencies, TensorRT-LLM requires Python 3.10
+sudo apt-get update && \
+      sudo apt-get -y install python3.10 python3.10-venv python3.10-dev openmpi-bin libopenmpi-dev git git-lfs
+
+python3.10 -m venv /home/ubuntu/venv3.10
+source /home/ubuntu/venv3.10/bin/activate
+pip install -U pip setuptools wheel setuptools-rust
+
+# Install the latest preview version (corresponding to the main branch) of TensorRT-LLM.
+# If you want to install the stable version (corresponding to the release branch), please
+# remove the `--pre` option.
+pip install tensorrt_llm -U --pre --extra-index-url https://pypi.nvidia.com
+
+# Check installation
+python3 -c "import tensorrt_llm"
