@@ -9,6 +9,8 @@ brew install colima
 colima start
 brew services start colima
 
+brew install cmake
+
 # Ensure zsh completion is initialized
 ZSHRC="${HOME}/.zshrc"
 if ! grep -qxF 'autoload -Uz compinit && compinit' "$ZSHRC" 2>/dev/null; then
