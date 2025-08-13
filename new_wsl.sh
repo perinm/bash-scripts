@@ -5,10 +5,23 @@ sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremov
 sudo apt-get install -y python-is-python3 gdebi python3-pip python3-venv htop p7zip-full lm-sensors \
   ncdu ppa-purge nmap whois gcc g++ make
 
-sudo add-apt-repository ppa:deadsnakes/ppa -y
+# sudo add-apt-repository ppa:deadsnakes/ppa -y
 sudo apt-get update -y && sudo apt-get full-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get autoclean -y
-sudo apt-get install -y python3.11 python3.11-venv python3.11-dev
-python3.11 -m pip install -U pip setuptools wheel setuptools-rust
+# sudo apt-get install -y python3.11 python3.11-venv python3.11-dev
+# python3.11 -m pip install -U pip setuptools wheel setuptools-rust
+
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv self update
+uv python install
+mkdir -p ~/resources/python
+uv venv --python 3.13 ~/resources/python/venv3.13 --seed
+source ~/resources/python/venv3.13/bin/activate
+uv pip install -U pip ruff setuptools setuptools-rust wheel
+deactivate
+uv venv --python 3.12 ~/resources/python/venv3.12 --seed
+source ~/resources/python/venv3.12/bin/activate
+uv pip install -U pip ruff setuptools setuptools-rust wheel
+deactivate
 
 KEY_BASE_NAME=id_ed25519
 KEY_NAME=${KEY_BASE_NAME}_$(date +%Y_%m_%d)
