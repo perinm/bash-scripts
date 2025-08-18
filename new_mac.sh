@@ -18,6 +18,7 @@ echo 'if type brew &>/dev/null; then
 fi' >> ~/.zshrc
 chmod go-w '/opt/homebrew/share'
 chmod -R go-w '/opt/homebrew/share/zsh'
+brew install --cask obs
 
 # Ensure zsh completion is initialized
 ZSHRC="${HOME}/.zshrc"
