@@ -10,6 +10,14 @@ colima start
 brew services start colima
 
 brew install cmake
+brew install zsh-completions
+echo 'if type brew &>/dev/null; then
+    FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+    autoload -Uz compinit
+    compinit
+fi' >> ~/.zshrc
+chmod go-w '/opt/homebrew/share'
+chmod -R go-w '/opt/homebrew/share/zsh'
 
 # Ensure zsh completion is initialized
 ZSHRC="${HOME}/.zshrc"
