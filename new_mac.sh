@@ -64,3 +64,6 @@ cat > "${KEYBIND_DIR}/DefaultKeyBinding.dict" <<'EOF'
 EOF
 
 echo "Installed custom macOS KeyBindings (restart apps to take effect)."
+
+# Close Finder on exit
+defaults write com.apple.finder QuitMenuItem -bool true; killall Finder
