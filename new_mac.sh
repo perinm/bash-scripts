@@ -19,7 +19,7 @@ fi' >> ~/.zshrc
 chmod go-w '/opt/homebrew/share'
 chmod -R go-w '/opt/homebrew/share/zsh'
 brew install --cask obs
-brew install sox
+brew install sox nmap
 
 # Ensure zsh completion is initialized
 ZSHRC="${HOME}/.zshrc"
