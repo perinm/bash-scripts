@@ -19,12 +19,23 @@ fi' >> ~/.zshrc
 chmod go-w '/opt/homebrew/share'
 chmod -R go-w '/opt/homebrew/share/zsh'
 brew install --cask obs
-brew install sox nmap
+brew install sox nmap opentofu
 
 # Ensure zsh completion is initialized
 ZSHRC="${HOME}/.zshrc"
 if ! grep -qxF 'autoload -Uz compinit && compinit' "$ZSHRC" 2>/dev/null; then
   printf '\n%s\n' 'autoload -Uz compinit && compinit' >> "$ZSHRC"
+fi
+if ! grep -qxF 'tf() {' "$ZSHRC" 2>/dev/null; then
+  echo '
+  tf() {
+      if [ -f .env ]; then
+          source .env
+      fi
+      tofu "$@"
+  }
+  alias tf=tf
+  ' >> $ZSHRC
 fi
 
 # Configure Git: auto-setup remote on first push
