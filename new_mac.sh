@@ -8,6 +8,7 @@ brew install docker docker-compose
 brew install colima
 colima start
 brew services start colima
+sudo ln -s ~/.colima/default/docker.sock /var/run/docker.sock
 
 brew install cmake
 brew install zsh-completions
