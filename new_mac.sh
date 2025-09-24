@@ -18,8 +18,9 @@ echo 'if type brew &>/dev/null; then
 fi' >> ~/.zshrc
 chmod go-w '/opt/homebrew/share'
 chmod -R go-w '/opt/homebrew/share/zsh'
+brew install sox nmap opentofu awk
+brew install --cask background-music
 brew install --cask obs
-brew install sox nmap opentofu
 
 # Ensure zsh completion is initialized
 ZSHRC="${HOME}/.zshrc"
