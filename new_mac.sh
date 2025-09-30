@@ -3,7 +3,7 @@
 xcode-select --install
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew update && brew upgrade
+brew update && brew upgrade && brew autoremove && brew cleanup
 brew install docker docker-compose
 brew install colima
 colima start
@@ -20,7 +20,7 @@ fi' >> ~/.zshrc
 chmod go-w '/opt/homebrew/share'
 chmod -R go-w '/opt/homebrew/share/zsh'
 brew install sox nmap opentofu awk ffmpeg htop
-brew install --cask background-music
+# brew install --cask background-music
 brew install --cask obs
 
 # Ensure zsh completion is initialized
