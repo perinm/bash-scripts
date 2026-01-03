@@ -19,7 +19,7 @@ echo 'if type brew &>/dev/null; then
 fi' >> ~/.zshrc
 chmod go-w '/opt/homebrew/share'
 chmod -R go-w '/opt/homebrew/share/zsh'
-brew install sox nmap opentofu awk ffmpeg htop
+brew install sox nmap opentofu awk ffmpeg htop yt-dlp telnet grpcurl coreutils
 # brew install --cask background-music
 brew install --cask obs
 
@@ -27,6 +27,47 @@ brew install --cask obs
 ZSHRC="${HOME}/.zshrc"
 if ! grep -qxF 'autoload -Uz compinit && compinit' "$ZSHRC" 2>/dev/null; then
   printf '\n%s\n' 'autoload -Uz compinit && compinit' >> "$ZSHRC"
+fi
+if ! grep -qxF 'export DOCKER_BUILDKIT=1' "$ZSHRC" 2>/dev/null; then
+  printf '\n%s\n' 'export DOCKER_BUILDKIT=1' >> "$ZSHRC"
+fi
+if ! grep -qxF 'export COMPOSE_DOCKER_CLI_BUILD=1' "$ZSHRC" 2>/dev/null; then
+  printf '\n%s\n' 'export COMPOSE_DOCKER_CLI_BUILD=1' >> "$ZSHRC"
+fi
+
+# Increase shell history substantially (zsh)
+if ! grep -qxF 'HISTSIZE=1000000' "$ZSHRC" 2>/dev/null; then
+  printf '\n%s\n' 'HISTSIZE=1000000' >> "$ZSHRC"
+fi
+if ! grep -qxF 'SAVEHIST=1000000' "$ZSHRC" 2>/dev/null; then
+  printf '\n%s\n' 'SAVEHIST=1000000' >> "$ZSHRC"
+fi
+if ! grep -qxF 'HISTFILE=~/.zsh_history' "$ZSHRC" 2>/dev/null; then
+  printf '\n%s\n' 'HISTFILE=~/.zsh_history' >> "$ZSHRC"
+fi
+if ! grep -qxF 'setopt APPEND_HISTORY' "$ZSHRC" 2>/dev/null; then
+  printf '\n%s\n' 'setopt APPEND_HISTORY' >> "$ZSHRC"
+fi
+if ! grep -qxF 'setopt INC_APPEND_HISTORY' "$ZSHRC" 2>/dev/null; then
+  printf '\n%s\n' 'setopt INC_APPEND_HISTORY' >> "$ZSHRC"
+fi
+if ! grep -qxF 'setopt SHARE_HISTORY' "$ZSHRC" 2>/dev/null; then
+  printf '\n%s\n' 'setopt SHARE_HISTORY' >> "$ZSHRC"
+fi
+if ! grep -qxF 'setopt HIST_IGNORE_ALL_DUPS' "$ZSHRC" 2>/dev/null; then
+  printf '\n%s\n' 'setopt HIST_IGNORE_ALL_DUPS' >> "$ZSHRC"
+fi
+if ! grep -qxF 'setopt HIST_REDUCE_BLANKS' "$ZSHRC" 2>/dev/null; then
+  printf '\n%s\n' 'setopt HIST_REDUCE_BLANKS' >> "$ZSHRC"
+fi
+if ! grep -qxF 'setopt EXTENDED_HISTORY' "$ZSHRC" 2>/dev/null; then
+  printf '\n%s\n' 'setopt EXTENDED_HISTORY' >> "$ZSHRC"
+fi
+if ! grep -qxF 'setopt HIST_IGNORE_SPACE' "$ZSHRC" 2>/dev/null; then
+  printf '\n%s\n' 'setopt HIST_IGNORE_SPACE' >> "$ZSHRC"
+fi
+if ! grep -qxF 'setopt HIST_FCNTL_LOCK' "$ZSHRC" 2>/dev/null; then
+  printf '\n%s\n' 'setopt HIST_FCNTL_LOCK' >> "$ZSHRC"
 fi
 if ! grep -qxF 'tf() {' "$ZSHRC" 2>/dev/null; then
   echo '
