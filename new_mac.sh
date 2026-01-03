@@ -4,11 +4,15 @@ xcode-select --install
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew update && brew upgrade && brew autoremove && brew cleanup
-brew install docker docker-compose
+brew install docker docker-compose docker-buildx
 brew install colima
 colima start
 brew services start colima
 sudo ln -s ~/.colima/default/docker.sock /var/run/docker.sock
+
+# Ensure Docker CLI plugins are discoverable (Buildx is a CLI plugin)
+mkdir -p ~/.docker/cli-plugins
+ln -sf "$(brew --prefix)/bin/docker-buildx" ~/.docker/cli-plugins/docker-buildx
 
 brew install cmake
 brew install zsh-completions
