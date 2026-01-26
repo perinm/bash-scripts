@@ -23,7 +23,8 @@ echo 'if type brew &>/dev/null; then
 fi' >> ~/.zshrc
 chmod go-w '/opt/homebrew/share'
 chmod -R go-w '/opt/homebrew/share/zsh'
-brew install sox nmap opentofu awk ffmpeg htop yt-dlp telnet grpcurl coreutils
+brew install sox nmap opentofu awk ffmpeg htop yt-dlp telnet grpcurl coreutils \
+  stats
 # brew install --cask background-music
 brew install --cask obs
 
