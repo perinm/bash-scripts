@@ -27,6 +27,16 @@ brew install sox nmap opentofu awk ffmpeg htop yt-dlp telnet grpcurl coreutils \
   stats bash
 # brew install --cask background-music
 brew install --cask obs
+brew install --cask iterm2
+brew install asmvik/formulae/skhd
+
+# Add a global shortcut: Ctrl+Cmd+T opens iTerm2
+SKHD_CONFIG="${HOME}/.skhdrc"
+if ! grep -qxF 'ctrl + cmd - t : open -b com.googlecode.iterm2' "$SKHD_CONFIG" 2>/dev/null; then
+  printf '\n%s\n' 'ctrl + cmd - t : open -b com.googlecode.iterm2' >> "$SKHD_CONFIG"
+fi
+skhd --restart-service || skhd --start-service
+echo "Configured Ctrl+Cmd+T to open iTerm2 (grant Accessibility permission to skhd if prompted)."
 
 # Ensure zsh completion is initialized
 ZSHRC="${HOME}/.zshrc"
