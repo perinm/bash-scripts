@@ -53,21 +53,6 @@ ensure_block_in_file() {
   fi
 }
 
-configure_gh_cli_repo() {
-  if [ -f /etc/apt/sources.list.d/github-cli.list ]; then
-    log "GitHub CLI APT repo already configured."
-    return
-  fi
-
-  log "Configuring GitHub CLI APT repository"
-  ensure_apt_keyring_dir
-  curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
-    | sudo dd of=/etc/apt/keyrings/githubcli-archive-keyring.gpg status=none
-  sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
-  echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" \
-    | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
-}
-
 configure_vscode_repo() {
   if [ -f /etc/apt/sources.list.d/vscode.list ]; then
     log "VS Code APT repo already configured."
@@ -128,8 +113,9 @@ install_base_packages() {
     ca-certificates \
     copyq \
     curl \
-    gdebi-core \
+    gdebi \
     gnome-shell-extensions \
+    gnupg \
     htop \
     lm-sensors \
     ncdu \
@@ -138,7 +124,6 @@ install_base_packages() {
     p7zip-full \
     python3-pip \
     python3-venv \
-    software-properties-common \
     wget \
     whois
 }
@@ -173,17 +158,41 @@ install_openclaw() {
 }
 
 refresh_shell_path() {
-  export PATH="$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/.nvm/current/bin:$PATH"
-
-  if [ -s "$HOME/.nvm/nvm.sh" ]; then
-    # shellcheck disable=SC1090
-    . "$HOME/.nvm/nvm.sh"
-  fi
+  export PATH="$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
 
   if [ -f "$HOME/.bashrc" ]; then
     # shellcheck disable=SC1090
     . "$HOME/.bashrc" || true
   fi
+
+  hash -r
+}
+
+ensure_npm_after_openclaw() {
+  if command -v npm >/dev/null 2>&1; then
+    return
+  fi
+
+  warn "npm is still unavailable after the OpenClaw installer. Falling back to Node.js 24 from NodeSource."
+  curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
+  apt_update
+  install_apt_packages nodejs
+  refresh_shell_path
+}
+
+configure_npm_global_prefix() {
+  if ! command -v npm >/dev/null 2>&1; then
+    warn "npm is still unavailable; skipping npm prefix configuration."
+    return
+  fi
+
+  mkdir -p "$HOME/.npm-global/bin"
+  if [ "$(npm config get prefix 2>/dev/null || true)" != "$HOME/.npm-global" ]; then
+    log "Configuring a user-writable npm global prefix at $HOME/.npm-global"
+    npm config set prefix "$HOME/.npm-global"
+  fi
+
+  refresh_shell_path
 }
 
 install_npm_cli() {
@@ -211,6 +220,7 @@ configure_copyq() {
   fi
 
   log "Configuring CopyQ"
+  copyq config autostart true || true
   copyq config maxitems 20000 || true
 
   mkdir -p "$HOME/.config/autostart"
@@ -234,9 +244,9 @@ configure_bash_history() {
 # OPENCLAW_BASH_HISTORY_TUNING
 export HISTSIZE=1000000
 export HISTFILESIZE=2000000
-export HISTTIMEFORMAT='%F %T '
+export HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
-export PROMPT_COMMAND='history -a; history -n; ${PROMPT_COMMAND:-:}'
+export PATH="$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
 EOF
   fi
 }
@@ -278,16 +288,6 @@ EOF
   systemctl --user enable --now no-lid-sleep.service || true
 }
 
-configure_chrome_default() {
-  if [ -f /usr/share/applications/google-chrome.desktop ]; then
-    log "Setting Google Chrome as default browser"
-    xdg-mime default google-chrome.desktop x-scheme-handler/http || true
-    xdg-mime default google-chrome.desktop x-scheme-handler/https || true
-    gio mime x-scheme-handler/http google-chrome.desktop || true
-    gio mime x-scheme-handler/https google-chrome.desktop || true
-  fi
-}
-
 print_optional_followups() {
   cat <<'EOF'
 
@@ -298,7 +298,6 @@ Optional/manual follow-ups intentionally left out of automatic installation:
 
 Recommended post-run checks:
 - openclaw --help
-- gh auth login
 - docker --version
 - code --version
 - google-chrome --version
@@ -307,27 +306,26 @@ EOF
 }
 
 main() {
-  need_cmd curl
-  need_cmd gpg
   need_cmd sudo
 
   log "Preparing repositories and base tooling"
   sudo apt-get update
-  install_apt_packages ca-certificates curl gpg wget software-properties-common
+  install_apt_packages ca-certificates curl gnupg wget
 
-  configure_gh_cli_repo
   configure_vscode_repo
   configure_google_chrome_repo
   configure_docker_repo
 
   apt_update
   install_base_packages
-  install_apt_packages gh code google-chrome-stable
+  install_apt_packages code google-chrome-stable
   install_docker_packages
   ensure_docker_group_membership
 
   install_openclaw
   refresh_shell_path
+  ensure_npm_after_openclaw
+  configure_npm_global_prefix
 
   install_npm_cli @openai/codex "OpenAI Codex CLI"
   install_npm_cli @anthropic-ai/claude-code "Anthropic Claude Code"
@@ -336,7 +334,6 @@ main() {
   configure_copyq
   configure_bash_history
   configure_no_lid_sleep_and_lock
-  configure_chrome_default
 
   log "Done. Reboot later if you want docker group membership and desktop autostarts to apply cleanly."
   print_optional_followups

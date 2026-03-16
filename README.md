@@ -14,7 +14,7 @@
 
     1. bootstrap a fresh Ubuntu laptop for OpenClaw-oriented use
 
-    2. installs core packages/tools (including gh CLI), OpenClaw, Docker, Chrome, VS Code, CopyQ tweaks, very large bash history, and post-OpenClaw npm CLIs like Codex / Claude Code / Gemini CLI
+    2. installs core packages/tools, OpenClaw, Docker, Chrome, VS Code, CopyQ tweaks, very large bash history, and post-OpenClaw npm CLIs like Codex / Claude Code / Gemini CLI
 
 - install_flutter.sh
 
