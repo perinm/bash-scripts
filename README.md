@@ -12,9 +12,9 @@
 
 - new-ubuntu-open-claw.sh:
 
-    1. bootstrap a fresh Ubuntu laptop for OpenClaw-oriented use
+    1. non-interactively bootstrap a fresh Ubuntu laptop for OpenClaw-oriented use
 
-    2. installs core packages/tools, OpenClaw, Docker, Chrome, VS Code, CopyQ tweaks, very large bash history, and post-OpenClaw npm CLIs like Codex / Claude Code / Gemini CLI
+    2. installs core packages/tools, OpenClaw, Docker, Chrome, VS Code, CopyQ tweaks, very large bash history, and post-OpenClaw npm CLIs like Codex / Claude Code / Gemini CLI while skipping desktop-session-only steps when no GUI session is active
 
 - install_flutter.sh
 

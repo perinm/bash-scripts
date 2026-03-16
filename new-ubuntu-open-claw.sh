@@ -13,6 +13,13 @@ warn() {
   printf '\n[WARN] %s\n' "$*" >&2
 }
 
+require_non_root() {
+  if [ "${EUID:-$(id -u)}" -eq 0 ]; then
+    echo "Run this script as the regular desktop user. It uses sudo internally and writes user-scoped config." >&2
+    exit 1
+  fi
+}
+
 need_cmd() {
   command -v "$1" >/dev/null 2>&1 || {
     echo "Missing required command: $1" >&2
@@ -22,6 +29,18 @@ need_cmd() {
 
 apt_pkg_installed() {
   dpkg -s "$1" >/dev/null 2>&1
+}
+
+has_graphical_session() {
+  [ -n "${DISPLAY:-}" ] || [ -n "${WAYLAND_DISPLAY:-}" ]
+}
+
+has_session_bus() {
+  [ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]
+}
+
+has_user_systemd_session() {
+  [ -n "${XDG_RUNTIME_DIR:-}" ] && systemctl --user show-environment >/dev/null 2>&1
 }
 
 install_apt_packages() {
@@ -36,7 +55,7 @@ install_apt_packages() {
   fi
 
   log "Installing APT packages: ${missing[*]}"
-  sudo apt-get install -y "${missing[@]}"
+  sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y "${missing[@]}"
 }
 
 ensure_apt_keyring_dir() {
@@ -81,7 +100,7 @@ configure_google_chrome_repo() {
     | gpg --dearmor \
     | sudo tee /etc/apt/keyrings/google-chrome.gpg >/dev/null
   sudo chmod go+r /etc/apt/keyrings/google-chrome.gpg
-  echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" \
+  echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/google-chrome.gpg] https://dl.google.com/linux/chrome/deb/ stable main" \
     | sudo tee /etc/apt/sources.list.d/google-chrome.list >/dev/null
 }
 
@@ -153,8 +172,9 @@ install_openclaw() {
     return
   fi
 
-  log "Installing OpenClaw (this also provisions modern Node/npm)"
-  curl -fsSL https://openclaw.ai/install.sh | bash
+  log "Installing OpenClaw with the official non-interactive npm flow"
+  curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install.sh \
+    | bash -s -- --install-method npm --no-prompt --no-onboard
 }
 
 refresh_shell_path() {
@@ -220,8 +240,12 @@ configure_copyq() {
   fi
 
   log "Configuring CopyQ"
-  copyq config autostart true || true
-  copyq config maxitems 20000 || true
+  if has_graphical_session && has_session_bus; then
+    copyq config autostart true || true
+    copyq config maxitems 20000 || true
+  else
+    warn "No graphical user session detected; writing CopyQ autostart only."
+  fi
 
   mkdir -p "$HOME/.config/autostart"
   cat > "$HOME/.config/autostart/copyq.desktop" <<'EOF'
@@ -238,8 +262,7 @@ EOF
 
 configure_bash_history() {
   local bashrc="$HOME/.bashrc"
-  if ! grep -Fq '# OPENCLAW_BASH_HISTORY_TUNING' "$bashrc" 2>/dev/null; then
-    cat >> "$bashrc" <<'EOF'
+  ensure_block_in_file '# OPENCLAW_BASH_HISTORY_TUNING' "$bashrc" "$(cat <<'EOF'
 
 # OPENCLAW_BASH_HISTORY_TUNING
 export HISTSIZE=1000000
@@ -248,26 +271,29 @@ export HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
 export PATH="$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
 EOF
-  fi
+)"
 }
 
 configure_no_lid_sleep_and_lock() {
-  if ! command -v gsettings >/dev/null 2>&1; then
-    warn "gsettings unavailable; skipping user-session lid/lock configuration."
-    return
+  if command -v gsettings >/dev/null 2>&1; then
+    if has_graphical_session && has_session_bus; then
+      log "Configuring GNOME to stay awake/unlocked with lid closed"
+      gsettings set org.gnome.settings-daemon.plugins.power lid-close-ac-action 'nothing' || true
+      gsettings set org.gnome.settings-daemon.plugins.power lid-close-battery-action 'nothing' || true
+      gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'nothing' || true
+      gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0 || true
+      gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type 'nothing' || true
+      gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-timeout 0 || true
+      gsettings set org.gnome.desktop.screensaver lock-enabled false || true
+      gsettings set org.gnome.desktop.screensaver idle-activation-enabled false || true
+      gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend false || true
+      gsettings set org.gnome.desktop.lockdown disable-lock-screen true || true
+    else
+      warn "No graphical user session detected; skipping live GNOME gsettings updates."
+    fi
+  else
+    warn "gsettings unavailable; skipping GNOME lid/lock configuration."
   fi
-
-  log "Configuring GNOME to stay awake/unlocked with lid closed"
-  gsettings set org.gnome.settings-daemon.plugins.power lid-close-ac-action 'nothing' || true
-  gsettings set org.gnome.settings-daemon.plugins.power lid-close-battery-action 'nothing' || true
-  gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'nothing' || true
-  gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0 || true
-  gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type 'nothing' || true
-  gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-timeout 0 || true
-  gsettings set org.gnome.desktop.screensaver lock-enabled false || true
-  gsettings set org.gnome.desktop.screensaver idle-activation-enabled false || true
-  gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend false || true
-  gsettings set org.gnome.desktop.lockdown disable-lock-screen true || true
 
   mkdir -p "$HOME/.config/systemd/user"
   cat > "$HOME/.config/systemd/user/no-lid-sleep.service" <<'EOF'
@@ -284,8 +310,12 @@ RestartSec=2
 [Install]
 WantedBy=default.target
 EOF
-  systemctl --user daemon-reload || true
-  systemctl --user enable --now no-lid-sleep.service || true
+  if has_user_systemd_session; then
+    systemctl --user daemon-reload || true
+    systemctl --user enable --now no-lid-sleep.service || true
+  else
+    warn "User systemd session unavailable; wrote no-lid-sleep.service but could not enable it automatically."
+  fi
 }
 
 print_optional_followups() {
@@ -306,6 +336,7 @@ EOF
 }
 
 main() {
+  require_non_root
   need_cmd sudo
 
   log "Preparing repositories and base tooling"
