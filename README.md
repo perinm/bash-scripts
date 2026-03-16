@@ -10,6 +10,12 @@
 
     2. updates system system, and install many useful packages for me
 
+- new-ubuntu-open-claw.sh:
+
+    1. bootstrap a fresh Ubuntu laptop for OpenClaw-oriented use
+
+    2. installs core packages/tools (including gh CLI), OpenClaw, Docker, Chrome, VS Code, CopyQ tweaks, very large bash history, and post-OpenClaw npm CLIs like Codex / Claude Code / Gemini CLI
+
 - install_flutter.sh
 
     1. install flutter, and android-studio, and configure some system things
