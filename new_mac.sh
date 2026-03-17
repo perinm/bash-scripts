@@ -101,9 +101,9 @@ git config --global push.autoSetupRemote true
 
 curl -LsSf https://astral.sh/uv/install.sh | sh
 uv self update
-uv python install 3.13
-uv venv --python 3.13 ~/resources/python/venv3.13 --seed
-source ~/resources/python/venv3.13/bin/activate
+uv python install 3.14
+uv venv --python 3.14 ~/resources/python/venv3.14 --seed
+source ~/resources/python/venv3.14/bin/activate
 uv pip install -U pip ruff setuptools setuptools-rust wheel
 
 # Configure macOS KeyBindings for improved Home/End key behavior
@@ -138,3 +138,4 @@ echo "Installed custom macOS KeyBindings (restart apps to take effect)."
 defaults write com.apple.finder QuitMenuItem -bool true; killall Finder
 
 npm install -g @openai/codex
+uv tool install it2
