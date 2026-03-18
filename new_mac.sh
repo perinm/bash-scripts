@@ -24,11 +24,13 @@ fi' >> ~/.zshrc
 chmod go-w '/opt/homebrew/share'
 chmod -R go-w '/opt/homebrew/share/zsh'
 brew install sox nmap opentofu awk ffmpeg htop yt-dlp telnet grpcurl coreutils \
-  stats bash
+  stats bash gemini-cli codex claude-code
 # brew install --cask background-music
 brew install --cask obs
 brew install --cask iterm2
+brew install --cask iina
 brew install asmvik/formulae/skhd
+brew install --cask steipete/tap/codexbar
 
 # Add a global shortcut: Ctrl+Cmd+T opens iTerm2
 SKHD_CONFIG="${HOME}/.skhdrc"
@@ -137,5 +139,4 @@ echo "Installed custom macOS KeyBindings (restart apps to take effect)."
 # Close Finder on exit
 defaults write com.apple.finder QuitMenuItem -bool true; killall Finder
 
-npm install -g @openai/codex
 uv tool install it2
