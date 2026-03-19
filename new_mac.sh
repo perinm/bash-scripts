@@ -24,13 +24,24 @@ fi' >> ~/.zshrc
 chmod go-w '/opt/homebrew/share'
 chmod -R go-w '/opt/homebrew/share/zsh'
 brew install sox nmap opentofu awk ffmpeg htop yt-dlp telnet grpcurl coreutils \
-  stats bash gemini-cli codex claude-code
+  stats bash gemini-cli codex claude-code gcc make autoconf pkgconf openssl@3 php
 # brew install --cask background-music
 brew install --cask obs
 brew install --cask iterm2
 brew install --cask iina
 brew install asmvik/formulae/skhd
 brew install --cask steipete/tap/codexbar
+
+pecl channel-update pecl.php.net
+pecl install grpc
+pecl install opentelemetry
+mkdir -p /opt/homebrew/etc/php/8.5/conf.d
+printf "extension=grpc.so\n" > /opt/homebrew/etc/php/8.5/conf.d/ext-grpc.ini
+printf "extension=opentelemetry.so\n" > /opt/homebrew/etc/php/8.5/conf.d/ext-opentelemetry.ini
+
+php --ri grpc
+php --ri opentelemetry
+php -m | rg 'grpc|opentelemetry'
 
 # Add a global shortcut: Ctrl+Cmd+T opens iTerm2
 SKHD_CONFIG="${HOME}/.skhdrc"
