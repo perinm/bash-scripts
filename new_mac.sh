@@ -235,7 +235,8 @@ if [[ -d "$BREW_ZSH_DIR" ]]; then
   chmod -R go-w "$BREW_ZSH_DIR"
 fi
 brew install sox nmap opentofu awk ffmpeg htop yt-dlp telnet grpcurl coreutils \
-  stats bash gemini-cli codex claude-code gcc make autoconf pkgconf openssl@3 php
+  stats bash gemini-cli codex claude-code gcc make autoconf pkgconf openssl@3 php \
+  ncdu
 # brew install --cask background-music
 brew install --cask obs
 brew install --cask iterm2
