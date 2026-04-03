@@ -344,3 +344,21 @@ If Windows does not appear in GRUB after the first boot into Arch, run:
 sudo os-prober
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
+
+### 12. Post-install script note
+
+The post-install script [new_arch.sh](/home/ubuntu/bash-scripts/arch/new_arch.sh) now favors cooler Intel laptop defaults:
+
+- keeps `thermald`
+- uses `TLP` instead of mixing multiple power-management layers
+- applies a conservative CPU policy for lower heat on Intel laptops
+
+If you want to tune those thermal settings later, edit:
+
+```text
+/etc/tlp.d/10-cooler-intel-laptop.conf
+```
+
+For lower temperatures, reduce `CPU_MAX_PERF_ON_AC` or set `CPU_BOOST_ON_AC=0`.
+
+For more performance, raise `CPU_MAX_PERF_ON_AC` back toward `100`.
