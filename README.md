@@ -20,7 +20,11 @@
 
 - arch
 
-    1. [Arch Linux installation guide](arch/README.md)
+    1. [Open Arch folder](arch/)
+
+    2. [Arch Linux installation guide](arch/README.md)
+
+    3. [Arch post-install script](arch/new_arch.sh)
 
 ## How to use
 
