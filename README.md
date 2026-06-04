@@ -18,6 +18,10 @@
 
     1. Install nordvpn app.
 
+- tenacity-macos.md
+
+    1. MacPorts-based Tenacity install and macOS 1.3.4 workarounds.
+
 - arch
 
     1. [Open Arch folder](arch/)
