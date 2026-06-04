@@ -19,3 +19,4 @@ docker/codeigniter3/src/**/*
 !docker/codeigniter3/src/README.md
 scrcpy
 yay
+.DS_Store
