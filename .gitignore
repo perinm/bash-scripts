@@ -1,4 +1,5 @@
 driver_ac_9260/*
+.codex
 *.ucode
 **/__pycache__/**
 **/octoprint/uploads/**

@@ -1,5 +1,5 @@
 #!/bin/bash
-LAPTOP_BRAND="Dell"
+LAPTOP_BRAND="$(cat /sys/class/dmi/id/sys_vendor 2>/dev/null || echo unknown)"
 PYTHON_MAJOR_VERSION=3.13
 PYTHON_AUR_VERSION=313
 NVIDIA=0
@@ -100,9 +100,21 @@ if grep -qi "GenuineIntel" /proc/cpuinfo; then
         vpl-gpu-rt libvpl thermald vulkan-intel intel-gpu-tools
     sudo systemctl enable thermald.service
     sudo systemctl start thermald.service
-    yay -S --noconfirm tuned tuned-ppd
-    sudo systemctl enable tuned.service tuned-ppd.service
-    sudo systemctl start tuned.service tuned-ppd.service
+
+    # Favor cooler CPU behavior on hot Intel laptops without fully killing boost on AC.
+    sudo mkdir -p /etc/tlp.d
+    sudo tee /etc/tlp.d/10-cooler-intel-laptop.conf >/dev/null <<'EOF'
+CPU_SCALING_GOVERNOR_ON_AC=powersave
+CPU_SCALING_GOVERNOR_ON_BAT=powersave
+CPU_ENERGY_PERF_POLICY_ON_AC=balance_performance
+CPU_ENERGY_PERF_POLICY_ON_BAT=balance_power
+CPU_MAX_PERF_ON_AC=85
+CPU_MAX_PERF_ON_BAT=65
+CPU_BOOST_ON_AC=1
+CPU_BOOST_ON_BAT=0
+EOF
+
+    sudo systemctl restart tlp.service
 else
     echo "The CPU is not an Intel CPU. Skipping Intel CPU specific packages."
 fi
@@ -116,10 +128,9 @@ else
 fi
 
 # Check if the laptop brand is Dell
-if [ "$LAPTOP_BRAND" == "Dell" ]; then
+if echo "$LAPTOP_BRAND" | grep -qi "Dell"; then
     echo "Dell laptop detected. Running package installation script."
-    sudo pacman -Syu --needed --noconfirm acpi tcl tk
-    # sudo pacman -Syu --needed --noconfirm dell-smm-hwmon
+    sudo pacman -Syu --needed --noconfirm acpi
     yay -S --noconfirm i8kutils
 else
     echo "The laptop brand is not Dell. Skipping Dell laptop specific packages."
